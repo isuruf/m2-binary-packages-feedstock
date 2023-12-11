@@ -1,5 +1,5 @@
---- binary-m2-filesystem/etc/bash.bashrc     2023-09-20 02:52:26.392108213 -0500
-+++ binary-m2-filesystem/etc/bash.bashrc     2023-09-20 02:53:33.713972519 -0500
+--- binary-m2-filesystem/etc/bash.bashrc.bak	2023-12-11 13:46:26.976829864 -0600
++++ binary-m2-filesystem/etc/bash.bashrc	2023-12-11 13:46:15.472524197 -0600
 @@ -12,6 +12,9 @@
  # Check that we haven't already been sourced.
  ([[ -z ${CYG_SYS_BASHRC} ]] && CYG_SYS_BASHRC="1") || return
