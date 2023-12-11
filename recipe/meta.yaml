@@ -346,12 +346,6 @@ source:
     folder: binary-m2-unzip
 
   - url:
-      - https://repo.msys2.org/msys/sources/unzip-6.0-2.src.tar.zst
-      - https://github.com/conda-forge/msys2-recipes/releases/download/20230914/unzip-6.0-2.src.tar.zst
-    sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
-    folder: source-unzip
-
-  - url:
       - https://repo.msys2.org/msys/x86_64/zip-3.0-3-x86_64.pkg.tar.xz
       - https://github.com/conda-forge/msys2-recipes/releases/download/20230914/zip-3.0-3-x86_64.pkg.tar.xz
     sha256: 0264950ec9122e5b3b92a1d9fffbe6f4240ab9dee4baf4ec129762866a6c1dc6
