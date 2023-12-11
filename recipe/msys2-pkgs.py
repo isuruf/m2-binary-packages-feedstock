@@ -44,9 +44,9 @@ to_process = OrderedSet([
         "pkg-config",
     ])
 
-#to_process = OrderedSet([
-#        "libzstd",
-#    ])
+to_process = OrderedSet([
+        "filesystem",
+    ])
 
 provides = {
     "sh": "bash",
