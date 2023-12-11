@@ -2,7 +2,7 @@ mkdir %PREFIX%\Library
 xcopy %SRC_DIR%\binary-%PKG_NAME%\ %LIBRARY_PREFIX%\ /s /e /y
 
 if "%PKG_NAME%" == "m2-file" (
-  rmdir %PREFIX%\Library\usr\lib\python3.11\site-packages\__pycache__\
+  rmdir /s /q %PREFIX%\Library\usr\lib\python3.11\site-packages\__pycache__\
 )
 
 del %LIBRARY_PREFIX%\.BUILDINFO
