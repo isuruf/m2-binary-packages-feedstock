@@ -45,7 +45,7 @@ to_process = OrderedSet([
     ])
 
 #to_process = OrderedSet([
-#        "libzstd",
+#        "filesystem",
 #    ])
 
 provides = {
@@ -108,7 +108,10 @@ def get_depends(pkg):
     pkgbase = pkgbases[0] if pkgbases else pkg
     pkgver = get_info(pkginfo, "pkgver")[0]
     src1 = f"{source_url}/{pkgbase}-{pkgver}.src.tar.zst"
-    src2 = f"{source_url}/sources/{pkgbase}-{pkgver}.src.tar.gz"
+    src2 = f"{source_url}/{pkgbase}-{pkgver}.src.tar.gz"
+    if "github" in source_url:
+        src1 = src1.replace("~", ".")
+        src2 = src2.replace("~", ".")
     if not os.path.exists("src-cache/" + os.path.basename(src1)) and not os.path.exists(
         "src-cache/" + os.path.basename(src2)
     ):
