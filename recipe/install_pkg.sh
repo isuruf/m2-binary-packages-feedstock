@@ -13,3 +13,7 @@ if [[ "${PKG_NAME}" != "m2-msys2-launcher" && "${PKG_NAME}" != "m2-base" ]]; the
   test -d $PREFIX/Library/usr
 fi
 
+if [[ "${PKG_NAME}" == "m2-ca-certificates" ]]; then
+  mkdir $PREFIX/Scripts
+  cp $RECIPE_DIR/.m2-ca-certificates-post-link.bat $PREFIX/Scripts/
+fi

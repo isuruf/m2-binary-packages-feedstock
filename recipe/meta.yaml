@@ -3292,6 +3292,7 @@ outputs:
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
       noarch: generic
+      number: 1
     requirements:
       host:
         - m2-bash
