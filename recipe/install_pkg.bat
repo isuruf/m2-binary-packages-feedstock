@@ -15,3 +15,7 @@ if NOT "%PKG_NAME%" == "m2-msys2-launcher" (
   )
 )
 
+if "%PKG_NAME%" == "m2-ca-certificates" (
+  mkdir %PREFIX%\Scripts
+  copy %RECIPE_DIR%\.m2-ca-certificates-post-link.bat %PREFIX%\Scripts\
+)
