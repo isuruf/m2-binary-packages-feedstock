@@ -5066,6 +5066,24 @@ outputs:
       summary: |
         Implementation of Kerberos V5 libraries
 
+  - name: posix
+    version: 2.0.0.20230914
+    build:
+      noarch: generic
+    requirements:
+      run:
+        - m2-conda-epoch 20230914
+        - m2-base
+        - m2-make
+        - m2-tar
+        - m2-zip
+        - m2-unzip
+        - m2-diffutils
+    about:
+      home: https://github.com/conda-forge/m2-recipes-feedstock
+      license: BSD-3-Clause
+      summary: POSIX tools for windows
+
 about:
   home: https://github.com/conda-forge/m2-recipes-feedstock
   summary: Repackaged msys2 x86_64 binaries
