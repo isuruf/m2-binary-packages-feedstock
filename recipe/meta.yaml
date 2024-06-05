@@ -40,18 +40,6 @@ source:
     folder: source-gcc-libs
 
   - url:
-      - https://repo.msys2.org/msys/x86_64/msys2-runtime-3.4.9-1-x86_64.pkg.tar.zst
-      - https://github.com/conda-forge/msys2-recipes/releases/download/20230914/msys2-runtime-3.4.9-1-x86_64.pkg.tar.zst
-    sha256: 6f720ee5cbdb3b862d5a4db100bcaa6faa4c10abb0572c4eecf22513d0ffb430
-    folder: binary-m2-msys2-runtime
-
-  - url:
-      - https://repo.msys2.org/msys/sources/msys2-runtime-3.4.9-1.src.tar.zst
-      - https://github.com/conda-forge/msys2-recipes/releases/download/20230914/msys2-runtime-3.4.9-1.src.tar.zst
-    sha256: 251fb77b6877ae0d2bc88ea4d50fc5cefc77ac1df96c2eb3e976b6de09174802
-    folder: source-msys2-runtime
-
-  - url:
       - https://repo.msys2.org/msys/x86_64/texinfo-tex-7.0.3-3-x86_64.pkg.tar.zst
       - https://github.com/conda-forge/msys2-recipes/releases/download/20230914/texinfo-tex-7.0.3-3-x86_64.pkg.tar.zst
     sha256: 9fe51573185dc418f4e159022096f597f8dede964c8313f9e7191e9e74867f4d
@@ -922,6 +910,18 @@ source:
     folder: source-nano
 
   - url:
+      - https://repo.msys2.org/msys/x86_64/msys2-runtime-3.4.9-1-x86_64.pkg.tar.zst
+      - https://github.com/conda-forge/msys2-recipes/releases/download/20230914/msys2-runtime-3.4.9-1-x86_64.pkg.tar.zst
+    sha256: 6f720ee5cbdb3b862d5a4db100bcaa6faa4c10abb0572c4eecf22513d0ffb430
+    folder: binary-m2-msys2-runtime
+
+  - url:
+      - https://repo.msys2.org/msys/sources/msys2-runtime-3.4.9-1.src.tar.zst
+      - https://github.com/conda-forge/msys2-recipes/releases/download/20230914/msys2-runtime-3.4.9-1.src.tar.zst
+    sha256: 251fb77b6877ae0d2bc88ea4d50fc5cefc77ac1df96c2eb3e976b6de09174802
+    folder: source-msys2-runtime
+
+  - url:
       - https://repo.msys2.org/msys/x86_64/msys2-launcher-1.5-1-x86_64.pkg.tar.zst
       - https://github.com/conda-forge/msys2-recipes/releases/download/20230914/msys2-launcher-1.5-1-x86_64.pkg.tar.zst
     sha256: 39f9dc679ffb3e514ed1ba9c38cc32c20c8f2d45fef3c0c6b73f6010e656f775
@@ -1772,7 +1772,7 @@ build:
 
 outputs:
   - name: m2-pkg-config
-    version: 0.29.2.4
+    version: "0.29.2.4"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -1793,7 +1793,7 @@ outputs:
         A system for managing library compile/link flags
 
   - name: m2-libiconv
-    version: 1.17.1
+    version: "1.17.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -1814,18 +1814,16 @@ outputs:
         Libiconv is a conversion library
 
   - name: m2-gcc-libs
-    version: 11.3.0.4
+    version: "11.3.0.4"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
       noarch: generic
     requirements:
       host:
-        - m2-msys2-runtime
         - m2-conda-epoch 20230914
         - m2-msys2-runtime
       run:
-        - m2-msys2-runtime
         - m2-conda-epoch 20230914
         - m2-msys2-runtime
     about:
@@ -1834,25 +1832,8 @@ outputs:
       summary: |
         Runtime libraries shipped by GCC
 
-  - name: m2-msys2-runtime
-    version: 3.4.9.1
-    script: install_pkg.bat  # [build_platform.startswith("win-")]
-    script: install_pkg.sh   # [not build_platform.startswith("win-")]
-    build:
-      noarch: generic
-    requirements:
-      host:
-        - m2-conda-epoch 20230914
-      run:
-        - m2-conda-epoch 20230914
-    about:
-      home: https://www.cygwin.com/
-      license: GPL
-      summary: |
-        Posix emulation engine for Windows
-
   - name: m2-texinfo-tex
-    version: 7.0.3.3
+    version: "7.0.3.3"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -1877,7 +1858,7 @@ outputs:
         Utilities to work with and produce manuals, ASCII text, and on-line documentation from a single source file
 
   - name: m2-perl
-    version: 5.36.1.2
+    version: "5.36.1.2"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -1906,7 +1887,7 @@ outputs:
         A highly capable, feature-rich programming language
 
   - name: m2-coreutils
-    version: 8.32.5
+    version: "8.32.5"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -1931,7 +1912,7 @@ outputs:
         The basic file, shell and text manipulation utilities of the GNU operating system
 
   - name: m2-libintl
-    version: 0.22.1
+    version: "0.22.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -1954,7 +1935,7 @@ outputs:
         GNU Internationalization runtime library
 
   - name: m2-gmp
-    version: 6.3.0.1
+    version: "6.3.0.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -1973,7 +1954,7 @@ outputs:
         A free library for arbitrary precision arithmetic
 
   - name: m2-libxcrypt
-    version: 4.4.36.1
+    version: "4.4.36.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -1992,7 +1973,7 @@ outputs:
         Modern library for one-way hashing of passwords
 
   - name: m2-gdbm
-    version: 1.23.1
+    version: "1.23.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -2013,7 +1994,7 @@ outputs:
         GNU database library
 
   - name: m2-libgdbm
-    version: 1.23.1
+    version: "1.23.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -2042,7 +2023,7 @@ outputs:
         GNU database library
 
   - name: m2-ncurses
-    version: 6.4.1
+    version: "6.4.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -2063,7 +2044,7 @@ outputs:
         System V Release 4.0 curses emulation library
 
   - name: m2-libreadline
-    version: 8.2.001.3
+    version: "8.2.001.3"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -2084,7 +2065,7 @@ outputs:
         GNU readline library
 
   - name: m2-db
-    version: 5.3.28.4
+    version: "5.3.28.4"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -2105,7 +2086,7 @@ outputs:
         The Berkeley DB embedded database system
 
   - name: m2-libdb
-    version: 5.3.28.4
+    version: "5.3.28.4"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -2126,7 +2107,7 @@ outputs:
         The Berkeley DB embedded database system
 
   - name: m2-gawk
-    version: 5.2.2.1
+    version: "5.2.2.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -2153,7 +2134,7 @@ outputs:
         GNU version of awk
 
   - name: m2-mpfr
-    version: 4.2.1.1
+    version: "4.2.1.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -2174,7 +2155,7 @@ outputs:
         Multiple-precision floating-point library
 
   - name: m2-patchutils
-    version: 0.4.2.3
+    version: "0.4.2.3"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -2195,7 +2176,7 @@ outputs:
         Utilities to work with patches
 
   - name: m2-pcre2
-    version: 10.42.1
+    version: "10.42.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -2228,7 +2209,7 @@ outputs:
         A library that implements Perl 5-style regular expressions
 
   - name: m2-libpcre2posix
-    version: 10.42.1
+    version: "10.42.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -2249,7 +2230,7 @@ outputs:
         A library that implements Perl 5-style regular expressions
 
   - name: m2-libpcre2_32
-    version: 10.42.1
+    version: "10.42.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -2270,7 +2251,7 @@ outputs:
         A library that implements Perl 5-style regular expressions
 
   - name: m2-libpcre2_16
-    version: 10.42.1
+    version: "10.42.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -2291,7 +2272,7 @@ outputs:
         A library that implements Perl 5-style regular expressions
 
   - name: m2-libpcre2_8
-    version: 10.42.1
+    version: "10.42.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -2312,7 +2293,7 @@ outputs:
         A library that implements Perl 5-style regular expressions
 
   - name: m2-zlib
-    version: 1.3.1
+    version: "1.3.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -2333,7 +2314,7 @@ outputs:
         Compression library implementing the deflate compression method found in gzip and PKZIP
 
   - name: m2-libbz2
-    version: 1.0.8.4
+    version: "1.0.8.4"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -2354,7 +2335,7 @@ outputs:
         A high-quality data compression program
 
   - name: m2-patch
-    version: 2.7.6.2
+    version: "2.7.6.2"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -2373,7 +2354,7 @@ outputs:
         A utility to apply patch files to original sources
 
   - name: m2-diffutils
-    version: 3.9.1
+    version: "3.9.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -2398,7 +2379,7 @@ outputs:
         Utility programs used for creating patch files
 
   - name: m2-unzip
-    version: 6.0.2
+    version: "6.0.2"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -2421,7 +2402,7 @@ outputs:
         Unpacks .zip archives such as those made by PKZIP
 
   - name: m2-zip
-    version: 3.0.3
+    version: "3.0.3"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -2442,7 +2423,7 @@ outputs:
         Creates PKZIP-compatible .zip files
 
   - name: m2-tar
-    version: 1.34.3
+    version: "1.34.3"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -2467,7 +2448,7 @@ outputs:
         Utility used to store, backup, and transport files
 
   - name: m2-base
-    version: 2022.06.1
+    version: "2022.06.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -2548,7 +2529,7 @@ outputs:
         Minimal package set to define a basic MSYS2 installation
 
   - name: m2-zstd
-    version: 1.5.5.1
+    version: "1.5.5.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -2571,7 +2552,7 @@ outputs:
         Zstandard - Fast real-time compression algorithm
 
   - name: m2-libzstd
-    version: 1.5.5.1
+    version: "1.5.5.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -2592,7 +2573,7 @@ outputs:
         Zstandard - Fast real-time compression algorithm
 
   - name: m2-which
-    version: 2.21.4
+    version: "2.21.4"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -2613,7 +2594,7 @@ outputs:
         A utility to show the full path of commands
 
   - name: m2-wget
-    version: 1.21.4.1
+    version: "1.21.4.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -2652,7 +2633,7 @@ outputs:
         A network utility to retrieve files from the Web
 
   - name: m2-libgnutls
-    version: 3.8.1.1
+    version: "3.8.1.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -2689,7 +2670,7 @@ outputs:
         A library which provides a secure layer over a reliable transport layer
 
   - name: m2-libtasn1
-    version: 4.19.0.1
+    version: "4.19.0.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -2710,7 +2691,7 @@ outputs:
         A library for Abstract Syntax Notation One (ASN.1) and Distinguish Encoding Rules (DER) manipulation
 
   - name: m2-libp11-kit
-    version: 0.25.0.1
+    version: "0.25.0.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -2735,7 +2716,7 @@ outputs:
         Library to work with PKCS#11 modules
 
   - name: m2-libffi
-    version: 3.4.4.1
+    version: "3.4.4.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -2754,7 +2735,7 @@ outputs:
         Portable, high level programming interface to various calling conventions
 
   - name: m2-libnettle
-    version: 3.9.1.1
+    version: "3.9.1.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -2775,7 +2756,7 @@ outputs:
         A low-level cryptographic library
 
   - name: m2-libhogweed
-    version: 3.9.1.1
+    version: "3.9.1.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -2796,7 +2777,7 @@ outputs:
         A low-level cryptographic library
 
   - name: m2-libutil-linux
-    version: 2.35.2.4
+    version: "2.35.2.4"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -2819,7 +2800,7 @@ outputs:
         Block device ID and Universally Unique ID libraries
 
   - name: m2-libpsl
-    version: 0.21.2.1
+    version: "0.21.2.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -2844,7 +2825,7 @@ outputs:
         Public Suffix List library (runtime)
 
   - name: m2-libunistring
-    version: 1.1.2
+    version: "1.1.2"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -2865,7 +2846,7 @@ outputs:
         Library for manipulating Unicode strings and C strings.
 
   - name: m2-libxslt
-    version: 1.1.38.1
+    version: "1.1.38.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -2888,7 +2869,7 @@ outputs:
         XML stylesheet transformation library
 
   - name: m2-libgcrypt
-    version: 1.9.4.1
+    version: "1.9.4.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -2909,7 +2890,7 @@ outputs:
         General purpose cryptographic library based on the code from GnuPG
 
   - name: m2-libgpg-error
-    version: 1.47.1
+    version: "1.47.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -2934,7 +2915,7 @@ outputs:
         Support library for libgcrypt
 
   - name: m2-libxml2
-    version: 2.9.14.5
+    version: "2.9.14.5"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -2963,7 +2944,7 @@ outputs:
         XML parsing library, version 2
 
   - name: m2-liblzma
-    version: 5.4.4.1
+    version: "5.4.4.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -2988,7 +2969,7 @@ outputs:
         Library for XZ and LZMA compressed files
 
   - name: m2-gettext
-    version: 0.22.1
+    version: "0.22.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -3013,7 +2994,7 @@ outputs:
         GNU internationalization library
 
   - name: m2-libasprintf
-    version: 0.22.1
+    version: "0.22.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -3034,7 +3015,7 @@ outputs:
         C-style formatted output in C++ (runtime)
 
   - name: m2-libgettextpo
-    version: 0.22.1
+    version: "0.22.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -3055,7 +3036,7 @@ outputs:
         GNU Internationalization runtime library
 
   - name: m2-libgpgme
-    version: 1.22.0.1
+    version: "1.22.0.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -3080,7 +3061,7 @@ outputs:
         A C wrapper library for GnuPG
 
   - name: m2-gnupg
-    version: 2.2.41.1
+    version: "2.2.41.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -3131,7 +3112,7 @@ outputs:
         Complete and free implementation of the OpenPGP standard
 
   - name: m2-pinentry
-    version: 1.2.1.1
+    version: "1.2.1.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -3156,7 +3137,7 @@ outputs:
         A collection of simple PIN or passphrase entry dialogs which utilize the Assuan protocol
 
   - name: m2-nettle
-    version: 3.9.1.1
+    version: "3.9.1.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -3177,7 +3158,7 @@ outputs:
         A low-level cryptographic library
 
   - name: m2-libsqlite
-    version: 3.42.0.2
+    version: "3.42.0.2"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -3196,7 +3177,7 @@ outputs:
         Sqlite3 library
 
   - name: m2-libnpth
-    version: 1.6.1
+    version: "1.6.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -3217,7 +3198,7 @@ outputs:
         New portable threads library
 
   - name: m2-libksba
-    version: 1.6.4.1
+    version: "1.6.4.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -3240,7 +3221,7 @@ outputs:
         A CMS and X.509 access library
 
   - name: m2-libcurl
-    version: 8.2.1.1
+    version: "8.2.1.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -3281,7 +3262,7 @@ outputs:
         Multi-protocol file transfer library (runtime)
 
   - name: m2-openssl
-    version: 3.1.2.1
+    version: "3.1.2.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -3302,7 +3283,7 @@ outputs:
         The Open Source toolkit for Secure Sockets Layer and Transport Layer Security
 
   - name: m2-libopenssl
-    version: 3.1.2.1
+    version: "3.1.2.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -3321,7 +3302,7 @@ outputs:
         The Open Source toolkit for Secure Sockets Layer and Transport Layer Security
 
   - name: m2-libssh2
-    version: 1.11.0.1
+    version: "1.11.0.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -3346,7 +3327,7 @@ outputs:
         Multi-protocol file transfer library (runtime)
 
   - name: m2-libnghttp2
-    version: 1.56.0.1
+    version: "1.56.0.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -3367,7 +3348,7 @@ outputs:
         Framing layer of HTTP/2 is implemented as a reusable C library (runtime)
 
   - name: m2-heimdal-libs
-    version: 7.8.0.4
+    version: "7.8.0.4"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -3396,7 +3377,7 @@ outputs:
         Implementation of Kerberos V5 libraries
 
   - name: m2-libedit
-    version: 20221030_3.1.1
+    version: "20221030_3.1.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -3419,7 +3400,7 @@ outputs:
         Libedit is an autotool- and libtoolized port of the NetBSD Editline library.
 
   - name: m2-ca-certificates
-    version: 20230311.1
+    version: "20230311.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -3450,7 +3431,7 @@ outputs:
         Common CA certificates
 
   - name: m2-p11-kit
-    version: 0.25.0.1
+    version: "0.25.0.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -3471,7 +3452,7 @@ outputs:
         Library to work with PKCS#11 modules
 
   - name: m2-brotli
-    version: 1.1.0.1
+    version: "1.1.0.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -3492,7 +3473,7 @@ outputs:
         Brotli compression library
 
   - name: m2-libassuan
-    version: 2.5.6.1
+    version: "2.5.6.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -3515,7 +3496,7 @@ outputs:
         A IPC library used by some GnuPG related software
 
   - name: m2-libidn2
-    version: 2.3.4.2
+    version: "2.3.4.2"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -3538,7 +3519,7 @@ outputs:
         Implementation of the Stringprep, Punycode and IDNA specifications
 
   - name: m2-util-linux
-    version: 2.35.2.4
+    version: "2.35.2.4"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -3563,7 +3544,7 @@ outputs:
         Collection of basic system utilities
 
   - name: m2-tzcode
-    version: 2023c.1
+    version: "2023c.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -3588,7 +3569,7 @@ outputs:
         Sources for time zone and daylight saving time data
 
   - name: m2-time
-    version: 1.9.3
+    version: "1.9.3"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -3607,7 +3588,7 @@ outputs:
         Utility for monitoring a program's use of system resources
 
   - name: m2-rebase
-    version: 4.5.0.4
+    version: "4.5.0.4"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -3628,7 +3609,7 @@ outputs:
         The Cygwin rebase distribution contains four utilities, rebase, rebaseall, peflags, and peflagsall
 
   - name: m2-nano
-    version: 7.2.1
+    version: "7.2.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -3654,8 +3635,25 @@ outputs:
       summary: |
         Pico editor clone with enhancements
 
+  - name: m2-msys2-runtime
+    version: "3.4.9.1"
+    script: install_pkg.bat  # [build_platform.startswith("win-")]
+    script: install_pkg.sh   # [not build_platform.startswith("win-")]
+    build:
+      noarch: generic
+    requirements:
+      host:
+        - m2-conda-epoch 20230914
+      run:
+        - m2-conda-epoch 20230914
+    about:
+      home: https://www.cygwin.com/
+      license: GPL
+      summary: |
+        Posix emulation engine for Windows
+
   - name: m2-msys2-launcher
-    version: 1.5.1
+    version: "1.5.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -3676,7 +3674,7 @@ outputs:
         Helper for launching MSYS2 shells
 
   - name: m2-msys2-keyring
-    version: 1!20230703.1
+    version: "1!20230703.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -3695,7 +3693,7 @@ outputs:
         MSYS2 PGP keyring
 
   - name: m2-mintty
-    version: 1!3.6.5.1
+    version: "1!3.6.5.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -3716,7 +3714,7 @@ outputs:
         Terminal emulator with native Windows look and feel
 
   - name: m2-less
-    version: 643.1
+    version: "643.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -3739,7 +3737,7 @@ outputs:
         A terminal based program for viewing text files
 
   - name: m2-info
-    version: 7.0.3.3
+    version: "7.0.3.3"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -3766,7 +3764,7 @@ outputs:
         Utilities to work with and produce manuals, ASCII text, and on-line documentation from a single source file
 
   - name: m2-inetutils
-    version: 2.4.2
+    version: "2.4.2"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -3793,7 +3791,7 @@ outputs:
         A collection of common network programs.
 
   - name: m2-gzip
-    version: 1.13.1
+    version: "1.13.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -3816,7 +3814,7 @@ outputs:
         GNU compression utility
 
   - name: m2-grep
-    version: 1!3.0.6
+    version: "1!3.0.6"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -3843,7 +3841,7 @@ outputs:
         A string search utility
 
   - name: m2-libpcre
-    version: 8.45.3
+    version: "8.45.3"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -3864,7 +3862,7 @@ outputs:
         A library that implements Perl 5-style regular expressions
 
   - name: m2-getent
-    version: 2.18.90.4
+    version: "2.18.90.4"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -3885,7 +3883,7 @@ outputs:
         Get entries from Name Service Switch libraries
 
   - name: m2-libargp
-    version: 20110921.4
+    version: "20110921.4"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -3904,7 +3902,7 @@ outputs:
         Interface for parsing command-line arguments
 
   - name: m2-filesystem
-    version: 2023.02.07.1
+    version: "2023.02.07.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -3923,7 +3921,7 @@ outputs:
         Base filesystem
 
   - name: m2-file
-    version: 5.45.1
+    version: "5.45.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -3952,7 +3950,7 @@ outputs:
         File type identification utility
 
   - name: m2-dash
-    version: 0.5.12.1
+    version: "0.5.12.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -3977,7 +3975,7 @@ outputs:
         A POSIX compliant shell that aims to be as small as possible
 
   - name: m2-bzip2
-    version: 1.0.8.4
+    version: "1.0.8.4"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -3998,7 +3996,7 @@ outputs:
         A high-quality data compression program
 
   - name: m2-bsdtar
-    version: 3.7.2.1
+    version: "3.7.2.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -4035,7 +4033,7 @@ outputs:
         Multi-format archive and compression library
 
   - name: m2-liblz4
-    version: 1.9.4.1
+    version: "1.9.4.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -4056,7 +4054,7 @@ outputs:
         Very fast lossless compression algorithm
 
   - name: m2-libexpat
-    version: 2.5.0.1
+    version: "2.5.0.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -4077,7 +4075,7 @@ outputs:
         An XML parser library
 
   - name: m2-bash-completion
-    version: 2.11.3
+    version: "2.11.3"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -4098,7 +4096,7 @@ outputs:
         Programmable completion for the bash shell
 
   - name: m2-curl
-    version: 8.2.1.1
+    version: "8.2.1.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -4131,7 +4129,7 @@ outputs:
         Multi-protocol file transfer utility
 
   - name: m2-p7zip
-    version: 17.05.1
+    version: "17.05.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -4154,7 +4152,7 @@ outputs:
         Command-line version of the 7zip compressed file archiver
 
   - name: m2-texinfo
-    version: 7.0.3.3
+    version: "7.0.3.3"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -4179,7 +4177,7 @@ outputs:
         Utilities to work with and produce manuals, ASCII text, and on-line documentation from a single source file
 
   - name: m2-bash
-    version: 5.2.015.1
+    version: "5.2.015.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -4200,7 +4198,7 @@ outputs:
         The GNU Bourne Again shell
 
   - name: m2-m4
-    version: 1.4.19.2
+    version: "1.4.19.2"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -4225,7 +4223,7 @@ outputs:
         The GNU macro processor
 
   - name: m2-findutils
-    version: 4.9.0.3
+    version: "4.9.0.3"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -4248,7 +4246,7 @@ outputs:
         GNU utilities to locate files
 
   - name: m2-autoconf
-    version: 2.71.3
+    version: "2.71.3"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -4279,7 +4277,7 @@ outputs:
         A GNU tool for automatically configuring source code
 
   - name: m2-libtool
-    version: 2.4.7.3
+    version: "2.4.7.3"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -4304,7 +4302,7 @@ outputs:
         A generic library support script
 
   - name: m2-libltdl
-    version: 2.4.7.3
+    version: "2.4.7.3"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -4323,7 +4321,7 @@ outputs:
         A system independent dlopen wrapper for GNU libtool
 
   - name: m2-sed
-    version: 4.9.1
+    version: "4.9.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -4346,7 +4344,7 @@ outputs:
         GNU stream editor
 
   - name: m2-make
-    version: 4.4.1.1
+    version: "4.4.1.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -4369,7 +4367,7 @@ outputs:
         GNU make utility to maintain groups of programs
 
   - name: m2-automake-wrapper
-    version: 20221207.1
+    version: "20221207.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -4404,7 +4402,7 @@ outputs:
         Wrapper scripts for automake commands
 
   - name: m2-automake1.16
-    version: 1.16.5.1
+    version: "1.16.5.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -4427,7 +4425,7 @@ outputs:
         A GNU tool for automatically creating Makefiles
 
   - name: m2-automake1.15
-    version: 1.15.1.4
+    version: "1.15.1.4"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -4450,7 +4448,7 @@ outputs:
         A GNU tool for automatically creating Makefiles
 
   - name: m2-automake1.14
-    version: 1.14.1.6
+    version: "1.14.1.6"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -4473,7 +4471,7 @@ outputs:
         A GNU tool for automatically creating Makefiles
 
   - name: m2-automake1.13
-    version: 1.13.4.7
+    version: "1.13.4.7"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -4496,7 +4494,7 @@ outputs:
         A GNU tool for automatically creating Makefiles
 
   - name: m2-automake1.12
-    version: 1.12.6.6
+    version: "1.12.6.6"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -4519,7 +4517,7 @@ outputs:
         A GNU tool for automatically creating Makefiles
 
   - name: m2-automake1.11
-    version: 1.11.6.6
+    version: "1.11.6.6"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -4542,7 +4540,7 @@ outputs:
         A GNU tool for automatically creating Makefiles
 
   - name: m2-git
-    version: 2.42.0.2
+    version: "2.42.0.2"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -4589,7 +4587,7 @@ outputs:
         The fast distributed version control system
 
   - name: m2-perl-termreadkey
-    version: 2.38.5
+    version: "2.38.5"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -4610,7 +4608,7 @@ outputs:
         Provides simple control over terminal driver modes
 
   - name: m2-perl-net-smtp-ssl
-    version: 1.04.2
+    version: "1.04.2"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -4631,7 +4629,7 @@ outputs:
         SSL support for Net::SMTP
 
   - name: m2-perl-io-socket-ssl
-    version: 2.083.1
+    version: "2.083.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -4656,7 +4654,7 @@ outputs:
         Nearly transparent SSL encapsulation for IO::Socket::INET
 
   - name: m2-perl-uri
-    version: 5.21.1
+    version: "5.21.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -4677,7 +4675,7 @@ outputs:
         Uniform Resource Identifiers (absolute and relative)
 
   - name: m2-perl-net-ssleay
-    version: 1.92.5
+    version: "1.92.5"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -4698,7 +4696,7 @@ outputs:
         Perl extension for using OpenSSL
 
   - name: m2-perl-mime-tools
-    version: 5.510.1
+    version: "5.510.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -4723,7 +4721,7 @@ outputs:
         Parses streams to create MIME entities
 
   - name: m2-perl-convert-binhex
-    version: 1.125.2
+    version: "1.125.2"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -4744,7 +4742,7 @@ outputs:
         Perl module to extract data from Macintosh BinHex files
 
   - name: m2-perl-io-stringy
-    version: 2.113.1
+    version: "2.113.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -4765,7 +4763,7 @@ outputs:
         I/O on in-core objects like strings/arrays
 
   - name: m2-perl-mailtools
-    version: 2.21.1
+    version: "2.21.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -4786,7 +4784,7 @@ outputs:
         Various e-mail related modules
 
   - name: m2-perl-timedate
-    version: 2.33.2
+    version: "2.33.2"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -4807,7 +4805,7 @@ outputs:
         Date formating subroutines
 
   - name: m2-perl-libwww
-    version: 6.67.1
+    version: "6.67.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -4854,7 +4852,7 @@ outputs:
         The World-Wide Web library for Perl
 
   - name: m2-perl-try-tiny
-    version: 0.31.1
+    version: "0.31.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -4875,7 +4873,7 @@ outputs:
         Minimal try/catch with proper localization of $@
 
   - name: m2-perl-http-message
-    version: 6.44.1
+    version: "6.44.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -4908,7 +4906,7 @@ outputs:
         HTTP style messages
 
   - name: m2-perl-io-html
-    version: 1.004.2
+    version: "1.004.2"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -4929,7 +4927,7 @@ outputs:
         Open an HTML file with automatic charset detection
 
   - name: m2-perl-clone
-    version: 0.46.1
+    version: "0.46.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -4950,7 +4948,7 @@ outputs:
         Recursive copy of nested objects.
 
   - name: m2-perl-www-robotrules
-    version: 6.02.2
+    version: "6.02.2"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -4973,7 +4971,7 @@ outputs:
         Database of robots.txt-derived permissions
 
   - name: m2-perl-net-http
-    version: 6.23.1
+    version: "6.23.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -4994,7 +4992,7 @@ outputs:
         Low-level HTTP connection (client)
 
   - name: m2-perl-lwp-mediatypes
-    version: 6.04.1
+    version: "6.04.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -5015,7 +5013,7 @@ outputs:
         Guess the media type of a file or a URL
 
   - name: m2-perl-http-negotiate
-    version: 6.01.3
+    version: "6.01.3"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -5038,7 +5036,7 @@ outputs:
         choose a variant to serve
 
   - name: m2-perl-http-date
-    version: 6.06.1
+    version: "6.06.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -5059,7 +5057,7 @@ outputs:
         Date conversion routines
 
   - name: m2-perl-http-daemon
-    version: 6.16.1
+    version: "6.16.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -5088,7 +5086,7 @@ outputs:
         A simple http server class
 
   - name: m2-perl-io-socket-ip
-    version: 0.41.2
+    version: "0.41.2"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -5109,7 +5107,7 @@ outputs:
         Family-neutral IP socket supporting both IPv4 and IPv6
 
   - name: m2-perl-http-cookies
-    version: 6.10.2
+    version: "6.10.2"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -5134,7 +5132,7 @@ outputs:
         HTTP cookie jars
 
   - name: m2-perl-html-parser
-    version: 3.81.1
+    version: "3.81.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -5161,7 +5159,7 @@ outputs:
         Perl HTML parser class
 
   - name: m2-perl-html-tagset
-    version: 3.20.3
+    version: "3.20.3"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -5182,7 +5180,7 @@ outputs:
         Data tables useful in parsing HTML
 
   - name: m2-perl-file-listing
-    version: 6.16.1
+    version: "6.16.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -5205,7 +5203,7 @@ outputs:
         parse directory listing
 
   - name: m2-perl-encode-locale
-    version: 1.05.2
+    version: "1.05.2"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -5226,7 +5224,7 @@ outputs:
         Determine the locale encoding
 
   - name: m2-perl-authen-sasl
-    version: 2.16.3
+    version: "2.16.3"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -5247,7 +5245,7 @@ outputs:
         Perl/CPAN Module Authen::SASL : SASL authentication framework
 
   - name: m2-perl-error
-    version: 0.17029.1
+    version: "0.17029.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -5268,7 +5266,7 @@ outputs:
         Perl/CPAN Error module - Error/exception handling in an OO-ish way
 
   - name: m2-openssh
-    version: 9.4p1.1
+    version: "9.4p1.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -5297,7 +5295,7 @@ outputs:
         Free version of the SSH connectivity tools
 
   - name: m2-libfido2
-    version: 1.13.0.1
+    version: "1.13.0.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -5320,7 +5318,7 @@ outputs:
         Library functionality for FIDO 2.0, including communication with a device over USB
 
   - name: m2-libcbor
-    version: 0.9.0.1
+    version: "0.9.0.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -5339,7 +5337,7 @@ outputs:
         A C library for parsing and generating CBOR, a general-purpose schema-less binary data format
 
   - name: m2-heimdal
-    version: 7.8.0.4
+    version: "7.8.0.4"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:

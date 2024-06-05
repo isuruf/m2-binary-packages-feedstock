@@ -158,8 +158,6 @@ def get_depends(pkg):
     elif pkg == "libiconv":
         # break a cycle
         depends.remove("libintl")
-    elif pkg == "gcc-libs":
-        depends.append("msys2-runtime")
     license_text = get_info(pkginfo, "license")[0]
     spdx = license_text[5:] if license_text.startswith("spdx:") else license_text
     desc = get_info(pkginfo, "pkgdesc")[0]
@@ -256,7 +254,7 @@ meta += "".join(sources.keys())
 
 meta += """
 build:
-  number: 0
+  number: 1
   noarch: generic
   error_overlinking: false
 
@@ -264,7 +262,7 @@ outputs:"""
 
 output_template = """
   - name: m2-{{ name }}
-    version: {{ version }}
+    version: "{{ version }}"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
