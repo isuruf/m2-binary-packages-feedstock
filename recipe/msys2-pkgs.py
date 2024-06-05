@@ -289,6 +289,8 @@ for pkg, (depends, spdx, desc, url, src_url) in seen.items():
     info = pkg_latest_ver[pkg]
     text = output_template
     depends += [f"conda-epoch {date}"]
+    if pkg.lower() != "msys2-runtime":
+        depends += ["msys2-runtime"]
     info = {
         "name": pkg.lower(),
         "version": ".".join(info.split("-")[:2]).replace("~", "!"),
