@@ -13,6 +13,16 @@ Package license:
 
 Summary: Repackaged msys2 x86_64 binaries
 
+About m2-msys2-runtime
+----------------------
+
+Home: https://www.cygwin.com/
+
+Package license: GPL
+
+Summary: Posix emulation engine for Windows
+
+
 About m2-filesystem
 -------------------
 
@@ -21,6 +31,16 @@ Home: https://github.com/msys2/MSYS2-packages/tree/master/filesystem
 Package license: BSD-3-Clause
 
 Summary: Base filesystem
+
+
+About m2-gcc-libs
+-----------------
+
+Home: https://gcc.gnu.org/
+
+Package license: GPL
+
+Summary: Runtime libraries shipped by GCC
 
 
 About m2-gmp
@@ -113,16 +133,6 @@ Package license: GPL
 Summary: MSYS2 PGP keyring
 
 
-About m2-msys2-runtime
-----------------------
-
-Home: https://www.cygwin.com/
-
-Package license: GPL
-
-Summary: Posix emulation engine for Windows
-
-
 About m2-patch
 --------------
 
@@ -153,14 +163,14 @@ Package license: GPL
 Summary: The GNU Bourne Again shell
 
 
-About m2-gcc-libs
------------------
+About m2-brotli
+---------------
 
-Home: https://gcc.gnu.org/
+Home: https://github.com/google/brotli
 
-Package license: GPL
+Package license: MIT
 
-Summary: Runtime libraries shipped by GCC
+Summary: Brotli compression library
 
 
 About m2-getent
@@ -171,56 +181,6 @@ Home: https://www.gnu.org/software/libc/libc.html
 Package license: LGPL
 
 Summary: Get entries from Name Service Switch libraries
-
-
-About m2-libhogweed
--------------------
-
-Home: https://www.lysator.liu.se/~nisse/nettle/
-
-Package license: GPL-2.0-or-later OR LGPL-3.0-or-later
-
-Summary: A low-level cryptographic library
-
-
-About m2-mpfr
--------------
-
-Home: https://www.mpfr.org/
-
-Package license: LGPL-3.0-or-later
-
-Summary: Multiple-precision floating-point library
-
-
-About m2-openssl
-----------------
-
-Home: https://www.openssl.org
-
-Package license: Apache-2.0
-
-Summary: The Open Source toolkit for Secure Sockets Layer and Transport Layer Security
-
-
-About m2-bash-completion
-------------------------
-
-Home: https://github.com/scop/bash-completion
-
-Package license: GPL
-
-Summary: Programmable completion for the bash shell
-
-
-About m2-brotli
----------------
-
-Home: https://github.com/google/brotli
-
-Package license: MIT
-
-Summary: Brotli compression library
 
 
 About m2-libasprintf
@@ -263,16 +223,6 @@ Package license: MIT
 Summary: An XML parser library
 
 
-About m2-libfido2
------------------
-
-Home: https://developers.yubico.com/libfido2/
-
-Package license: BSD-2-Clause
-
-Summary: Library functionality for FIDO 2.0, including communication with a device over USB
-
-
 About m2-libgettextpo
 ---------------------
 
@@ -281,6 +231,16 @@ Home: https://www.gnu.org/software/gettext/
 Package license: GPL
 
 Summary: GNU Internationalization runtime library
+
+
+About m2-libhogweed
+-------------------
+
+Home: https://www.lysator.liu.se/~nisse/nettle/
+
+Package license: GPL-2.0-or-later OR LGPL-3.0-or-later
+
+Summary: A low-level cryptographic library
 
 
 About m2-libiconv
@@ -301,16 +261,6 @@ Home: https://lz4.github.io/lz4/
 Package license: LGPL
 
 Summary: Very fast lossless compression algorithm
-
-
-About m2-libnettle
-------------------
-
-Home: https://www.lysator.liu.se/~nisse/nettle/
-
-Package license: GPL-2.0-or-later OR LGPL-3.0-or-later
-
-Summary: A low-level cryptographic library
 
 
 About m2-libnghttp2
@@ -383,14 +333,14 @@ Package license: BSD
 Summary: Zstandard - Fast real-time compression algorithm
 
 
-About m2-mintty
----------------
+About m2-mpfr
+-------------
 
-Home: https://mintty.github.io
+Home: https://www.mpfr.org/
 
-Package license: GPL-3.0-or-later
+Package license: LGPL-3.0-or-later
 
-Summary: Terminal emulator with native Windows look and feel
+Summary: Multiple-precision floating-point library
 
 
 About m2-ncurses
@@ -403,34 +353,14 @@ Package license: MIT
 Summary: System V Release 4.0 curses emulation library
 
 
-About m2-p7zip
---------------
+About m2-openssl
+----------------
 
-Home: https://github.com/p7zip-project/p7zip
+Home: https://www.openssl.org
 
-Package license: LGPL
+Package license: Apache-2.0
 
-Summary: Command-line version of the 7zip compressed file archiver
-
-
-About m2-perl-net-ssleay
-------------------------
-
-Home: https://metacpan.org/dist/Net-SSLeay/
-
-Package license: custom:BSD
-
-Summary: Perl extension for using OpenSSL
-
-
-About m2-which
---------------
-
-Home: https://savannah.gnu.org/projects/which/
-
-Package license: GPL3
-
-Summary: A utility to show the full path of commands
+Summary: The Open Source toolkit for Secure Sockets Layer and Transport Layer Security
 
 
 About m2-zlib
@@ -441,6 +371,16 @@ Home: https://www.zlib.net/
 Package license: custom
 
 Summary: Compression library implementing the deflate compression method found in gzip and PKZIP
+
+
+About m2-bash-completion
+------------------------
+
+Home: https://github.com/scop/bash-completion
+
+Package license: GPL
+
+Summary: Programmable completion for the bash shell
 
 
 About m2-bzip2
@@ -483,6 +423,16 @@ Package license: BSD
 Summary: Libedit is an autotool- and libtoolized port of the NetBSD Editline library.
 
 
+About m2-libfido2
+-----------------
+
+Home: https://developers.yubico.com/libfido2/
+
+Package license: BSD-2-Clause
+
+Summary: Library functionality for FIDO 2.0, including communication with a device over USB
+
+
 About m2-libintl
 ----------------
 
@@ -491,6 +441,16 @@ Home: https://www.gnu.org/software/gettext/
 Package license: GPL
 
 Summary: GNU Internationalization runtime library
+
+
+About m2-libnettle
+------------------
+
+Home: https://www.lysator.liu.se/~nisse/nettle/
+
+Package license: GPL-2.0-or-later OR LGPL-3.0-or-later
+
+Summary: A low-level cryptographic library
 
 
 About m2-libpcre2posix
@@ -533,24 +493,34 @@ Package license: GPL3
 Summary: The GNU macro processor
 
 
-About m2-msys2-launcher
------------------------
-
-
-
-Package license: MIT
-
-Summary: Helper for launching MSYS2 shells
-
-
-About m2-nettle
+About m2-mintty
 ---------------
 
-Home: https://www.lysator.liu.se/~nisse/nettle/
+Home: https://mintty.github.io
 
-Package license: GPL-2.0-or-later OR LGPL-3.0-or-later
+Package license: GPL-3.0-or-later
 
-Summary: A low-level cryptographic library
+Summary: Terminal emulator with native Windows look and feel
+
+
+About m2-p7zip
+--------------
+
+Home: https://github.com/p7zip-project/p7zip
+
+Package license: LGPL
+
+Summary: Command-line version of the 7zip compressed file archiver
+
+
+About m2-perl-net-ssleay
+------------------------
+
+Home: https://metacpan.org/dist/Net-SSLeay/
+
+Package license: custom:BSD
+
+Summary: Perl extension for using OpenSSL
 
 
 About m2-pkg-config
@@ -571,6 +541,16 @@ Home: http://www.info-zip.org/
 Package license: custom
 
 Summary: Unpacks .zip archives such as those made by PKZIP
+
+
+About m2-which
+--------------
+
+Home: https://savannah.gnu.org/projects/which/
+
+Package license: GPL3
+
+Summary: A utility to show the full path of commands
 
 
 About m2-zip
@@ -731,6 +711,26 @@ Home: https://www.gnu.org/software/make
 Package license: GPL3
 
 Summary: GNU make utility to maintain groups of programs
+
+
+About m2-msys2-launcher
+-----------------------
+
+
+
+Package license: MIT
+
+Summary: Helper for launching MSYS2 shells
+
+
+About m2-nettle
+---------------
+
+Home: https://www.lysator.liu.se/~nisse/nettle/
+
+Package license: GPL-2.0-or-later OR LGPL-3.0-or-later
+
+Summary: A low-level cryptographic library
 
 
 About m2-pcre2
