@@ -1055,7 +1055,6 @@ source:
     patches:
       - patches/filesystem/0001-Remove-etc-post-install-07-pacman-key-post.patch
       - patches/filesystem/0002-Use-Windows-users-temporary-directory-as-tmp.patch
-      - patches/filesystem/0003-Fix-bin-PATH-issue.patch
 
   - url:
       - https://repo.msys2.org/msys/sources/filesystem-2023.02.07-1.src.tar.zst
@@ -1766,7 +1765,7 @@ source:
     folder: source-heimdal
 
 build:
-  number: 1
+  number: 2
   noarch: generic
   error_overlinking: false
 

@@ -230,7 +230,6 @@ for pkg, (depends, spdx, desc, url, src_url) in seen.items():
     patches:
       - patches/filesystem/0001-Remove-etc-post-install-07-pacman-key-post.patch
       - patches/filesystem/0002-Use-Windows-users-temporary-directory-as-tmp.patch
-      - patches/filesystem/0003-Fix-bin-PATH-issue.patch
             """.rstrip()
 
         info = {
