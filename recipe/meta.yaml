@@ -40,18 +40,6 @@ source:
     folder: source-gcc-libs
 
   - url:
-      - https://repo.msys2.org/msys/x86_64/msys2-runtime-3.4.9-1-x86_64.pkg.tar.zst
-      - https://github.com/conda-forge/msys2-recipes/releases/download/20230914/msys2-runtime-3.4.9-1-x86_64.pkg.tar.zst
-    sha256: 6f720ee5cbdb3b862d5a4db100bcaa6faa4c10abb0572c4eecf22513d0ffb430
-    folder: binary-m2-msys2-runtime
-
-  - url:
-      - https://repo.msys2.org/msys/sources/msys2-runtime-3.4.9-1.src.tar.zst
-      - https://github.com/conda-forge/msys2-recipes/releases/download/20230914/msys2-runtime-3.4.9-1.src.tar.zst
-    sha256: 251fb77b6877ae0d2bc88ea4d50fc5cefc77ac1df96c2eb3e976b6de09174802
-    folder: source-msys2-runtime
-
-  - url:
       - https://repo.msys2.org/msys/x86_64/texinfo-tex-7.0.3-3-x86_64.pkg.tar.zst
       - https://github.com/conda-forge/msys2-recipes/releases/download/20230914/texinfo-tex-7.0.3-3-x86_64.pkg.tar.zst
     sha256: 9fe51573185dc418f4e159022096f597f8dede964c8313f9e7191e9e74867f4d
@@ -922,6 +910,18 @@ source:
     folder: source-nano
 
   - url:
+      - https://repo.msys2.org/msys/x86_64/msys2-runtime-3.4.9-1-x86_64.pkg.tar.zst
+      - https://github.com/conda-forge/msys2-recipes/releases/download/20230914/msys2-runtime-3.4.9-1-x86_64.pkg.tar.zst
+    sha256: 6f720ee5cbdb3b862d5a4db100bcaa6faa4c10abb0572c4eecf22513d0ffb430
+    folder: binary-m2-msys2-runtime
+
+  - url:
+      - https://repo.msys2.org/msys/sources/msys2-runtime-3.4.9-1.src.tar.zst
+      - https://github.com/conda-forge/msys2-recipes/releases/download/20230914/msys2-runtime-3.4.9-1.src.tar.zst
+    sha256: 251fb77b6877ae0d2bc88ea4d50fc5cefc77ac1df96c2eb3e976b6de09174802
+    folder: source-msys2-runtime
+
+  - url:
       - https://repo.msys2.org/msys/x86_64/msys2-launcher-1.5-1-x86_64.pkg.tar.zst
       - https://github.com/conda-forge/msys2-recipes/releases/download/20230914/msys2-launcher-1.5-1-x86_64.pkg.tar.zst
     sha256: 39f9dc679ffb3e514ed1ba9c38cc32c20c8f2d45fef3c0c6b73f6010e656f775
@@ -1766,13 +1766,13 @@ source:
     folder: source-heimdal
 
 build:
-  number: 0
+  number: 1
   noarch: generic
   error_overlinking: false
 
 outputs:
   - name: m2-pkg-config
-    version: 0.29.2.4
+    version: "0.29.2.4"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -1781,9 +1781,11 @@ outputs:
       host:
         - m2-libiconv
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
       run:
         - m2-libiconv
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
     about:
       home: https://www.freedesktop.org/wiki/Software/pkg-config/
       license: GPL
@@ -1791,7 +1793,7 @@ outputs:
         A system for managing library compile/link flags
 
   - name: m2-libiconv
-    version: 1.17.1
+    version: "1.17.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -1800,9 +1802,11 @@ outputs:
       host:
         - m2-gcc-libs
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
       run:
         - m2-gcc-libs
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
     about:
       home: https://www.gnu.org/software/libiconv/
       license: LGPL
@@ -1810,26 +1814,1829 @@ outputs:
         Libiconv is a conversion library
 
   - name: m2-gcc-libs
-    version: 11.3.0.4
+    version: "11.3.0.4"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
       noarch: generic
     requirements:
       host:
-        - m2-msys2-runtime
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
       run:
-        - m2-msys2-runtime
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
     about:
       home: https://gcc.gnu.org/
       license: GPL
       summary: |
         Runtime libraries shipped by GCC
 
+  - name: m2-texinfo-tex
+    version: "7.0.3.3"
+    script: install_pkg.bat  # [build_platform.startswith("win-")]
+    script: install_pkg.sh   # [not build_platform.startswith("win-")]
+    build:
+      noarch: generic
+    requirements:
+      host:
+        - m2-gawk
+        - m2-perl
+        - m2-bash
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+      run:
+        - m2-gawk
+        - m2-perl
+        - m2-bash
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+    about:
+      home: https://www.gnu.org/software/texinfo/
+      license: GPL-3.0-or-later
+      summary: |
+        Utilities to work with and produce manuals, ASCII text, and on-line documentation from a single source file
+
+  - name: m2-perl
+    version: "5.36.1.2"
+    script: install_pkg.bat  # [build_platform.startswith("win-")]
+    script: install_pkg.sh   # [not build_platform.startswith("win-")]
+    build:
+      noarch: generic
+    requirements:
+      host:
+        - m2-db
+        - m2-gdbm
+        - m2-libxcrypt
+        - m2-coreutils
+        - m2-bash
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+      run:
+        - m2-db
+        - m2-gdbm
+        - m2-libxcrypt
+        - m2-coreutils
+        - m2-bash
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+    about:
+      home: https://www.perl.org/
+      license: GPL
+      summary: |
+        A highly capable, feature-rich programming language
+
+  - name: m2-coreutils
+    version: "8.32.5"
+    script: install_pkg.bat  # [build_platform.startswith("win-")]
+    script: install_pkg.sh   # [not build_platform.startswith("win-")]
+    build:
+      noarch: generic
+    requirements:
+      host:
+        - m2-gmp
+        - m2-libiconv
+        - m2-libintl
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+      run:
+        - m2-gmp
+        - m2-libiconv
+        - m2-libintl
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+    about:
+      home: https://www.gnu.org/software/coreutils
+      license: GPL3
+      summary: |
+        The basic file, shell and text manipulation utilities of the GNU operating system
+
+  - name: m2-libintl
+    version: "0.22.1"
+    script: install_pkg.bat  # [build_platform.startswith("win-")]
+    script: install_pkg.sh   # [not build_platform.startswith("win-")]
+    build:
+      noarch: generic
+    requirements:
+      host:
+        - m2-gcc-libs
+        - m2-libiconv
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+      run:
+        - m2-gcc-libs
+        - m2-libiconv
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+    about:
+      home: https://www.gnu.org/software/gettext/
+      license: GPL
+      summary: |
+        GNU Internationalization runtime library
+
+  - name: m2-gmp
+    version: "6.3.0.1"
+    script: install_pkg.bat  # [build_platform.startswith("win-")]
+    script: install_pkg.sh   # [not build_platform.startswith("win-")]
+    build:
+      noarch: generic
+    requirements:
+      host:
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+      run:
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+    about:
+      home: https://gmplib.org/
+      license: LGPL3
+      summary: |
+        A free library for arbitrary precision arithmetic
+
+  - name: m2-libxcrypt
+    version: "4.4.36.1"
+    script: install_pkg.bat  # [build_platform.startswith("win-")]
+    script: install_pkg.sh   # [not build_platform.startswith("win-")]
+    build:
+      noarch: generic
+    requirements:
+      host:
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+      run:
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+    about:
+      home: https://github.com/besser82/libxcrypt/
+      license: LGPL-2.1-or-later
+      summary: |
+        Modern library for one-way hashing of passwords
+
+  - name: m2-gdbm
+    version: "1.23.1"
+    script: install_pkg.bat  # [build_platform.startswith("win-")]
+    script: install_pkg.sh   # [not build_platform.startswith("win-")]
+    build:
+      noarch: generic
+    requirements:
+      host:
+        - m2-libgdbm =1.23
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+      run:
+        - m2-libgdbm =1.23
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+    about:
+      home: https://www.gnu.org/software/gdbm/gdbm.html
+      license: GPL3
+      summary: |
+        GNU database library
+
+  - name: m2-libgdbm
+    version: "1.23.1"
+    script: install_pkg.bat  # [build_platform.startswith("win-")]
+    script: install_pkg.sh   # [not build_platform.startswith("win-")]
+    build:
+      noarch: generic
+    requirements:
+      host:
+        - m2-gcc-libs
+        - m2-libreadline
+        - m2-libiconv
+        - m2-libintl
+        - m2-ncurses
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+      run:
+        - m2-gcc-libs
+        - m2-libreadline
+        - m2-libiconv
+        - m2-libintl
+        - m2-ncurses
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+    about:
+      home: https://www.gnu.org/software/gdbm/gdbm.html
+      license: GPL3
+      summary: |
+        GNU database library
+
+  - name: m2-ncurses
+    version: "6.4.1"
+    script: install_pkg.bat  # [build_platform.startswith("win-")]
+    script: install_pkg.sh   # [not build_platform.startswith("win-")]
+    build:
+      noarch: generic
+    requirements:
+      host:
+        - m2-gcc-libs
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+      run:
+        - m2-gcc-libs
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+    about:
+      home: https://www.gnu.org/software/ncurses/
+      license: MIT
+      summary: |
+        System V Release 4.0 curses emulation library
+
+  - name: m2-libreadline
+    version: "8.2.001.3"
+    script: install_pkg.bat  # [build_platform.startswith("win-")]
+    script: install_pkg.sh   # [not build_platform.startswith("win-")]
+    build:
+      noarch: generic
+    requirements:
+      host:
+        - m2-ncurses
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+      run:
+        - m2-ncurses
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+    about:
+      home: https://tiswww.case.edu/php/chet/readline/rltop.html
+      license: GPL
+      summary: |
+        GNU readline library
+
+  - name: m2-db
+    version: "5.3.28.4"
+    script: install_pkg.bat  # [build_platform.startswith("win-")]
+    script: install_pkg.sh   # [not build_platform.startswith("win-")]
+    build:
+      noarch: generic
+    requirements:
+      host:
+        - m2-libdb =5.3.28
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+      run:
+        - m2-libdb =5.3.28
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+    about:
+      home: https://www.oracle.com/technetwork/database/database-technologies/berkeleydb/overview/index.html
+      license: custom
+      summary: |
+        The Berkeley DB embedded database system
+
+  - name: m2-libdb
+    version: "5.3.28.4"
+    script: install_pkg.bat  # [build_platform.startswith("win-")]
+    script: install_pkg.sh   # [not build_platform.startswith("win-")]
+    build:
+      noarch: generic
+    requirements:
+      host:
+        - m2-gcc-libs
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+      run:
+        - m2-gcc-libs
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+    about:
+      home: https://www.oracle.com/technetwork/database/database-technologies/berkeleydb/overview/index.html
+      license: custom
+      summary: |
+        The Berkeley DB embedded database system
+
+  - name: m2-gawk
+    version: "5.2.2.1"
+    script: install_pkg.bat  # [build_platform.startswith("win-")]
+    script: install_pkg.sh   # [not build_platform.startswith("win-")]
+    build:
+      noarch: generic
+    requirements:
+      host:
+        - m2-bash
+        - m2-mpfr
+        - m2-libintl
+        - m2-libreadline
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+      run:
+        - m2-bash
+        - m2-mpfr
+        - m2-libintl
+        - m2-libreadline
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+    about:
+      home: https://www.gnu.org/software/gawk/
+      license: GPL
+      summary: |
+        GNU version of awk
+
+  - name: m2-mpfr
+    version: "4.2.1.1"
+    script: install_pkg.bat  # [build_platform.startswith("win-")]
+    script: install_pkg.sh   # [not build_platform.startswith("win-")]
+    build:
+      noarch: generic
+    requirements:
+      host:
+        - m2-gmp >=5.0
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+      run:
+        - m2-gmp >=5.0
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+    about:
+      home: https://www.mpfr.org/
+      license: LGPL-3.0-or-later
+      summary: |
+        Multiple-precision floating-point library
+
+  - name: m2-patchutils
+    version: "0.4.2.3"
+    script: install_pkg.bat  # [build_platform.startswith("win-")]
+    script: install_pkg.sh   # [not build_platform.startswith("win-")]
+    build:
+      noarch: generic
+    requirements:
+      host:
+        - m2-pcre2
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+      run:
+        - m2-pcre2
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+    about:
+      home: http://cyberelk.net/tim/software/patchutils/
+      license: GPL
+      summary: |
+        Utilities to work with patches
+
+  - name: m2-pcre2
+    version: "10.42.1"
+    script: install_pkg.bat  # [build_platform.startswith("win-")]
+    script: install_pkg.sh   # [not build_platform.startswith("win-")]
+    build:
+      noarch: generic
+    requirements:
+      host:
+        - m2-libreadline
+        - m2-libbz2
+        - m2-zlib
+        - m2-libpcre2_8 =10.42
+        - m2-libpcre2_16 =10.42
+        - m2-libpcre2_32 =10.42
+        - m2-libpcre2posix =10.42
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+      run:
+        - m2-libreadline
+        - m2-libbz2
+        - m2-zlib
+        - m2-libpcre2_8 =10.42
+        - m2-libpcre2_16 =10.42
+        - m2-libpcre2_32 =10.42
+        - m2-libpcre2posix =10.42
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+    about:
+      home: https://www.pcre.org/
+      license: BSD
+      summary: |
+        A library that implements Perl 5-style regular expressions
+
+  - name: m2-libpcre2posix
+    version: "10.42.1"
+    script: install_pkg.bat  # [build_platform.startswith("win-")]
+    script: install_pkg.sh   # [not build_platform.startswith("win-")]
+    build:
+      noarch: generic
+    requirements:
+      host:
+        - m2-libpcre2_8 =10.42
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+      run:
+        - m2-libpcre2_8 =10.42
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+    about:
+      home: https://www.pcre.org/
+      license: BSD
+      summary: |
+        A library that implements Perl 5-style regular expressions
+
+  - name: m2-libpcre2_32
+    version: "10.42.1"
+    script: install_pkg.bat  # [build_platform.startswith("win-")]
+    script: install_pkg.sh   # [not build_platform.startswith("win-")]
+    build:
+      noarch: generic
+    requirements:
+      host:
+        - m2-gcc-libs
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+      run:
+        - m2-gcc-libs
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+    about:
+      home: https://www.pcre.org/
+      license: BSD
+      summary: |
+        A library that implements Perl 5-style regular expressions
+
+  - name: m2-libpcre2_16
+    version: "10.42.1"
+    script: install_pkg.bat  # [build_platform.startswith("win-")]
+    script: install_pkg.sh   # [not build_platform.startswith("win-")]
+    build:
+      noarch: generic
+    requirements:
+      host:
+        - m2-gcc-libs
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+      run:
+        - m2-gcc-libs
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+    about:
+      home: https://www.pcre.org/
+      license: BSD
+      summary: |
+        A library that implements Perl 5-style regular expressions
+
+  - name: m2-libpcre2_8
+    version: "10.42.1"
+    script: install_pkg.bat  # [build_platform.startswith("win-")]
+    script: install_pkg.sh   # [not build_platform.startswith("win-")]
+    build:
+      noarch: generic
+    requirements:
+      host:
+        - m2-gcc-libs
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+      run:
+        - m2-gcc-libs
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+    about:
+      home: https://www.pcre.org/
+      license: BSD
+      summary: |
+        A library that implements Perl 5-style regular expressions
+
+  - name: m2-zlib
+    version: "1.3.1"
+    script: install_pkg.bat  # [build_platform.startswith("win-")]
+    script: install_pkg.sh   # [not build_platform.startswith("win-")]
+    build:
+      noarch: generic
+    requirements:
+      host:
+        - m2-gcc-libs
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+      run:
+        - m2-gcc-libs
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+    about:
+      home: https://www.zlib.net/
+      license: custom
+      summary: |
+        Compression library implementing the deflate compression method found in gzip and PKZIP
+
+  - name: m2-libbz2
+    version: "1.0.8.4"
+    script: install_pkg.bat  # [build_platform.startswith("win-")]
+    script: install_pkg.sh   # [not build_platform.startswith("win-")]
+    build:
+      noarch: generic
+    requirements:
+      host:
+        - m2-gcc-libs
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+      run:
+        - m2-gcc-libs
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+    about:
+      home: http://www.bzip.org
+      license: custom
+      summary: |
+        A high-quality data compression program
+
+  - name: m2-patch
+    version: "2.7.6.2"
+    script: install_pkg.bat  # [build_platform.startswith("win-")]
+    script: install_pkg.sh   # [not build_platform.startswith("win-")]
+    build:
+      noarch: generic
+    requirements:
+      host:
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+      run:
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+    about:
+      home: https://www.gnu.org/software/patch/patch.html
+      license: GPL
+      summary: |
+        A utility to apply patch files to original sources
+
+  - name: m2-diffutils
+    version: "3.9.1"
+    script: install_pkg.bat  # [build_platform.startswith("win-")]
+    script: install_pkg.sh   # [not build_platform.startswith("win-")]
+    build:
+      noarch: generic
+    requirements:
+      host:
+        - m2-bash
+        - m2-libiconv
+        - m2-libintl
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+      run:
+        - m2-bash
+        - m2-libiconv
+        - m2-libintl
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+    about:
+      home: https://www.gnu.org/software/diffutils
+      license: GPL-3.0-or-later
+      summary: |
+        Utility programs used for creating patch files
+
+  - name: m2-unzip
+    version: "6.0.2"
+    script: install_pkg.bat  # [build_platform.startswith("win-")]
+    script: install_pkg.sh   # [not build_platform.startswith("win-")]
+    build:
+      noarch: generic
+    requirements:
+      host:
+        - m2-libbz2
+        - m2-bash
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+      run:
+        - m2-libbz2
+        - m2-bash
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+    about:
+      home: http://www.info-zip.org/
+      license: custom
+      summary: |
+        Unpacks .zip archives such as those made by PKZIP
+
+  - name: m2-zip
+    version: "3.0.3"
+    script: install_pkg.bat  # [build_platform.startswith("win-")]
+    script: install_pkg.sh   # [not build_platform.startswith("win-")]
+    build:
+      noarch: generic
+    requirements:
+      host:
+        - m2-libbz2
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+      run:
+        - m2-libbz2
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+    about:
+      home: http://www.info-zip.org/Zip.html
+      license: BSD
+      summary: |
+        Creates PKZIP-compatible .zip files
+
+  - name: m2-tar
+    version: "1.34.3"
+    script: install_pkg.bat  # [build_platform.startswith("win-")]
+    script: install_pkg.sh   # [not build_platform.startswith("win-")]
+    build:
+      noarch: generic
+    requirements:
+      host:
+        - m2-libiconv
+        - m2-libintl
+        - m2-bash
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+      run:
+        - m2-libiconv
+        - m2-libintl
+        - m2-bash
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+    about:
+      home: https://www.gnu.org/software/tar/tar.html
+      license: GPL3
+      summary: |
+        Utility used to store, backup, and transport files
+
+  - name: m2-base
+    version: "2022.06.1"
+    script: install_pkg.bat  # [build_platform.startswith("win-")]
+    script: install_pkg.sh   # [not build_platform.startswith("win-")]
+    build:
+      noarch: generic
+    requirements:
+      host:
+        - m2-bash
+        - m2-bash-completion
+        - m2-bsdtar
+        - m2-bzip2
+        - m2-coreutils
+        - m2-curl
+        - m2-dash
+        - m2-file
+        - m2-filesystem
+        - m2-findutils
+        - m2-gawk
+        - m2-getent
+        - m2-grep
+        - m2-gzip
+        - m2-inetutils
+        - m2-info
+        - m2-less
+        - m2-mintty
+        - m2-msys2-keyring
+        - m2-msys2-launcher
+        - m2-msys2-runtime
+        - m2-nano
+        - m2-rebase
+        - m2-sed
+        - m2-tar
+        - m2-time
+        - m2-tzcode
+        - m2-util-linux
+        - m2-wget
+        - m2-which
+        - m2-zstd
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+      run:
+        - m2-bash
+        - m2-bash-completion
+        - m2-bsdtar
+        - m2-bzip2
+        - m2-coreutils
+        - m2-curl
+        - m2-dash
+        - m2-file
+        - m2-filesystem
+        - m2-findutils
+        - m2-gawk
+        - m2-getent
+        - m2-grep
+        - m2-gzip
+        - m2-inetutils
+        - m2-info
+        - m2-less
+        - m2-mintty
+        - m2-msys2-keyring
+        - m2-msys2-launcher
+        - m2-msys2-runtime
+        - m2-nano
+        - m2-rebase
+        - m2-sed
+        - m2-tar
+        - m2-time
+        - m2-tzcode
+        - m2-util-linux
+        - m2-wget
+        - m2-which
+        - m2-zstd
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+    about:
+      home: https://www.msys2.org
+      license: GPL
+      summary: |
+        Minimal package set to define a basic MSYS2 installation
+
+  - name: m2-zstd
+    version: "1.5.5.1"
+    script: install_pkg.bat  # [build_platform.startswith("win-")]
+    script: install_pkg.sh   # [not build_platform.startswith("win-")]
+    build:
+      noarch: generic
+    requirements:
+      host:
+        - m2-gcc-libs
+        - m2-libzstd
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+      run:
+        - m2-gcc-libs
+        - m2-libzstd
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+    about:
+      home: https://facebook.github.io/zstd/
+      license: BSD
+      summary: |
+        Zstandard - Fast real-time compression algorithm
+
+  - name: m2-libzstd
+    version: "1.5.5.1"
+    script: install_pkg.bat  # [build_platform.startswith("win-")]
+    script: install_pkg.sh   # [not build_platform.startswith("win-")]
+    build:
+      noarch: generic
+    requirements:
+      host:
+        - m2-gcc-libs
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+      run:
+        - m2-gcc-libs
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+    about:
+      home: https://facebook.github.io/zstd/
+      license: BSD
+      summary: |
+        Zstandard - Fast real-time compression algorithm
+
+  - name: m2-which
+    version: "2.21.4"
+    script: install_pkg.bat  # [build_platform.startswith("win-")]
+    script: install_pkg.sh   # [not build_platform.startswith("win-")]
+    build:
+      noarch: generic
+    requirements:
+      host:
+        - m2-bash
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+      run:
+        - m2-bash
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+    about:
+      home: https://savannah.gnu.org/projects/which/
+      license: GPL3
+      summary: |
+        A utility to show the full path of commands
+
+  - name: m2-wget
+    version: "1.21.4.1"
+    script: install_pkg.bat  # [build_platform.startswith("win-")]
+    script: install_pkg.sh   # [not build_platform.startswith("win-")]
+    build:
+      noarch: generic
+    requirements:
+      host:
+        - m2-gcc-libs
+        - m2-libiconv
+        - m2-libidn2
+        - m2-libintl
+        - m2-libgpgme
+        - m2-libpcre2_8
+        - m2-libpsl
+        - m2-libutil-linux
+        - m2-libgnutls
+        - m2-zlib
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+      run:
+        - m2-gcc-libs
+        - m2-libiconv
+        - m2-libidn2
+        - m2-libintl
+        - m2-libgpgme
+        - m2-libpcre2_8
+        - m2-libpsl
+        - m2-libutil-linux
+        - m2-libgnutls
+        - m2-zlib
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+    about:
+      home: https://www.gnu.org/software/wget/
+      license: GPL3
+      summary: |
+        A network utility to retrieve files from the Web
+
+  - name: m2-libgnutls
+    version: "3.8.1.1"
+    script: install_pkg.bat  # [build_platform.startswith("win-")]
+    script: install_pkg.sh   # [not build_platform.startswith("win-")]
+    build:
+      noarch: generic
+    requirements:
+      host:
+        - m2-gcc-libs
+        - m2-libidn2
+        - m2-libiconv
+        - m2-libintl
+        - m2-gmp
+        - m2-libnettle
+        - m2-libp11-kit
+        - m2-libtasn1
+        - m2-zlib
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+      run:
+        - m2-gcc-libs
+        - m2-libidn2
+        - m2-libiconv
+        - m2-libintl
+        - m2-gmp
+        - m2-libnettle
+        - m2-libp11-kit
+        - m2-libtasn1
+        - m2-zlib
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+    about:
+      home: https://www.gnutls.org/
+      license: GPL-3.0-or-later
+      summary: |
+        A library which provides a secure layer over a reliable transport layer
+
+  - name: m2-libtasn1
+    version: "4.19.0.1"
+    script: install_pkg.bat  # [build_platform.startswith("win-")]
+    script: install_pkg.sh   # [not build_platform.startswith("win-")]
+    build:
+      noarch: generic
+    requirements:
+      host:
+        - m2-info
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+      run:
+        - m2-info
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+    about:
+      home: https://www.gnu.org/software/libtasn1/
+      license: GPL3
+      summary: |
+        A library for Abstract Syntax Notation One (ASN.1) and Distinguish Encoding Rules (DER) manipulation
+
+  - name: m2-libp11-kit
+    version: "0.25.0.1"
+    script: install_pkg.bat  # [build_platform.startswith("win-")]
+    script: install_pkg.sh   # [not build_platform.startswith("win-")]
+    build:
+      noarch: generic
+    requirements:
+      host:
+        - m2-libffi
+        - m2-libintl
+        - m2-libtasn1
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+      run:
+        - m2-libffi
+        - m2-libintl
+        - m2-libtasn1
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+    about:
+      home: https://p11-glue.freedesktop.org/p11-kit.html
+      license: BSD
+      summary: |
+        Library to work with PKCS#11 modules
+
+  - name: m2-libffi
+    version: "3.4.4.1"
+    script: install_pkg.bat  # [build_platform.startswith("win-")]
+    script: install_pkg.sh   # [not build_platform.startswith("win-")]
+    build:
+      noarch: generic
+    requirements:
+      host:
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+      run:
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+    about:
+      home: https://sourceware.org/libffi/
+      license: MIT
+      summary: |
+        Portable, high level programming interface to various calling conventions
+
+  - name: m2-libnettle
+    version: "3.9.1.1"
+    script: install_pkg.bat  # [build_platform.startswith("win-")]
+    script: install_pkg.sh   # [not build_platform.startswith("win-")]
+    build:
+      noarch: generic
+    requirements:
+      host:
+        - m2-libhogweed
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+      run:
+        - m2-libhogweed
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+    about:
+      home: https://www.lysator.liu.se/~nisse/nettle/
+      license: GPL-2.0-or-later OR LGPL-3.0-or-later
+      summary: |
+        A low-level cryptographic library
+
+  - name: m2-libhogweed
+    version: "3.9.1.1"
+    script: install_pkg.bat  # [build_platform.startswith("win-")]
+    script: install_pkg.sh   # [not build_platform.startswith("win-")]
+    build:
+      noarch: generic
+    requirements:
+      host:
+        - m2-gmp
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+      run:
+        - m2-gmp
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+    about:
+      home: https://www.lysator.liu.se/~nisse/nettle/
+      license: GPL-2.0-or-later OR LGPL-3.0-or-later
+      summary: |
+        A low-level cryptographic library
+
+  - name: m2-libutil-linux
+    version: "2.35.2.4"
+    script: install_pkg.bat  # [build_platform.startswith("win-")]
+    script: install_pkg.sh   # [not build_platform.startswith("win-")]
+    build:
+      noarch: generic
+    requirements:
+      host:
+        - m2-gcc-libs
+        - m2-libintl
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+      run:
+        - m2-gcc-libs
+        - m2-libintl
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+    about:
+      home: https://www.kernel.org/pub/linux/utils/util-linux/
+      license: GPL3
+      summary: |
+        Block device ID and Universally Unique ID libraries
+
+  - name: m2-libpsl
+    version: "0.21.2.1"
+    script: install_pkg.bat  # [build_platform.startswith("win-")]
+    script: install_pkg.sh   # [not build_platform.startswith("win-")]
+    build:
+      noarch: generic
+    requirements:
+      host:
+        - m2-libxslt
+        - m2-libidn2
+        - m2-libunistring
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+      run:
+        - m2-libxslt
+        - m2-libidn2
+        - m2-libunistring
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+    about:
+      home: https://github.com/rockdaboot/libpsl
+      license: MIT
+      summary: |
+        Public Suffix List library (runtime)
+
+  - name: m2-libunistring
+    version: "1.1.2"
+    script: install_pkg.bat  # [build_platform.startswith("win-")]
+    script: install_pkg.sh   # [not build_platform.startswith("win-")]
+    build:
+      noarch: generic
+    requirements:
+      host:
+        - m2-libiconv
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+      run:
+        - m2-libiconv
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+    about:
+      home: https://www.gnu.org/software/libunistring/
+      license: LGPL-3.0-or-later OR GPL-2.0-or-later
+      summary: |
+        Library for manipulating Unicode strings and C strings.
+
+  - name: m2-libxslt
+    version: "1.1.38.1"
+    script: install_pkg.bat  # [build_platform.startswith("win-")]
+    script: install_pkg.sh   # [not build_platform.startswith("win-")]
+    build:
+      noarch: generic
+    requirements:
+      host:
+        - m2-libxml2
+        - m2-libgcrypt
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+      run:
+        - m2-libxml2
+        - m2-libgcrypt
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+    about:
+      home: https://gitlab.gnome.org/GNOME/libxslt/-/wikis/
+      license: custom
+      summary: |
+        XML stylesheet transformation library
+
+  - name: m2-libgcrypt
+    version: "1.9.4.1"
+    script: install_pkg.bat  # [build_platform.startswith("win-")]
+    script: install_pkg.sh   # [not build_platform.startswith("win-")]
+    build:
+      noarch: generic
+    requirements:
+      host:
+        - m2-libgpg-error
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+      run:
+        - m2-libgpg-error
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+    about:
+      home: https://gnupg.org
+      license: LGPL
+      summary: |
+        General purpose cryptographic library based on the code from GnuPG
+
+  - name: m2-libgpg-error
+    version: "1.47.1"
+    script: install_pkg.bat  # [build_platform.startswith("win-")]
+    script: install_pkg.sh   # [not build_platform.startswith("win-")]
+    build:
+      noarch: generic
+    requirements:
+      host:
+        - m2-bash
+        - m2-libiconv
+        - m2-libintl
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+      run:
+        - m2-bash
+        - m2-libiconv
+        - m2-libintl
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+    about:
+      home: https://gnupg.org
+      license: LGPL-2.1-or-later
+      summary: |
+        Support library for libgcrypt
+
+  - name: m2-libxml2
+    version: "2.9.14.5"
+    script: install_pkg.bat  # [build_platform.startswith("win-")]
+    script: install_pkg.sh   # [not build_platform.startswith("win-")]
+    build:
+      noarch: generic
+    requirements:
+      host:
+        - m2-coreutils
+        - m2-liblzma
+        - m2-libreadline
+        - m2-ncurses
+        - m2-zlib
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+      run:
+        - m2-coreutils
+        - m2-liblzma
+        - m2-libreadline
+        - m2-ncurses
+        - m2-zlib
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+    about:
+      home: https://gitlab.gnome.org/GNOME/libxml2/-/wikis/
+      license: MIT
+      summary: |
+        XML parsing library, version 2
+
+  - name: m2-liblzma
+    version: "5.4.4.1"
+    script: install_pkg.bat  # [build_platform.startswith("win-")]
+    script: install_pkg.sh   # [not build_platform.startswith("win-")]
+    build:
+      noarch: generic
+    requirements:
+      host:
+        - m2-bash
+        - m2-libiconv
+        - m2-gettext
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+      run:
+        - m2-bash
+        - m2-libiconv
+        - m2-gettext
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+    about:
+      home: https://tukaani.org/xz/
+      license: GPL
+      summary: |
+        Library for XZ and LZMA compressed files
+
+  - name: m2-gettext
+    version: "0.22.1"
+    script: install_pkg.bat  # [build_platform.startswith("win-")]
+    script: install_pkg.sh   # [not build_platform.startswith("win-")]
+    build:
+      noarch: generic
+    requirements:
+      host:
+        - m2-libintl
+        - m2-libgettextpo
+        - m2-libasprintf
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+      run:
+        - m2-libintl
+        - m2-libgettextpo
+        - m2-libasprintf
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+    about:
+      home: https://www.gnu.org/software/gettext/
+      license: GPL
+      summary: |
+        GNU internationalization library
+
+  - name: m2-libasprintf
+    version: "0.22.1"
+    script: install_pkg.bat  # [build_platform.startswith("win-")]
+    script: install_pkg.sh   # [not build_platform.startswith("win-")]
+    build:
+      noarch: generic
+    requirements:
+      host:
+        - m2-gcc-libs
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+      run:
+        - m2-gcc-libs
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+    about:
+      home: https://www.gnu.org/software/gettext/
+      license: GPL
+      summary: |
+        C-style formatted output in C++ (runtime)
+
+  - name: m2-libgettextpo
+    version: "0.22.1"
+    script: install_pkg.bat  # [build_platform.startswith("win-")]
+    script: install_pkg.sh   # [not build_platform.startswith("win-")]
+    build:
+      noarch: generic
+    requirements:
+      host:
+        - m2-gcc-libs
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+      run:
+        - m2-gcc-libs
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+    about:
+      home: https://www.gnu.org/software/gettext/
+      license: GPL
+      summary: |
+        GNU Internationalization runtime library
+
+  - name: m2-libgpgme
+    version: "1.22.0.1"
+    script: install_pkg.bat  # [build_platform.startswith("win-")]
+    script: install_pkg.sh   # [not build_platform.startswith("win-")]
+    build:
+      noarch: generic
+    requirements:
+      host:
+        - m2-libassuan
+        - m2-libgpg-error
+        - m2-gnupg
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+      run:
+        - m2-libassuan
+        - m2-libgpg-error
+        - m2-gnupg
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+    about:
+      home: https://gnupg.org/related_software/gpgme/
+      license: LGPL
+      summary: |
+        A C wrapper library for GnuPG
+
+  - name: m2-gnupg
+    version: "2.2.41.1"
+    script: install_pkg.bat  # [build_platform.startswith("win-")]
+    script: install_pkg.sh   # [not build_platform.startswith("win-")]
+    build:
+      noarch: generic
+    requirements:
+      host:
+        - m2-bzip2
+        - m2-libassuan
+        - m2-libbz2
+        - m2-libcurl
+        - m2-libgcrypt
+        - m2-libgpg-error
+        - m2-libgnutls
+        - m2-libiconv
+        - m2-libintl
+        - m2-libksba
+        - m2-libnpth
+        - m2-libreadline
+        - m2-libsqlite
+        - m2-nettle
+        - m2-pinentry
+        - m2-zlib
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+      run:
+        - m2-bzip2
+        - m2-libassuan
+        - m2-libbz2
+        - m2-libcurl
+        - m2-libgcrypt
+        - m2-libgpg-error
+        - m2-libgnutls
+        - m2-libiconv
+        - m2-libintl
+        - m2-libksba
+        - m2-libnpth
+        - m2-libreadline
+        - m2-libsqlite
+        - m2-nettle
+        - m2-pinentry
+        - m2-zlib
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+    about:
+      home: https://gnupg.org/
+      license: GPL
+      summary: |
+        Complete and free implementation of the OpenPGP standard
+
+  - name: m2-pinentry
+    version: "1.2.1.1"
+    script: install_pkg.bat  # [build_platform.startswith("win-")]
+    script: install_pkg.sh   # [not build_platform.startswith("win-")]
+    build:
+      noarch: generic
+    requirements:
+      host:
+        - m2-ncurses
+        - m2-libassuan
+        - m2-libgpg-error
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+      run:
+        - m2-ncurses
+        - m2-libassuan
+        - m2-libgpg-error
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+    about:
+      home: https://gnupg.org/related_software/pinentry/
+      license: GPL
+      summary: |
+        A collection of simple PIN or passphrase entry dialogs which utilize the Assuan protocol
+
+  - name: m2-nettle
+    version: "3.9.1.1"
+    script: install_pkg.bat  # [build_platform.startswith("win-")]
+    script: install_pkg.sh   # [not build_platform.startswith("win-")]
+    build:
+      noarch: generic
+    requirements:
+      host:
+        - m2-libnettle
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+      run:
+        - m2-libnettle
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+    about:
+      home: https://www.lysator.liu.se/~nisse/nettle/
+      license: GPL-2.0-or-later OR LGPL-3.0-or-later
+      summary: |
+        A low-level cryptographic library
+
+  - name: m2-libsqlite
+    version: "3.42.0.2"
+    script: install_pkg.bat  # [build_platform.startswith("win-")]
+    script: install_pkg.sh   # [not build_platform.startswith("win-")]
+    build:
+      noarch: generic
+    requirements:
+      host:
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+      run:
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+    about:
+      home: https://www.sqlite.org/
+      license: PublicDomain
+      summary: |
+        Sqlite3 library
+
+  - name: m2-libnpth
+    version: "1.6.1"
+    script: install_pkg.bat  # [build_platform.startswith("win-")]
+    script: install_pkg.sh   # [not build_platform.startswith("win-")]
+    build:
+      noarch: generic
+    requirements:
+      host:
+        - m2-gcc-libs
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+      run:
+        - m2-gcc-libs
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+    about:
+      home: https://gnupg.org/
+      license: LGPL
+      summary: |
+        New portable threads library
+
+  - name: m2-libksba
+    version: "1.6.4.1"
+    script: install_pkg.bat  # [build_platform.startswith("win-")]
+    script: install_pkg.sh   # [not build_platform.startswith("win-")]
+    build:
+      noarch: generic
+    requirements:
+      host:
+        - m2-gcc-libs
+        - m2-libgpg-error
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+      run:
+        - m2-gcc-libs
+        - m2-libgpg-error
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+    about:
+      home: https://www.gnupg.org/related_software/libksba/
+      license: LGPL-3.0-or-later OR GPL-2.0-or-later
+      summary: |
+        A CMS and X.509 access library
+
+  - name: m2-libcurl
+    version: "8.2.1.1"
+    script: install_pkg.bat  # [build_platform.startswith("win-")]
+    script: install_pkg.sh   # [not build_platform.startswith("win-")]
+    build:
+      noarch: generic
+    requirements:
+      host:
+        - m2-brotli
+        - m2-ca-certificates
+        - m2-heimdal-libs
+        - m2-libidn2
+        - m2-libunistring
+        - m2-libnghttp2
+        - m2-libpsl
+        - m2-libssh2
+        - m2-openssl
+        - m2-zlib
+        - m2-libzstd
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+      run:
+        - m2-brotli
+        - m2-ca-certificates
+        - m2-heimdal-libs
+        - m2-libidn2
+        - m2-libunistring
+        - m2-libnghttp2
+        - m2-libpsl
+        - m2-libssh2
+        - m2-openssl
+        - m2-zlib
+        - m2-libzstd
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+    about:
+      home: https://curl.haxx.se
+      license: MIT
+      summary: |
+        Multi-protocol file transfer library (runtime)
+
+  - name: m2-openssl
+    version: "3.1.2.1"
+    script: install_pkg.bat  # [build_platform.startswith("win-")]
+    script: install_pkg.sh   # [not build_platform.startswith("win-")]
+    build:
+      noarch: generic
+    requirements:
+      host:
+        - m2-libopenssl
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+      run:
+        - m2-libopenssl
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+    about:
+      home: https://www.openssl.org
+      license: Apache-2.0
+      summary: |
+        The Open Source toolkit for Secure Sockets Layer and Transport Layer Security
+
+  - name: m2-libopenssl
+    version: "3.1.2.1"
+    script: install_pkg.bat  # [build_platform.startswith("win-")]
+    script: install_pkg.sh   # [not build_platform.startswith("win-")]
+    build:
+      noarch: generic
+    requirements:
+      host:
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+      run:
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+    about:
+      home: https://www.openssl.org
+      license: Apache-2.0
+      summary: |
+        The Open Source toolkit for Secure Sockets Layer and Transport Layer Security
+
+  - name: m2-libssh2
+    version: "1.11.0.1"
+    script: install_pkg.bat  # [build_platform.startswith("win-")]
+    script: install_pkg.sh   # [not build_platform.startswith("win-")]
+    build:
+      noarch: generic
+    requirements:
+      host:
+        - m2-ca-certificates
+        - m2-openssl
+        - m2-zlib
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+      run:
+        - m2-ca-certificates
+        - m2-openssl
+        - m2-zlib
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+    about:
+      home: https://libssh2.org/
+      license: BSD
+      summary: |
+        Multi-protocol file transfer library (runtime)
+
+  - name: m2-libnghttp2
+    version: "1.56.0.1"
+    script: install_pkg.bat  # [build_platform.startswith("win-")]
+    script: install_pkg.sh   # [not build_platform.startswith("win-")]
+    build:
+      noarch: generic
+    requirements:
+      host:
+        - m2-gcc-libs
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+      run:
+        - m2-gcc-libs
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+    about:
+      home: https://nghttp2.org/
+      license: MIT
+      summary: |
+        Framing layer of HTTP/2 is implemented as a reusable C library (runtime)
+
+  - name: m2-heimdal-libs
+    version: "7.8.0.4"
+    script: install_pkg.bat  # [build_platform.startswith("win-")]
+    script: install_pkg.sh   # [not build_platform.startswith("win-")]
+    build:
+      noarch: generic
+    requirements:
+      host:
+        - m2-libdb
+        - m2-libxcrypt
+        - m2-libedit
+        - m2-libsqlite
+        - m2-libopenssl
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+      run:
+        - m2-libdb
+        - m2-libxcrypt
+        - m2-libedit
+        - m2-libsqlite
+        - m2-libopenssl
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+    about:
+      home: https://www.h5l.org/
+      license: custom
+      summary: |
+        Implementation of Kerberos V5 libraries
+
+  - name: m2-libedit
+    version: "20221030_3.1.1"
+    script: install_pkg.bat  # [build_platform.startswith("win-")]
+    script: install_pkg.sh   # [not build_platform.startswith("win-")]
+    build:
+      noarch: generic
+    requirements:
+      host:
+        - m2-ncurses
+        - m2-bash
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+      run:
+        - m2-ncurses
+        - m2-bash
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+    about:
+      home: https://www.thrysoee.dk/editline/
+      license: BSD
+      summary: |
+        Libedit is an autotool- and libtoolized port of the NetBSD Editline library.
+
+  - name: m2-ca-certificates
+    version: "20230311.1"
+    script: install_pkg.bat  # [build_platform.startswith("win-")]
+    script: install_pkg.sh   # [not build_platform.startswith("win-")]
+    build:
+      noarch: generic
+    requirements:
+      host:
+        - m2-bash
+        - m2-openssl
+        - m2-findutils
+        - m2-coreutils
+        - m2-sed
+        - m2-p11-kit
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+      run:
+        - m2-bash
+        - m2-openssl
+        - m2-findutils
+        - m2-coreutils
+        - m2-sed
+        - m2-p11-kit
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+    about:
+      home: https://www.mozilla.org/en-US/about/governance/policies/security-group/certs/
+      license: MPL
+      summary: |
+        Common CA certificates
+
+  - name: m2-p11-kit
+    version: "0.25.0.1"
+    script: install_pkg.bat  # [build_platform.startswith("win-")]
+    script: install_pkg.sh   # [not build_platform.startswith("win-")]
+    build:
+      noarch: generic
+    requirements:
+      host:
+        - m2-libp11-kit
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+      run:
+        - m2-libp11-kit
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+    about:
+      home: https://p11-glue.freedesktop.org/p11-kit.html
+      license: BSD
+      summary: |
+        Library to work with PKCS#11 modules
+
+  - name: m2-brotli
+    version: "1.1.0.1"
+    script: install_pkg.bat  # [build_platform.startswith("win-")]
+    script: install_pkg.sh   # [not build_platform.startswith("win-")]
+    build:
+      noarch: generic
+    requirements:
+      host:
+        - m2-gcc-libs
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+      run:
+        - m2-gcc-libs
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+    about:
+      home: https://github.com/google/brotli
+      license: MIT
+      summary: |
+        Brotli compression library
+
+  - name: m2-libassuan
+    version: "2.5.6.1"
+    script: install_pkg.bat  # [build_platform.startswith("win-")]
+    script: install_pkg.sh   # [not build_platform.startswith("win-")]
+    build:
+      noarch: generic
+    requirements:
+      host:
+        - m2-gcc-libs
+        - m2-libgpg-error
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+      run:
+        - m2-gcc-libs
+        - m2-libgpg-error
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+    about:
+      home: https://gnupg.org/related_software/libassuan
+      license: GPL
+      summary: |
+        A IPC library used by some GnuPG related software
+
+  - name: m2-libidn2
+    version: "2.3.4.2"
+    script: install_pkg.bat  # [build_platform.startswith("win-")]
+    script: install_pkg.sh   # [not build_platform.startswith("win-")]
+    build:
+      noarch: generic
+    requirements:
+      host:
+        - m2-libunistring
+        - m2-libintl
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+      run:
+        - m2-libunistring
+        - m2-libintl
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+    about:
+      home: https://www.gnu.org/software/libidn/
+      license: GPL3
+      summary: |
+        Implementation of the Stringprep, Punycode and IDNA specifications
+
+  - name: m2-util-linux
+    version: "2.35.2.4"
+    script: install_pkg.bat  # [build_platform.startswith("win-")]
+    script: install_pkg.sh   # [not build_platform.startswith("win-")]
+    build:
+      noarch: generic
+    requirements:
+      host:
+        - m2-coreutils
+        - m2-libutil-linux
+        - m2-libiconv
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+      run:
+        - m2-coreutils
+        - m2-libutil-linux
+        - m2-libiconv
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+    about:
+      home: https://www.kernel.org/pub/linux/utils/util-linux/
+      license: GPL3
+      summary: |
+        Collection of basic system utilities
+
+  - name: m2-tzcode
+    version: "2023c.1"
+    script: install_pkg.bat  # [build_platform.startswith("win-")]
+    script: install_pkg.sh   # [not build_platform.startswith("win-")]
+    build:
+      noarch: generic
+    requirements:
+      host:
+        - m2-coreutils
+        - m2-gawk
+        - m2-sed
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+      run:
+        - m2-coreutils
+        - m2-gawk
+        - m2-sed
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+    about:
+      home: https://www.iana.org/time-zones
+      license: GPL
+      summary: |
+        Sources for time zone and daylight saving time data
+
+  - name: m2-time
+    version: "1.9.3"
+    script: install_pkg.bat  # [build_platform.startswith("win-")]
+    script: install_pkg.sh   # [not build_platform.startswith("win-")]
+    build:
+      noarch: generic
+    requirements:
+      host:
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+      run:
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+    about:
+      home: https://www.gnu.org/directory/time.html
+      license: GPL
+      summary: |
+        Utility for monitoring a program's use of system resources
+
+  - name: m2-rebase
+    version: "4.5.0.4"
+    script: install_pkg.bat  # [build_platform.startswith("win-")]
+    script: install_pkg.sh   # [not build_platform.startswith("win-")]
+    build:
+      noarch: generic
+    requirements:
+      host:
+        - m2-dash
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+      run:
+        - m2-dash
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+    about:
+      home: https://www.cygwin.com/
+      license: custom
+      summary: |
+        The Cygwin rebase distribution contains four utilities, rebase, rebaseall, peflags, and peflagsall
+
+  - name: m2-nano
+    version: "7.2.1"
+    script: install_pkg.bat  # [build_platform.startswith("win-")]
+    script: install_pkg.sh   # [not build_platform.startswith("win-")]
+    build:
+      noarch: generic
+    requirements:
+      host:
+        - m2-file
+        - m2-libintl
+        - m2-ncurses
+        - m2-bash
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+      run:
+        - m2-file
+        - m2-libintl
+        - m2-ncurses
+        - m2-bash
+        - m2-conda-epoch 20230914
+        - m2-msys2-runtime
+    about:
+      home: https://www.nano-editor.org
+      license: GPL-3.0-or-later
+      summary: |
+        Pico editor clone with enhancements
+
   - name: m2-msys2-runtime
-    version: 3.4.9.1
+    version: "3.4.9.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -1845,1666 +3652,8 @@ outputs:
       summary: |
         Posix emulation engine for Windows
 
-  - name: m2-texinfo-tex
-    version: 7.0.3.3
-    script: install_pkg.bat  # [build_platform.startswith("win-")]
-    script: install_pkg.sh   # [not build_platform.startswith("win-")]
-    build:
-      noarch: generic
-    requirements:
-      host:
-        - m2-gawk
-        - m2-perl
-        - m2-bash
-        - m2-conda-epoch 20230914
-      run:
-        - m2-gawk
-        - m2-perl
-        - m2-bash
-        - m2-conda-epoch 20230914
-    about:
-      home: https://www.gnu.org/software/texinfo/
-      license: GPL-3.0-or-later
-      summary: |
-        Utilities to work with and produce manuals, ASCII text, and on-line documentation from a single source file
-
-  - name: m2-perl
-    version: 5.36.1.2
-    script: install_pkg.bat  # [build_platform.startswith("win-")]
-    script: install_pkg.sh   # [not build_platform.startswith("win-")]
-    build:
-      noarch: generic
-    requirements:
-      host:
-        - m2-db
-        - m2-gdbm
-        - m2-libxcrypt
-        - m2-coreutils
-        - m2-bash
-        - m2-conda-epoch 20230914
-      run:
-        - m2-db
-        - m2-gdbm
-        - m2-libxcrypt
-        - m2-coreutils
-        - m2-bash
-        - m2-conda-epoch 20230914
-    about:
-      home: https://www.perl.org/
-      license: GPL
-      summary: |
-        A highly capable, feature-rich programming language
-
-  - name: m2-coreutils
-    version: 8.32.5
-    script: install_pkg.bat  # [build_platform.startswith("win-")]
-    script: install_pkg.sh   # [not build_platform.startswith("win-")]
-    build:
-      noarch: generic
-    requirements:
-      host:
-        - m2-gmp
-        - m2-libiconv
-        - m2-libintl
-        - m2-conda-epoch 20230914
-      run:
-        - m2-gmp
-        - m2-libiconv
-        - m2-libintl
-        - m2-conda-epoch 20230914
-    about:
-      home: https://www.gnu.org/software/coreutils
-      license: GPL3
-      summary: |
-        The basic file, shell and text manipulation utilities of the GNU operating system
-
-  - name: m2-libintl
-    version: 0.22.1
-    script: install_pkg.bat  # [build_platform.startswith("win-")]
-    script: install_pkg.sh   # [not build_platform.startswith("win-")]
-    build:
-      noarch: generic
-    requirements:
-      host:
-        - m2-gcc-libs
-        - m2-libiconv
-        - m2-conda-epoch 20230914
-      run:
-        - m2-gcc-libs
-        - m2-libiconv
-        - m2-conda-epoch 20230914
-    about:
-      home: https://www.gnu.org/software/gettext/
-      license: GPL
-      summary: |
-        GNU Internationalization runtime library
-
-  - name: m2-gmp
-    version: 6.3.0.1
-    script: install_pkg.bat  # [build_platform.startswith("win-")]
-    script: install_pkg.sh   # [not build_platform.startswith("win-")]
-    build:
-      noarch: generic
-    requirements:
-      host:
-        - m2-conda-epoch 20230914
-      run:
-        - m2-conda-epoch 20230914
-    about:
-      home: https://gmplib.org/
-      license: LGPL3
-      summary: |
-        A free library for arbitrary precision arithmetic
-
-  - name: m2-libxcrypt
-    version: 4.4.36.1
-    script: install_pkg.bat  # [build_platform.startswith("win-")]
-    script: install_pkg.sh   # [not build_platform.startswith("win-")]
-    build:
-      noarch: generic
-    requirements:
-      host:
-        - m2-conda-epoch 20230914
-      run:
-        - m2-conda-epoch 20230914
-    about:
-      home: https://github.com/besser82/libxcrypt/
-      license: LGPL-2.1-or-later
-      summary: |
-        Modern library for one-way hashing of passwords
-
-  - name: m2-gdbm
-    version: 1.23.1
-    script: install_pkg.bat  # [build_platform.startswith("win-")]
-    script: install_pkg.sh   # [not build_platform.startswith("win-")]
-    build:
-      noarch: generic
-    requirements:
-      host:
-        - m2-libgdbm =1.23
-        - m2-conda-epoch 20230914
-      run:
-        - m2-libgdbm =1.23
-        - m2-conda-epoch 20230914
-    about:
-      home: https://www.gnu.org/software/gdbm/gdbm.html
-      license: GPL3
-      summary: |
-        GNU database library
-
-  - name: m2-libgdbm
-    version: 1.23.1
-    script: install_pkg.bat  # [build_platform.startswith("win-")]
-    script: install_pkg.sh   # [not build_platform.startswith("win-")]
-    build:
-      noarch: generic
-    requirements:
-      host:
-        - m2-gcc-libs
-        - m2-libreadline
-        - m2-libiconv
-        - m2-libintl
-        - m2-ncurses
-        - m2-conda-epoch 20230914
-      run:
-        - m2-gcc-libs
-        - m2-libreadline
-        - m2-libiconv
-        - m2-libintl
-        - m2-ncurses
-        - m2-conda-epoch 20230914
-    about:
-      home: https://www.gnu.org/software/gdbm/gdbm.html
-      license: GPL3
-      summary: |
-        GNU database library
-
-  - name: m2-ncurses
-    version: 6.4.1
-    script: install_pkg.bat  # [build_platform.startswith("win-")]
-    script: install_pkg.sh   # [not build_platform.startswith("win-")]
-    build:
-      noarch: generic
-    requirements:
-      host:
-        - m2-gcc-libs
-        - m2-conda-epoch 20230914
-      run:
-        - m2-gcc-libs
-        - m2-conda-epoch 20230914
-    about:
-      home: https://www.gnu.org/software/ncurses/
-      license: MIT
-      summary: |
-        System V Release 4.0 curses emulation library
-
-  - name: m2-libreadline
-    version: 8.2.001.3
-    script: install_pkg.bat  # [build_platform.startswith("win-")]
-    script: install_pkg.sh   # [not build_platform.startswith("win-")]
-    build:
-      noarch: generic
-    requirements:
-      host:
-        - m2-ncurses
-        - m2-conda-epoch 20230914
-      run:
-        - m2-ncurses
-        - m2-conda-epoch 20230914
-    about:
-      home: https://tiswww.case.edu/php/chet/readline/rltop.html
-      license: GPL
-      summary: |
-        GNU readline library
-
-  - name: m2-db
-    version: 5.3.28.4
-    script: install_pkg.bat  # [build_platform.startswith("win-")]
-    script: install_pkg.sh   # [not build_platform.startswith("win-")]
-    build:
-      noarch: generic
-    requirements:
-      host:
-        - m2-libdb =5.3.28
-        - m2-conda-epoch 20230914
-      run:
-        - m2-libdb =5.3.28
-        - m2-conda-epoch 20230914
-    about:
-      home: https://www.oracle.com/technetwork/database/database-technologies/berkeleydb/overview/index.html
-      license: custom
-      summary: |
-        The Berkeley DB embedded database system
-
-  - name: m2-libdb
-    version: 5.3.28.4
-    script: install_pkg.bat  # [build_platform.startswith("win-")]
-    script: install_pkg.sh   # [not build_platform.startswith("win-")]
-    build:
-      noarch: generic
-    requirements:
-      host:
-        - m2-gcc-libs
-        - m2-conda-epoch 20230914
-      run:
-        - m2-gcc-libs
-        - m2-conda-epoch 20230914
-    about:
-      home: https://www.oracle.com/technetwork/database/database-technologies/berkeleydb/overview/index.html
-      license: custom
-      summary: |
-        The Berkeley DB embedded database system
-
-  - name: m2-gawk
-    version: 5.2.2.1
-    script: install_pkg.bat  # [build_platform.startswith("win-")]
-    script: install_pkg.sh   # [not build_platform.startswith("win-")]
-    build:
-      noarch: generic
-    requirements:
-      host:
-        - m2-bash
-        - m2-mpfr
-        - m2-libintl
-        - m2-libreadline
-        - m2-conda-epoch 20230914
-      run:
-        - m2-bash
-        - m2-mpfr
-        - m2-libintl
-        - m2-libreadline
-        - m2-conda-epoch 20230914
-    about:
-      home: https://www.gnu.org/software/gawk/
-      license: GPL
-      summary: |
-        GNU version of awk
-
-  - name: m2-mpfr
-    version: 4.2.1.1
-    script: install_pkg.bat  # [build_platform.startswith("win-")]
-    script: install_pkg.sh   # [not build_platform.startswith("win-")]
-    build:
-      noarch: generic
-    requirements:
-      host:
-        - m2-gmp >=5.0
-        - m2-conda-epoch 20230914
-      run:
-        - m2-gmp >=5.0
-        - m2-conda-epoch 20230914
-    about:
-      home: https://www.mpfr.org/
-      license: LGPL-3.0-or-later
-      summary: |
-        Multiple-precision floating-point library
-
-  - name: m2-patchutils
-    version: 0.4.2.3
-    script: install_pkg.bat  # [build_platform.startswith("win-")]
-    script: install_pkg.sh   # [not build_platform.startswith("win-")]
-    build:
-      noarch: generic
-    requirements:
-      host:
-        - m2-pcre2
-        - m2-conda-epoch 20230914
-      run:
-        - m2-pcre2
-        - m2-conda-epoch 20230914
-    about:
-      home: http://cyberelk.net/tim/software/patchutils/
-      license: GPL
-      summary: |
-        Utilities to work with patches
-
-  - name: m2-pcre2
-    version: 10.42.1
-    script: install_pkg.bat  # [build_platform.startswith("win-")]
-    script: install_pkg.sh   # [not build_platform.startswith("win-")]
-    build:
-      noarch: generic
-    requirements:
-      host:
-        - m2-libreadline
-        - m2-libbz2
-        - m2-zlib
-        - m2-libpcre2_8 =10.42
-        - m2-libpcre2_16 =10.42
-        - m2-libpcre2_32 =10.42
-        - m2-libpcre2posix =10.42
-        - m2-conda-epoch 20230914
-      run:
-        - m2-libreadline
-        - m2-libbz2
-        - m2-zlib
-        - m2-libpcre2_8 =10.42
-        - m2-libpcre2_16 =10.42
-        - m2-libpcre2_32 =10.42
-        - m2-libpcre2posix =10.42
-        - m2-conda-epoch 20230914
-    about:
-      home: https://www.pcre.org/
-      license: BSD
-      summary: |
-        A library that implements Perl 5-style regular expressions
-
-  - name: m2-libpcre2posix
-    version: 10.42.1
-    script: install_pkg.bat  # [build_platform.startswith("win-")]
-    script: install_pkg.sh   # [not build_platform.startswith("win-")]
-    build:
-      noarch: generic
-    requirements:
-      host:
-        - m2-libpcre2_8 =10.42
-        - m2-conda-epoch 20230914
-      run:
-        - m2-libpcre2_8 =10.42
-        - m2-conda-epoch 20230914
-    about:
-      home: https://www.pcre.org/
-      license: BSD
-      summary: |
-        A library that implements Perl 5-style regular expressions
-
-  - name: m2-libpcre2_32
-    version: 10.42.1
-    script: install_pkg.bat  # [build_platform.startswith("win-")]
-    script: install_pkg.sh   # [not build_platform.startswith("win-")]
-    build:
-      noarch: generic
-    requirements:
-      host:
-        - m2-gcc-libs
-        - m2-conda-epoch 20230914
-      run:
-        - m2-gcc-libs
-        - m2-conda-epoch 20230914
-    about:
-      home: https://www.pcre.org/
-      license: BSD
-      summary: |
-        A library that implements Perl 5-style regular expressions
-
-  - name: m2-libpcre2_16
-    version: 10.42.1
-    script: install_pkg.bat  # [build_platform.startswith("win-")]
-    script: install_pkg.sh   # [not build_platform.startswith("win-")]
-    build:
-      noarch: generic
-    requirements:
-      host:
-        - m2-gcc-libs
-        - m2-conda-epoch 20230914
-      run:
-        - m2-gcc-libs
-        - m2-conda-epoch 20230914
-    about:
-      home: https://www.pcre.org/
-      license: BSD
-      summary: |
-        A library that implements Perl 5-style regular expressions
-
-  - name: m2-libpcre2_8
-    version: 10.42.1
-    script: install_pkg.bat  # [build_platform.startswith("win-")]
-    script: install_pkg.sh   # [not build_platform.startswith("win-")]
-    build:
-      noarch: generic
-    requirements:
-      host:
-        - m2-gcc-libs
-        - m2-conda-epoch 20230914
-      run:
-        - m2-gcc-libs
-        - m2-conda-epoch 20230914
-    about:
-      home: https://www.pcre.org/
-      license: BSD
-      summary: |
-        A library that implements Perl 5-style regular expressions
-
-  - name: m2-zlib
-    version: 1.3.1
-    script: install_pkg.bat  # [build_platform.startswith("win-")]
-    script: install_pkg.sh   # [not build_platform.startswith("win-")]
-    build:
-      noarch: generic
-    requirements:
-      host:
-        - m2-gcc-libs
-        - m2-conda-epoch 20230914
-      run:
-        - m2-gcc-libs
-        - m2-conda-epoch 20230914
-    about:
-      home: https://www.zlib.net/
-      license: custom
-      summary: |
-        Compression library implementing the deflate compression method found in gzip and PKZIP
-
-  - name: m2-libbz2
-    version: 1.0.8.4
-    script: install_pkg.bat  # [build_platform.startswith("win-")]
-    script: install_pkg.sh   # [not build_platform.startswith("win-")]
-    build:
-      noarch: generic
-    requirements:
-      host:
-        - m2-gcc-libs
-        - m2-conda-epoch 20230914
-      run:
-        - m2-gcc-libs
-        - m2-conda-epoch 20230914
-    about:
-      home: http://www.bzip.org
-      license: custom
-      summary: |
-        A high-quality data compression program
-
-  - name: m2-patch
-    version: 2.7.6.2
-    script: install_pkg.bat  # [build_platform.startswith("win-")]
-    script: install_pkg.sh   # [not build_platform.startswith("win-")]
-    build:
-      noarch: generic
-    requirements:
-      host:
-        - m2-conda-epoch 20230914
-      run:
-        - m2-conda-epoch 20230914
-    about:
-      home: https://www.gnu.org/software/patch/patch.html
-      license: GPL
-      summary: |
-        A utility to apply patch files to original sources
-
-  - name: m2-diffutils
-    version: 3.9.1
-    script: install_pkg.bat  # [build_platform.startswith("win-")]
-    script: install_pkg.sh   # [not build_platform.startswith("win-")]
-    build:
-      noarch: generic
-    requirements:
-      host:
-        - m2-bash
-        - m2-libiconv
-        - m2-libintl
-        - m2-conda-epoch 20230914
-      run:
-        - m2-bash
-        - m2-libiconv
-        - m2-libintl
-        - m2-conda-epoch 20230914
-    about:
-      home: https://www.gnu.org/software/diffutils
-      license: GPL-3.0-or-later
-      summary: |
-        Utility programs used for creating patch files
-
-  - name: m2-unzip
-    version: 6.0.2
-    script: install_pkg.bat  # [build_platform.startswith("win-")]
-    script: install_pkg.sh   # [not build_platform.startswith("win-")]
-    build:
-      noarch: generic
-    requirements:
-      host:
-        - m2-libbz2
-        - m2-bash
-        - m2-conda-epoch 20230914
-      run:
-        - m2-libbz2
-        - m2-bash
-        - m2-conda-epoch 20230914
-    about:
-      home: http://www.info-zip.org/
-      license: custom
-      summary: |
-        Unpacks .zip archives such as those made by PKZIP
-
-  - name: m2-zip
-    version: 3.0.3
-    script: install_pkg.bat  # [build_platform.startswith("win-")]
-    script: install_pkg.sh   # [not build_platform.startswith("win-")]
-    build:
-      noarch: generic
-    requirements:
-      host:
-        - m2-libbz2
-        - m2-conda-epoch 20230914
-      run:
-        - m2-libbz2
-        - m2-conda-epoch 20230914
-    about:
-      home: http://www.info-zip.org/Zip.html
-      license: BSD
-      summary: |
-        Creates PKZIP-compatible .zip files
-
-  - name: m2-tar
-    version: 1.34.3
-    script: install_pkg.bat  # [build_platform.startswith("win-")]
-    script: install_pkg.sh   # [not build_platform.startswith("win-")]
-    build:
-      noarch: generic
-    requirements:
-      host:
-        - m2-libiconv
-        - m2-libintl
-        - m2-bash
-        - m2-conda-epoch 20230914
-      run:
-        - m2-libiconv
-        - m2-libintl
-        - m2-bash
-        - m2-conda-epoch 20230914
-    about:
-      home: https://www.gnu.org/software/tar/tar.html
-      license: GPL3
-      summary: |
-        Utility used to store, backup, and transport files
-
-  - name: m2-base
-    version: 2022.06.1
-    script: install_pkg.bat  # [build_platform.startswith("win-")]
-    script: install_pkg.sh   # [not build_platform.startswith("win-")]
-    build:
-      noarch: generic
-    requirements:
-      host:
-        - m2-bash
-        - m2-bash-completion
-        - m2-bsdtar
-        - m2-bzip2
-        - m2-coreutils
-        - m2-curl
-        - m2-dash
-        - m2-file
-        - m2-filesystem
-        - m2-findutils
-        - m2-gawk
-        - m2-getent
-        - m2-grep
-        - m2-gzip
-        - m2-inetutils
-        - m2-info
-        - m2-less
-        - m2-mintty
-        - m2-msys2-keyring
-        - m2-msys2-launcher
-        - m2-msys2-runtime
-        - m2-nano
-        - m2-rebase
-        - m2-sed
-        - m2-tar
-        - m2-time
-        - m2-tzcode
-        - m2-util-linux
-        - m2-wget
-        - m2-which
-        - m2-zstd
-        - m2-conda-epoch 20230914
-      run:
-        - m2-bash
-        - m2-bash-completion
-        - m2-bsdtar
-        - m2-bzip2
-        - m2-coreutils
-        - m2-curl
-        - m2-dash
-        - m2-file
-        - m2-filesystem
-        - m2-findutils
-        - m2-gawk
-        - m2-getent
-        - m2-grep
-        - m2-gzip
-        - m2-inetutils
-        - m2-info
-        - m2-less
-        - m2-mintty
-        - m2-msys2-keyring
-        - m2-msys2-launcher
-        - m2-msys2-runtime
-        - m2-nano
-        - m2-rebase
-        - m2-sed
-        - m2-tar
-        - m2-time
-        - m2-tzcode
-        - m2-util-linux
-        - m2-wget
-        - m2-which
-        - m2-zstd
-        - m2-conda-epoch 20230914
-    about:
-      home: https://www.msys2.org
-      license: GPL
-      summary: |
-        Minimal package set to define a basic MSYS2 installation
-
-  - name: m2-zstd
-    version: 1.5.5.1
-    script: install_pkg.bat  # [build_platform.startswith("win-")]
-    script: install_pkg.sh   # [not build_platform.startswith("win-")]
-    build:
-      noarch: generic
-    requirements:
-      host:
-        - m2-gcc-libs
-        - m2-libzstd
-        - m2-conda-epoch 20230914
-      run:
-        - m2-gcc-libs
-        - m2-libzstd
-        - m2-conda-epoch 20230914
-    about:
-      home: https://facebook.github.io/zstd/
-      license: BSD
-      summary: |
-        Zstandard - Fast real-time compression algorithm
-
-  - name: m2-libzstd
-    version: 1.5.5.1
-    script: install_pkg.bat  # [build_platform.startswith("win-")]
-    script: install_pkg.sh   # [not build_platform.startswith("win-")]
-    build:
-      noarch: generic
-    requirements:
-      host:
-        - m2-gcc-libs
-        - m2-conda-epoch 20230914
-      run:
-        - m2-gcc-libs
-        - m2-conda-epoch 20230914
-    about:
-      home: https://facebook.github.io/zstd/
-      license: BSD
-      summary: |
-        Zstandard - Fast real-time compression algorithm
-
-  - name: m2-which
-    version: 2.21.4
-    script: install_pkg.bat  # [build_platform.startswith("win-")]
-    script: install_pkg.sh   # [not build_platform.startswith("win-")]
-    build:
-      noarch: generic
-    requirements:
-      host:
-        - m2-bash
-        - m2-conda-epoch 20230914
-      run:
-        - m2-bash
-        - m2-conda-epoch 20230914
-    about:
-      home: https://savannah.gnu.org/projects/which/
-      license: GPL3
-      summary: |
-        A utility to show the full path of commands
-
-  - name: m2-wget
-    version: 1.21.4.1
-    script: install_pkg.bat  # [build_platform.startswith("win-")]
-    script: install_pkg.sh   # [not build_platform.startswith("win-")]
-    build:
-      noarch: generic
-    requirements:
-      host:
-        - m2-gcc-libs
-        - m2-libiconv
-        - m2-libidn2
-        - m2-libintl
-        - m2-libgpgme
-        - m2-libpcre2_8
-        - m2-libpsl
-        - m2-libutil-linux
-        - m2-libgnutls
-        - m2-zlib
-        - m2-conda-epoch 20230914
-      run:
-        - m2-gcc-libs
-        - m2-libiconv
-        - m2-libidn2
-        - m2-libintl
-        - m2-libgpgme
-        - m2-libpcre2_8
-        - m2-libpsl
-        - m2-libutil-linux
-        - m2-libgnutls
-        - m2-zlib
-        - m2-conda-epoch 20230914
-    about:
-      home: https://www.gnu.org/software/wget/
-      license: GPL3
-      summary: |
-        A network utility to retrieve files from the Web
-
-  - name: m2-libgnutls
-    version: 3.8.1.1
-    script: install_pkg.bat  # [build_platform.startswith("win-")]
-    script: install_pkg.sh   # [not build_platform.startswith("win-")]
-    build:
-      noarch: generic
-    requirements:
-      host:
-        - m2-gcc-libs
-        - m2-libidn2
-        - m2-libiconv
-        - m2-libintl
-        - m2-gmp
-        - m2-libnettle
-        - m2-libp11-kit
-        - m2-libtasn1
-        - m2-zlib
-        - m2-conda-epoch 20230914
-      run:
-        - m2-gcc-libs
-        - m2-libidn2
-        - m2-libiconv
-        - m2-libintl
-        - m2-gmp
-        - m2-libnettle
-        - m2-libp11-kit
-        - m2-libtasn1
-        - m2-zlib
-        - m2-conda-epoch 20230914
-    about:
-      home: https://www.gnutls.org/
-      license: GPL-3.0-or-later
-      summary: |
-        A library which provides a secure layer over a reliable transport layer
-
-  - name: m2-libtasn1
-    version: 4.19.0.1
-    script: install_pkg.bat  # [build_platform.startswith("win-")]
-    script: install_pkg.sh   # [not build_platform.startswith("win-")]
-    build:
-      noarch: generic
-    requirements:
-      host:
-        - m2-info
-        - m2-conda-epoch 20230914
-      run:
-        - m2-info
-        - m2-conda-epoch 20230914
-    about:
-      home: https://www.gnu.org/software/libtasn1/
-      license: GPL3
-      summary: |
-        A library for Abstract Syntax Notation One (ASN.1) and Distinguish Encoding Rules (DER) manipulation
-
-  - name: m2-libp11-kit
-    version: 0.25.0.1
-    script: install_pkg.bat  # [build_platform.startswith("win-")]
-    script: install_pkg.sh   # [not build_platform.startswith("win-")]
-    build:
-      noarch: generic
-    requirements:
-      host:
-        - m2-libffi
-        - m2-libintl
-        - m2-libtasn1
-        - m2-conda-epoch 20230914
-      run:
-        - m2-libffi
-        - m2-libintl
-        - m2-libtasn1
-        - m2-conda-epoch 20230914
-    about:
-      home: https://p11-glue.freedesktop.org/p11-kit.html
-      license: BSD
-      summary: |
-        Library to work with PKCS#11 modules
-
-  - name: m2-libffi
-    version: 3.4.4.1
-    script: install_pkg.bat  # [build_platform.startswith("win-")]
-    script: install_pkg.sh   # [not build_platform.startswith("win-")]
-    build:
-      noarch: generic
-    requirements:
-      host:
-        - m2-conda-epoch 20230914
-      run:
-        - m2-conda-epoch 20230914
-    about:
-      home: https://sourceware.org/libffi/
-      license: MIT
-      summary: |
-        Portable, high level programming interface to various calling conventions
-
-  - name: m2-libnettle
-    version: 3.9.1.1
-    script: install_pkg.bat  # [build_platform.startswith("win-")]
-    script: install_pkg.sh   # [not build_platform.startswith("win-")]
-    build:
-      noarch: generic
-    requirements:
-      host:
-        - m2-libhogweed
-        - m2-conda-epoch 20230914
-      run:
-        - m2-libhogweed
-        - m2-conda-epoch 20230914
-    about:
-      home: https://www.lysator.liu.se/~nisse/nettle/
-      license: GPL-2.0-or-later OR LGPL-3.0-or-later
-      summary: |
-        A low-level cryptographic library
-
-  - name: m2-libhogweed
-    version: 3.9.1.1
-    script: install_pkg.bat  # [build_platform.startswith("win-")]
-    script: install_pkg.sh   # [not build_platform.startswith("win-")]
-    build:
-      noarch: generic
-    requirements:
-      host:
-        - m2-gmp
-        - m2-conda-epoch 20230914
-      run:
-        - m2-gmp
-        - m2-conda-epoch 20230914
-    about:
-      home: https://www.lysator.liu.se/~nisse/nettle/
-      license: GPL-2.0-or-later OR LGPL-3.0-or-later
-      summary: |
-        A low-level cryptographic library
-
-  - name: m2-libutil-linux
-    version: 2.35.2.4
-    script: install_pkg.bat  # [build_platform.startswith("win-")]
-    script: install_pkg.sh   # [not build_platform.startswith("win-")]
-    build:
-      noarch: generic
-    requirements:
-      host:
-        - m2-gcc-libs
-        - m2-libintl
-        - m2-conda-epoch 20230914
-      run:
-        - m2-gcc-libs
-        - m2-libintl
-        - m2-conda-epoch 20230914
-    about:
-      home: https://www.kernel.org/pub/linux/utils/util-linux/
-      license: GPL3
-      summary: |
-        Block device ID and Universally Unique ID libraries
-
-  - name: m2-libpsl
-    version: 0.21.2.1
-    script: install_pkg.bat  # [build_platform.startswith("win-")]
-    script: install_pkg.sh   # [not build_platform.startswith("win-")]
-    build:
-      noarch: generic
-    requirements:
-      host:
-        - m2-libxslt
-        - m2-libidn2
-        - m2-libunistring
-        - m2-conda-epoch 20230914
-      run:
-        - m2-libxslt
-        - m2-libidn2
-        - m2-libunistring
-        - m2-conda-epoch 20230914
-    about:
-      home: https://github.com/rockdaboot/libpsl
-      license: MIT
-      summary: |
-        Public Suffix List library (runtime)
-
-  - name: m2-libunistring
-    version: 1.1.2
-    script: install_pkg.bat  # [build_platform.startswith("win-")]
-    script: install_pkg.sh   # [not build_platform.startswith("win-")]
-    build:
-      noarch: generic
-    requirements:
-      host:
-        - m2-libiconv
-        - m2-conda-epoch 20230914
-      run:
-        - m2-libiconv
-        - m2-conda-epoch 20230914
-    about:
-      home: https://www.gnu.org/software/libunistring/
-      license: LGPL-3.0-or-later OR GPL-2.0-or-later
-      summary: |
-        Library for manipulating Unicode strings and C strings.
-
-  - name: m2-libxslt
-    version: 1.1.38.1
-    script: install_pkg.bat  # [build_platform.startswith("win-")]
-    script: install_pkg.sh   # [not build_platform.startswith("win-")]
-    build:
-      noarch: generic
-    requirements:
-      host:
-        - m2-libxml2
-        - m2-libgcrypt
-        - m2-conda-epoch 20230914
-      run:
-        - m2-libxml2
-        - m2-libgcrypt
-        - m2-conda-epoch 20230914
-    about:
-      home: https://gitlab.gnome.org/GNOME/libxslt/-/wikis/
-      license: custom
-      summary: |
-        XML stylesheet transformation library
-
-  - name: m2-libgcrypt
-    version: 1.9.4.1
-    script: install_pkg.bat  # [build_platform.startswith("win-")]
-    script: install_pkg.sh   # [not build_platform.startswith("win-")]
-    build:
-      noarch: generic
-    requirements:
-      host:
-        - m2-libgpg-error
-        - m2-conda-epoch 20230914
-      run:
-        - m2-libgpg-error
-        - m2-conda-epoch 20230914
-    about:
-      home: https://gnupg.org
-      license: LGPL
-      summary: |
-        General purpose cryptographic library based on the code from GnuPG
-
-  - name: m2-libgpg-error
-    version: 1.47.1
-    script: install_pkg.bat  # [build_platform.startswith("win-")]
-    script: install_pkg.sh   # [not build_platform.startswith("win-")]
-    build:
-      noarch: generic
-    requirements:
-      host:
-        - m2-bash
-        - m2-libiconv
-        - m2-libintl
-        - m2-conda-epoch 20230914
-      run:
-        - m2-bash
-        - m2-libiconv
-        - m2-libintl
-        - m2-conda-epoch 20230914
-    about:
-      home: https://gnupg.org
-      license: LGPL-2.1-or-later
-      summary: |
-        Support library for libgcrypt
-
-  - name: m2-libxml2
-    version: 2.9.14.5
-    script: install_pkg.bat  # [build_platform.startswith("win-")]
-    script: install_pkg.sh   # [not build_platform.startswith("win-")]
-    build:
-      noarch: generic
-    requirements:
-      host:
-        - m2-coreutils
-        - m2-liblzma
-        - m2-libreadline
-        - m2-ncurses
-        - m2-zlib
-        - m2-conda-epoch 20230914
-      run:
-        - m2-coreutils
-        - m2-liblzma
-        - m2-libreadline
-        - m2-ncurses
-        - m2-zlib
-        - m2-conda-epoch 20230914
-    about:
-      home: https://gitlab.gnome.org/GNOME/libxml2/-/wikis/
-      license: MIT
-      summary: |
-        XML parsing library, version 2
-
-  - name: m2-liblzma
-    version: 5.4.4.1
-    script: install_pkg.bat  # [build_platform.startswith("win-")]
-    script: install_pkg.sh   # [not build_platform.startswith("win-")]
-    build:
-      noarch: generic
-    requirements:
-      host:
-        - m2-bash
-        - m2-libiconv
-        - m2-gettext
-        - m2-conda-epoch 20230914
-      run:
-        - m2-bash
-        - m2-libiconv
-        - m2-gettext
-        - m2-conda-epoch 20230914
-    about:
-      home: https://tukaani.org/xz/
-      license: GPL
-      summary: |
-        Library for XZ and LZMA compressed files
-
-  - name: m2-gettext
-    version: 0.22.1
-    script: install_pkg.bat  # [build_platform.startswith("win-")]
-    script: install_pkg.sh   # [not build_platform.startswith("win-")]
-    build:
-      noarch: generic
-    requirements:
-      host:
-        - m2-libintl
-        - m2-libgettextpo
-        - m2-libasprintf
-        - m2-conda-epoch 20230914
-      run:
-        - m2-libintl
-        - m2-libgettextpo
-        - m2-libasprintf
-        - m2-conda-epoch 20230914
-    about:
-      home: https://www.gnu.org/software/gettext/
-      license: GPL
-      summary: |
-        GNU internationalization library
-
-  - name: m2-libasprintf
-    version: 0.22.1
-    script: install_pkg.bat  # [build_platform.startswith("win-")]
-    script: install_pkg.sh   # [not build_platform.startswith("win-")]
-    build:
-      noarch: generic
-    requirements:
-      host:
-        - m2-gcc-libs
-        - m2-conda-epoch 20230914
-      run:
-        - m2-gcc-libs
-        - m2-conda-epoch 20230914
-    about:
-      home: https://www.gnu.org/software/gettext/
-      license: GPL
-      summary: |
-        C-style formatted output in C++ (runtime)
-
-  - name: m2-libgettextpo
-    version: 0.22.1
-    script: install_pkg.bat  # [build_platform.startswith("win-")]
-    script: install_pkg.sh   # [not build_platform.startswith("win-")]
-    build:
-      noarch: generic
-    requirements:
-      host:
-        - m2-gcc-libs
-        - m2-conda-epoch 20230914
-      run:
-        - m2-gcc-libs
-        - m2-conda-epoch 20230914
-    about:
-      home: https://www.gnu.org/software/gettext/
-      license: GPL
-      summary: |
-        GNU Internationalization runtime library
-
-  - name: m2-libgpgme
-    version: 1.22.0.1
-    script: install_pkg.bat  # [build_platform.startswith("win-")]
-    script: install_pkg.sh   # [not build_platform.startswith("win-")]
-    build:
-      noarch: generic
-    requirements:
-      host:
-        - m2-libassuan
-        - m2-libgpg-error
-        - m2-gnupg
-        - m2-conda-epoch 20230914
-      run:
-        - m2-libassuan
-        - m2-libgpg-error
-        - m2-gnupg
-        - m2-conda-epoch 20230914
-    about:
-      home: https://gnupg.org/related_software/gpgme/
-      license: LGPL
-      summary: |
-        A C wrapper library for GnuPG
-
-  - name: m2-gnupg
-    version: 2.2.41.1
-    script: install_pkg.bat  # [build_platform.startswith("win-")]
-    script: install_pkg.sh   # [not build_platform.startswith("win-")]
-    build:
-      noarch: generic
-    requirements:
-      host:
-        - m2-bzip2
-        - m2-libassuan
-        - m2-libbz2
-        - m2-libcurl
-        - m2-libgcrypt
-        - m2-libgpg-error
-        - m2-libgnutls
-        - m2-libiconv
-        - m2-libintl
-        - m2-libksba
-        - m2-libnpth
-        - m2-libreadline
-        - m2-libsqlite
-        - m2-nettle
-        - m2-pinentry
-        - m2-zlib
-        - m2-conda-epoch 20230914
-      run:
-        - m2-bzip2
-        - m2-libassuan
-        - m2-libbz2
-        - m2-libcurl
-        - m2-libgcrypt
-        - m2-libgpg-error
-        - m2-libgnutls
-        - m2-libiconv
-        - m2-libintl
-        - m2-libksba
-        - m2-libnpth
-        - m2-libreadline
-        - m2-libsqlite
-        - m2-nettle
-        - m2-pinentry
-        - m2-zlib
-        - m2-conda-epoch 20230914
-    about:
-      home: https://gnupg.org/
-      license: GPL
-      summary: |
-        Complete and free implementation of the OpenPGP standard
-
-  - name: m2-pinentry
-    version: 1.2.1.1
-    script: install_pkg.bat  # [build_platform.startswith("win-")]
-    script: install_pkg.sh   # [not build_platform.startswith("win-")]
-    build:
-      noarch: generic
-    requirements:
-      host:
-        - m2-ncurses
-        - m2-libassuan
-        - m2-libgpg-error
-        - m2-conda-epoch 20230914
-      run:
-        - m2-ncurses
-        - m2-libassuan
-        - m2-libgpg-error
-        - m2-conda-epoch 20230914
-    about:
-      home: https://gnupg.org/related_software/pinentry/
-      license: GPL
-      summary: |
-        A collection of simple PIN or passphrase entry dialogs which utilize the Assuan protocol
-
-  - name: m2-nettle
-    version: 3.9.1.1
-    script: install_pkg.bat  # [build_platform.startswith("win-")]
-    script: install_pkg.sh   # [not build_platform.startswith("win-")]
-    build:
-      noarch: generic
-    requirements:
-      host:
-        - m2-libnettle
-        - m2-conda-epoch 20230914
-      run:
-        - m2-libnettle
-        - m2-conda-epoch 20230914
-    about:
-      home: https://www.lysator.liu.se/~nisse/nettle/
-      license: GPL-2.0-or-later OR LGPL-3.0-or-later
-      summary: |
-        A low-level cryptographic library
-
-  - name: m2-libsqlite
-    version: 3.42.0.2
-    script: install_pkg.bat  # [build_platform.startswith("win-")]
-    script: install_pkg.sh   # [not build_platform.startswith("win-")]
-    build:
-      noarch: generic
-    requirements:
-      host:
-        - m2-conda-epoch 20230914
-      run:
-        - m2-conda-epoch 20230914
-    about:
-      home: https://www.sqlite.org/
-      license: PublicDomain
-      summary: |
-        Sqlite3 library
-
-  - name: m2-libnpth
-    version: 1.6.1
-    script: install_pkg.bat  # [build_platform.startswith("win-")]
-    script: install_pkg.sh   # [not build_platform.startswith("win-")]
-    build:
-      noarch: generic
-    requirements:
-      host:
-        - m2-gcc-libs
-        - m2-conda-epoch 20230914
-      run:
-        - m2-gcc-libs
-        - m2-conda-epoch 20230914
-    about:
-      home: https://gnupg.org/
-      license: LGPL
-      summary: |
-        New portable threads library
-
-  - name: m2-libksba
-    version: 1.6.4.1
-    script: install_pkg.bat  # [build_platform.startswith("win-")]
-    script: install_pkg.sh   # [not build_platform.startswith("win-")]
-    build:
-      noarch: generic
-    requirements:
-      host:
-        - m2-gcc-libs
-        - m2-libgpg-error
-        - m2-conda-epoch 20230914
-      run:
-        - m2-gcc-libs
-        - m2-libgpg-error
-        - m2-conda-epoch 20230914
-    about:
-      home: https://www.gnupg.org/related_software/libksba/
-      license: LGPL-3.0-or-later OR GPL-2.0-or-later
-      summary: |
-        A CMS and X.509 access library
-
-  - name: m2-libcurl
-    version: 8.2.1.1
-    script: install_pkg.bat  # [build_platform.startswith("win-")]
-    script: install_pkg.sh   # [not build_platform.startswith("win-")]
-    build:
-      noarch: generic
-    requirements:
-      host:
-        - m2-brotli
-        - m2-ca-certificates
-        - m2-heimdal-libs
-        - m2-libidn2
-        - m2-libunistring
-        - m2-libnghttp2
-        - m2-libpsl
-        - m2-libssh2
-        - m2-openssl
-        - m2-zlib
-        - m2-libzstd
-        - m2-conda-epoch 20230914
-      run:
-        - m2-brotli
-        - m2-ca-certificates
-        - m2-heimdal-libs
-        - m2-libidn2
-        - m2-libunistring
-        - m2-libnghttp2
-        - m2-libpsl
-        - m2-libssh2
-        - m2-openssl
-        - m2-zlib
-        - m2-libzstd
-        - m2-conda-epoch 20230914
-    about:
-      home: https://curl.haxx.se
-      license: MIT
-      summary: |
-        Multi-protocol file transfer library (runtime)
-
-  - name: m2-openssl
-    version: 3.1.2.1
-    script: install_pkg.bat  # [build_platform.startswith("win-")]
-    script: install_pkg.sh   # [not build_platform.startswith("win-")]
-    build:
-      noarch: generic
-    requirements:
-      host:
-        - m2-libopenssl
-        - m2-conda-epoch 20230914
-      run:
-        - m2-libopenssl
-        - m2-conda-epoch 20230914
-    about:
-      home: https://www.openssl.org
-      license: Apache-2.0
-      summary: |
-        The Open Source toolkit for Secure Sockets Layer and Transport Layer Security
-
-  - name: m2-libopenssl
-    version: 3.1.2.1
-    script: install_pkg.bat  # [build_platform.startswith("win-")]
-    script: install_pkg.sh   # [not build_platform.startswith("win-")]
-    build:
-      noarch: generic
-    requirements:
-      host:
-        - m2-conda-epoch 20230914
-      run:
-        - m2-conda-epoch 20230914
-    about:
-      home: https://www.openssl.org
-      license: Apache-2.0
-      summary: |
-        The Open Source toolkit for Secure Sockets Layer and Transport Layer Security
-
-  - name: m2-libssh2
-    version: 1.11.0.1
-    script: install_pkg.bat  # [build_platform.startswith("win-")]
-    script: install_pkg.sh   # [not build_platform.startswith("win-")]
-    build:
-      noarch: generic
-    requirements:
-      host:
-        - m2-ca-certificates
-        - m2-openssl
-        - m2-zlib
-        - m2-conda-epoch 20230914
-      run:
-        - m2-ca-certificates
-        - m2-openssl
-        - m2-zlib
-        - m2-conda-epoch 20230914
-    about:
-      home: https://libssh2.org/
-      license: BSD
-      summary: |
-        Multi-protocol file transfer library (runtime)
-
-  - name: m2-libnghttp2
-    version: 1.56.0.1
-    script: install_pkg.bat  # [build_platform.startswith("win-")]
-    script: install_pkg.sh   # [not build_platform.startswith("win-")]
-    build:
-      noarch: generic
-    requirements:
-      host:
-        - m2-gcc-libs
-        - m2-conda-epoch 20230914
-      run:
-        - m2-gcc-libs
-        - m2-conda-epoch 20230914
-    about:
-      home: https://nghttp2.org/
-      license: MIT
-      summary: |
-        Framing layer of HTTP/2 is implemented as a reusable C library (runtime)
-
-  - name: m2-heimdal-libs
-    version: 7.8.0.4
-    script: install_pkg.bat  # [build_platform.startswith("win-")]
-    script: install_pkg.sh   # [not build_platform.startswith("win-")]
-    build:
-      noarch: generic
-    requirements:
-      host:
-        - m2-libdb
-        - m2-libxcrypt
-        - m2-libedit
-        - m2-libsqlite
-        - m2-libopenssl
-        - m2-conda-epoch 20230914
-      run:
-        - m2-libdb
-        - m2-libxcrypt
-        - m2-libedit
-        - m2-libsqlite
-        - m2-libopenssl
-        - m2-conda-epoch 20230914
-    about:
-      home: https://www.h5l.org/
-      license: custom
-      summary: |
-        Implementation of Kerberos V5 libraries
-
-  - name: m2-libedit
-    version: 20221030_3.1.1
-    script: install_pkg.bat  # [build_platform.startswith("win-")]
-    script: install_pkg.sh   # [not build_platform.startswith("win-")]
-    build:
-      noarch: generic
-    requirements:
-      host:
-        - m2-ncurses
-        - m2-bash
-        - m2-conda-epoch 20230914
-      run:
-        - m2-ncurses
-        - m2-bash
-        - m2-conda-epoch 20230914
-    about:
-      home: https://www.thrysoee.dk/editline/
-      license: BSD
-      summary: |
-        Libedit is an autotool- and libtoolized port of the NetBSD Editline library.
-
-  - name: m2-ca-certificates
-    version: 20230311.1
-    script: install_pkg.bat  # [build_platform.startswith("win-")]
-    script: install_pkg.sh   # [not build_platform.startswith("win-")]
-    build:
-      noarch: generic
-      number: 1
-    requirements:
-      host:
-        - m2-bash
-        - m2-openssl
-        - m2-findutils
-        - m2-coreutils
-        - m2-sed
-        - m2-p11-kit
-        - m2-conda-epoch 20230914
-      run:
-        - m2-bash
-        - m2-openssl
-        - m2-findutils
-        - m2-coreutils
-        - m2-sed
-        - m2-p11-kit
-        - m2-conda-epoch 20230914
-    about:
-      home: https://www.mozilla.org/en-US/about/governance/policies/security-group/certs/
-      license: MPL
-      summary: |
-        Common CA certificates
-
-  - name: m2-p11-kit
-    version: 0.25.0.1
-    script: install_pkg.bat  # [build_platform.startswith("win-")]
-    script: install_pkg.sh   # [not build_platform.startswith("win-")]
-    build:
-      noarch: generic
-    requirements:
-      host:
-        - m2-libp11-kit
-        - m2-conda-epoch 20230914
-      run:
-        - m2-libp11-kit
-        - m2-conda-epoch 20230914
-    about:
-      home: https://p11-glue.freedesktop.org/p11-kit.html
-      license: BSD
-      summary: |
-        Library to work with PKCS#11 modules
-
-  - name: m2-brotli
-    version: 1.1.0.1
-    script: install_pkg.bat  # [build_platform.startswith("win-")]
-    script: install_pkg.sh   # [not build_platform.startswith("win-")]
-    build:
-      noarch: generic
-    requirements:
-      host:
-        - m2-gcc-libs
-        - m2-conda-epoch 20230914
-      run:
-        - m2-gcc-libs
-        - m2-conda-epoch 20230914
-    about:
-      home: https://github.com/google/brotli
-      license: MIT
-      summary: |
-        Brotli compression library
-
-  - name: m2-libassuan
-    version: 2.5.6.1
-    script: install_pkg.bat  # [build_platform.startswith("win-")]
-    script: install_pkg.sh   # [not build_platform.startswith("win-")]
-    build:
-      noarch: generic
-    requirements:
-      host:
-        - m2-gcc-libs
-        - m2-libgpg-error
-        - m2-conda-epoch 20230914
-      run:
-        - m2-gcc-libs
-        - m2-libgpg-error
-        - m2-conda-epoch 20230914
-    about:
-      home: https://gnupg.org/related_software/libassuan
-      license: GPL
-      summary: |
-        A IPC library used by some GnuPG related software
-
-  - name: m2-libidn2
-    version: 2.3.4.2
-    script: install_pkg.bat  # [build_platform.startswith("win-")]
-    script: install_pkg.sh   # [not build_platform.startswith("win-")]
-    build:
-      noarch: generic
-    requirements:
-      host:
-        - m2-libunistring
-        - m2-libintl
-        - m2-conda-epoch 20230914
-      run:
-        - m2-libunistring
-        - m2-libintl
-        - m2-conda-epoch 20230914
-    about:
-      home: https://www.gnu.org/software/libidn/
-      license: GPL3
-      summary: |
-        Implementation of the Stringprep, Punycode and IDNA specifications
-
-  - name: m2-util-linux
-    version: 2.35.2.4
-    script: install_pkg.bat  # [build_platform.startswith("win-")]
-    script: install_pkg.sh   # [not build_platform.startswith("win-")]
-    build:
-      noarch: generic
-    requirements:
-      host:
-        - m2-coreutils
-        - m2-libutil-linux
-        - m2-libiconv
-        - m2-conda-epoch 20230914
-      run:
-        - m2-coreutils
-        - m2-libutil-linux
-        - m2-libiconv
-        - m2-conda-epoch 20230914
-    about:
-      home: https://www.kernel.org/pub/linux/utils/util-linux/
-      license: GPL3
-      summary: |
-        Collection of basic system utilities
-
-  - name: m2-tzcode
-    version: 2023c.1
-    script: install_pkg.bat  # [build_platform.startswith("win-")]
-    script: install_pkg.sh   # [not build_platform.startswith("win-")]
-    build:
-      noarch: generic
-    requirements:
-      host:
-        - m2-coreutils
-        - m2-gawk
-        - m2-sed
-        - m2-conda-epoch 20230914
-      run:
-        - m2-coreutils
-        - m2-gawk
-        - m2-sed
-        - m2-conda-epoch 20230914
-    about:
-      home: https://www.iana.org/time-zones
-      license: GPL
-      summary: |
-        Sources for time zone and daylight saving time data
-
-  - name: m2-time
-    version: 1.9.3
-    script: install_pkg.bat  # [build_platform.startswith("win-")]
-    script: install_pkg.sh   # [not build_platform.startswith("win-")]
-    build:
-      noarch: generic
-    requirements:
-      host:
-        - m2-conda-epoch 20230914
-      run:
-        - m2-conda-epoch 20230914
-    about:
-      home: https://www.gnu.org/directory/time.html
-      license: GPL
-      summary: |
-        Utility for monitoring a program's use of system resources
-
-  - name: m2-rebase
-    version: 4.5.0.4
-    script: install_pkg.bat  # [build_platform.startswith("win-")]
-    script: install_pkg.sh   # [not build_platform.startswith("win-")]
-    build:
-      noarch: generic
-    requirements:
-      host:
-        - m2-dash
-        - m2-conda-epoch 20230914
-      run:
-        - m2-dash
-        - m2-conda-epoch 20230914
-    about:
-      home: https://www.cygwin.com/
-      license: custom
-      summary: |
-        The Cygwin rebase distribution contains four utilities, rebase, rebaseall, peflags, and peflagsall
-
-  - name: m2-nano
-    version: 7.2.1
-    script: install_pkg.bat  # [build_platform.startswith("win-")]
-    script: install_pkg.sh   # [not build_platform.startswith("win-")]
-    build:
-      noarch: generic
-    requirements:
-      host:
-        - m2-file
-        - m2-libintl
-        - m2-ncurses
-        - m2-bash
-        - m2-conda-epoch 20230914
-      run:
-        - m2-file
-        - m2-libintl
-        - m2-ncurses
-        - m2-bash
-        - m2-conda-epoch 20230914
-    about:
-      home: https://www.nano-editor.org
-      license: GPL-3.0-or-later
-      summary: |
-        Pico editor clone with enhancements
-
   - name: m2-msys2-launcher
-    version: 1.5.1
+    version: "1.5.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -3513,9 +3662,11 @@ outputs:
       host:
         - m2-mintty >=1!2.2.1
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
       run:
         - m2-mintty >=1!2.2.1
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
     about:
       home: 
       license: MIT
@@ -3523,7 +3674,7 @@ outputs:
         Helper for launching MSYS2 shells
 
   - name: m2-msys2-keyring
-    version: 1!20230703.1
+    version: "1!20230703.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -3531,8 +3682,10 @@ outputs:
     requirements:
       host:
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
       run:
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
     about:
       home: https://github.com/msys2/MSYS2-keyring
       license: GPL
@@ -3540,7 +3693,7 @@ outputs:
         MSYS2 PGP keyring
 
   - name: m2-mintty
-    version: 1!3.6.5.1
+    version: "1!3.6.5.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -3549,9 +3702,11 @@ outputs:
       host:
         - m2-bash
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
       run:
         - m2-bash
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
     about:
       home: https://mintty.github.io
       license: GPL-3.0-or-later
@@ -3559,7 +3714,7 @@ outputs:
         Terminal emulator with native Windows look and feel
 
   - name: m2-less
-    version: 643.1
+    version: "643.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -3569,10 +3724,12 @@ outputs:
         - m2-ncurses
         - m2-libpcre2_8
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
       run:
         - m2-ncurses
         - m2-libpcre2_8
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
     about:
       home: http://www.greenwoodsoftware.com/less
       license: GPL3
@@ -3580,7 +3737,7 @@ outputs:
         A terminal based program for viewing text files
 
   - name: m2-info
-    version: 7.0.3.3
+    version: "7.0.3.3"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -3592,12 +3749,14 @@ outputs:
         - m2-libintl
         - m2-ncurses
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
       run:
         - m2-gzip
         - m2-libxcrypt
         - m2-libintl
         - m2-ncurses
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
     about:
       home: https://www.gnu.org/software/texinfo/
       license: GPL-3.0-or-later
@@ -3605,7 +3764,7 @@ outputs:
         Utilities to work with and produce manuals, ASCII text, and on-line documentation from a single source file
 
   - name: m2-inetutils
-    version: 2.4.2
+    version: "2.4.2"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -3617,12 +3776,14 @@ outputs:
         - m2-libreadline
         - m2-ncurses
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
       run:
         - m2-gcc-libs
         - m2-libintl
         - m2-libreadline
         - m2-ncurses
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
     about:
       home: https://www.gnu.org/software/inetutils/
       license: GPL-3.0-or-later
@@ -3630,7 +3791,7 @@ outputs:
         A collection of common network programs.
 
   - name: m2-gzip
-    version: 1.13.1
+    version: "1.13.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -3640,10 +3801,12 @@ outputs:
         - m2-bash
         - m2-less
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
       run:
         - m2-bash
         - m2-less
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
     about:
       home: https://www.gnu.org/software/gzip/
       license: GPL3
@@ -3651,7 +3814,7 @@ outputs:
         GNU compression utility
 
   - name: m2-grep
-    version: 1!3.0.6
+    version: "1!3.0.6"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -3663,12 +3826,14 @@ outputs:
         - m2-libpcre
         - m2-bash
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
       run:
         - m2-libiconv
         - m2-libintl
         - m2-libpcre
         - m2-bash
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
     about:
       home: https://www.gnu.org/software/grep/
       license: GPL3
@@ -3676,7 +3841,7 @@ outputs:
         A string search utility
 
   - name: m2-libpcre
-    version: 8.45.3
+    version: "8.45.3"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -3685,9 +3850,11 @@ outputs:
       host:
         - m2-gcc-libs
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
       run:
         - m2-gcc-libs
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
     about:
       home: https://www.pcre.org/
       license: BSD
@@ -3695,7 +3862,7 @@ outputs:
         A library that implements Perl 5-style regular expressions
 
   - name: m2-getent
-    version: 2.18.90.4
+    version: "2.18.90.4"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -3704,9 +3871,11 @@ outputs:
       host:
         - m2-libargp
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
       run:
         - m2-libargp
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
     about:
       home: https://www.gnu.org/software/libc/libc.html
       license: LGPL
@@ -3714,7 +3883,7 @@ outputs:
         Get entries from Name Service Switch libraries
 
   - name: m2-libargp
-    version: 20110921.4
+    version: "20110921.4"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -3722,8 +3891,10 @@ outputs:
     requirements:
       host:
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
       run:
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
     about:
       home: https://www.gnu.org/software/libc/libc.html
       license: GPL
@@ -3731,7 +3902,7 @@ outputs:
         Interface for parsing command-line arguments
 
   - name: m2-filesystem
-    version: 2023.02.07.1
+    version: "2023.02.07.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -3739,8 +3910,10 @@ outputs:
     requirements:
       host:
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
       run:
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
     about:
       home: https://github.com/msys2/MSYS2-packages/tree/master/filesystem
       license: BSD-3-Clause
@@ -3748,7 +3921,7 @@ outputs:
         Base filesystem
 
   - name: m2-file
-    version: 5.45.1
+    version: "5.45.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -3761,6 +3934,7 @@ outputs:
         - m2-liblzma
         - m2-libzstd
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
       run:
         - m2-gcc-libs
         - m2-zlib
@@ -3768,6 +3942,7 @@ outputs:
         - m2-liblzma
         - m2-libzstd
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
     about:
       home: https://www.darwinsys.com/file/
       license: custom
@@ -3775,7 +3950,7 @@ outputs:
         File type identification utility
 
   - name: m2-dash
-    version: 0.5.12.1
+    version: "0.5.12.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -3786,11 +3961,13 @@ outputs:
         - m2-sed
         - m2-filesystem
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
       run:
         - m2-grep
         - m2-sed
         - m2-filesystem
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
     about:
       home: http://gondor.apana.org.au/~herbert/dash/
       license: BSD
@@ -3798,7 +3975,7 @@ outputs:
         A POSIX compliant shell that aims to be as small as possible
 
   - name: m2-bzip2
-    version: 1.0.8.4
+    version: "1.0.8.4"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -3807,9 +3984,11 @@ outputs:
       host:
         - m2-libbz2
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
       run:
         - m2-libbz2
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
     about:
       home: http://www.bzip.org
       license: custom
@@ -3817,7 +3996,7 @@ outputs:
         A high-quality data compression program
 
   - name: m2-bsdtar
-    version: 3.7.2.1
+    version: "3.7.2.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -3834,6 +4013,7 @@ outputs:
         - m2-libzstd
         - m2-zlib
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
       run:
         - m2-gcc-libs
         - m2-libbz2
@@ -3845,6 +4025,7 @@ outputs:
         - m2-libzstd
         - m2-zlib
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
     about:
       home: https://libarchive.org/
       license: BSD
@@ -3852,7 +4033,7 @@ outputs:
         Multi-format archive and compression library
 
   - name: m2-liblz4
-    version: 1.9.4.1
+    version: "1.9.4.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -3861,9 +4042,11 @@ outputs:
       host:
         - m2-gcc-libs
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
       run:
         - m2-gcc-libs
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
     about:
       home: https://lz4.github.io/lz4/
       license: LGPL
@@ -3871,7 +4054,7 @@ outputs:
         Very fast lossless compression algorithm
 
   - name: m2-libexpat
-    version: 2.5.0.1
+    version: "2.5.0.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -3880,9 +4063,11 @@ outputs:
       host:
         - m2-gcc-libs
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
       run:
         - m2-gcc-libs
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
     about:
       home: https://libexpat.github.io/
       license: MIT
@@ -3890,7 +4075,7 @@ outputs:
         An XML parser library
 
   - name: m2-bash-completion
-    version: 2.11.3
+    version: "2.11.3"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -3899,9 +4084,11 @@ outputs:
       host:
         - m2-bash
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
       run:
         - m2-bash
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
     about:
       home: https://github.com/scop/bash-completion
       license: GPL
@@ -3909,7 +4096,7 @@ outputs:
         Programmable completion for the bash shell
 
   - name: m2-curl
-    version: 8.2.1.1
+    version: "8.2.1.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -3924,6 +4111,7 @@ outputs:
         - m2-openssl
         - m2-zlib
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
       run:
         - m2-ca-certificates
         - m2-libcurl
@@ -3933,6 +4121,7 @@ outputs:
         - m2-openssl
         - m2-zlib
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
     about:
       home: https://curl.haxx.se
       license: MIT
@@ -3940,7 +4129,7 @@ outputs:
         Multi-protocol file transfer utility
 
   - name: m2-p7zip
-    version: 17.05.1
+    version: "17.05.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -3950,10 +4139,12 @@ outputs:
         - m2-gcc-libs
         - m2-bash
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
       run:
         - m2-gcc-libs
         - m2-bash
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
     about:
       home: https://github.com/p7zip-project/p7zip
       license: LGPL
@@ -3961,7 +4152,7 @@ outputs:
         Command-line version of the 7zip compressed file archiver
 
   - name: m2-texinfo
-    version: 7.0.3.3
+    version: "7.0.3.3"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -3972,11 +4163,13 @@ outputs:
         - m2-perl
         - m2-bash
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
       run:
         - m2-info
         - m2-perl
         - m2-bash
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
     about:
       home: https://www.gnu.org/software/texinfo/
       license: GPL-3.0-or-later
@@ -3984,7 +4177,7 @@ outputs:
         Utilities to work with and produce manuals, ASCII text, and on-line documentation from a single source file
 
   - name: m2-bash
-    version: 5.2.015.1
+    version: "5.2.015.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -3993,9 +4186,11 @@ outputs:
       host:
         - m2-filesystem
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
       run:
         - m2-filesystem
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
     about:
       home: https://www.gnu.org/software/bash/bash.html
       license: GPL
@@ -4003,7 +4198,7 @@ outputs:
         The GNU Bourne Again shell
 
   - name: m2-m4
-    version: 1.4.19.2
+    version: "1.4.19.2"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -4014,11 +4209,13 @@ outputs:
         - m2-gcc-libs
         - m2-libiconv
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
       run:
         - m2-bash
         - m2-gcc-libs
         - m2-libiconv
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
     about:
       home: https://www.gnu.org/software/m4
       license: GPL3
@@ -4026,7 +4223,7 @@ outputs:
         The GNU macro processor
 
   - name: m2-findutils
-    version: 4.9.0.3
+    version: "4.9.0.3"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -4036,10 +4233,12 @@ outputs:
         - m2-libiconv
         - m2-libintl
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
       run:
         - m2-libiconv
         - m2-libintl
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
     about:
       home: https://www.gnu.org/software/findutils
       license: GPL3
@@ -4047,7 +4246,7 @@ outputs:
         GNU utilities to locate files
 
   - name: m2-autoconf
-    version: 2.71.3
+    version: "2.71.3"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -4061,6 +4260,7 @@ outputs:
         - m2-perl
         - m2-sed
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
       run:
         - m2-gawk
         - m2-m4
@@ -4069,6 +4269,7 @@ outputs:
         - m2-perl
         - m2-sed
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
     about:
       home: https://www.gnu.org/software/autoconf
       license: GPL2
@@ -4076,7 +4277,7 @@ outputs:
         A GNU tool for automatically configuring source code
 
   - name: m2-libtool
-    version: 2.4.7.3
+    version: "2.4.7.3"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -4087,11 +4288,13 @@ outputs:
         - m2-libltdl =2.4.7
         - m2-tar
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
       run:
         - m2-bash
         - m2-libltdl =2.4.7
         - m2-tar
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
     about:
       home: https://www.gnu.org/software/libtool/
       license: GPL-2.0-or-later
@@ -4099,7 +4302,7 @@ outputs:
         A generic library support script
 
   - name: m2-libltdl
-    version: 2.4.7.3
+    version: "2.4.7.3"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -4107,8 +4310,10 @@ outputs:
     requirements:
       host:
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
       run:
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
     about:
       home: https://www.gnu.org/software/libtool/
       license: GPL-2.0-or-later
@@ -4116,7 +4321,7 @@ outputs:
         A system independent dlopen wrapper for GNU libtool
 
   - name: m2-sed
-    version: 4.9.1
+    version: "4.9.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -4126,10 +4331,12 @@ outputs:
         - m2-libintl
         - m2-bash
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
       run:
         - m2-libintl
         - m2-bash
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
     about:
       home: https://www.gnu.org/software/sed
       license: GPL3
@@ -4137,7 +4344,7 @@ outputs:
         GNU stream editor
 
   - name: m2-make
-    version: 4.4.1.1
+    version: "4.4.1.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -4147,10 +4354,12 @@ outputs:
         - m2-libintl
         - m2-bash
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
       run:
         - m2-libintl
         - m2-bash
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
     about:
       home: https://www.gnu.org/software/make
       license: GPL3
@@ -4158,7 +4367,7 @@ outputs:
         GNU make utility to maintain groups of programs
 
   - name: m2-automake-wrapper
-    version: 20221207.1
+    version: "20221207.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -4174,6 +4383,7 @@ outputs:
         - m2-automake1.15
         - m2-automake1.16
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
       run:
         - m2-bash
         - m2-gawk
@@ -4184,6 +4394,7 @@ outputs:
         - m2-automake1.15
         - m2-automake1.16
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
     about:
       home: https://gitweb.gentoo.org/proj/autotools-wrappers.git/
       license: GPL-2.0-only
@@ -4191,7 +4402,7 @@ outputs:
         Wrapper scripts for automake commands
 
   - name: m2-automake1.16
-    version: 1.16.5.1
+    version: "1.16.5.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -4201,10 +4412,12 @@ outputs:
         - m2-perl
         - m2-bash
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
       run:
         - m2-perl
         - m2-bash
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
     about:
       home: https://www.gnu.org/software/automake
       license: GPL
@@ -4212,7 +4425,7 @@ outputs:
         A GNU tool for automatically creating Makefiles
 
   - name: m2-automake1.15
-    version: 1.15.1.4
+    version: "1.15.1.4"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -4222,10 +4435,12 @@ outputs:
         - m2-perl
         - m2-bash
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
       run:
         - m2-perl
         - m2-bash
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
     about:
       home: https://www.gnu.org/software/automake
       license: GPL
@@ -4233,7 +4448,7 @@ outputs:
         A GNU tool for automatically creating Makefiles
 
   - name: m2-automake1.14
-    version: 1.14.1.6
+    version: "1.14.1.6"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -4243,10 +4458,12 @@ outputs:
         - m2-perl
         - m2-bash
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
       run:
         - m2-perl
         - m2-bash
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
     about:
       home: https://www.gnu.org/software/automake
       license: GPL
@@ -4254,7 +4471,7 @@ outputs:
         A GNU tool for automatically creating Makefiles
 
   - name: m2-automake1.13
-    version: 1.13.4.7
+    version: "1.13.4.7"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -4264,10 +4481,12 @@ outputs:
         - m2-perl
         - m2-bash
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
       run:
         - m2-perl
         - m2-bash
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
     about:
       home: https://www.gnu.org/software/automake
       license: GPL
@@ -4275,7 +4494,7 @@ outputs:
         A GNU tool for automatically creating Makefiles
 
   - name: m2-automake1.12
-    version: 1.12.6.6
+    version: "1.12.6.6"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -4285,10 +4504,12 @@ outputs:
         - m2-perl
         - m2-bash
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
       run:
         - m2-perl
         - m2-bash
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
     about:
       home: https://www.gnu.org/software/automake
       license: GPL
@@ -4296,7 +4517,7 @@ outputs:
         A GNU tool for automatically creating Makefiles
 
   - name: m2-automake1.11
-    version: 1.11.6.6
+    version: "1.11.6.6"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -4306,10 +4527,12 @@ outputs:
         - m2-perl
         - m2-bash
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
       run:
         - m2-perl
         - m2-bash
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
     about:
       home: https://www.gnu.org/software/automake
       license: GPL
@@ -4317,7 +4540,7 @@ outputs:
         A GNU tool for automatically creating Makefiles
 
   - name: m2-git
-    version: 2.42.0.2
+    version: "2.42.0.2"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -4339,6 +4562,7 @@ outputs:
         - m2-perl-net-smtp-ssl
         - m2-perl-termreadkey
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
       run:
         - m2-curl
         - m2-libpcre2_8
@@ -4355,6 +4579,7 @@ outputs:
         - m2-perl-net-smtp-ssl
         - m2-perl-termreadkey
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
     about:
       home: https://git-scm.com/
       license: GPL2
@@ -4362,7 +4587,7 @@ outputs:
         The fast distributed version control system
 
   - name: m2-perl-termreadkey
-    version: 2.38.5
+    version: "2.38.5"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -4371,9 +4596,11 @@ outputs:
       host:
         - m2-perl
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
       run:
         - m2-perl
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
     about:
       home: https://metacpan.org/dist/TermReadKey
       license: custom
@@ -4381,7 +4608,7 @@ outputs:
         Provides simple control over terminal driver modes
 
   - name: m2-perl-net-smtp-ssl
-    version: 1.04.2
+    version: "1.04.2"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -4390,9 +4617,11 @@ outputs:
       host:
         - m2-perl-io-socket-ssl
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
       run:
         - m2-perl-io-socket-ssl
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
     about:
       home: https://metacpan.org/dist/Net-SMTP-SSL
       license: GPL
@@ -4400,7 +4629,7 @@ outputs:
         SSL support for Net::SMTP
 
   - name: m2-perl-io-socket-ssl
-    version: 2.083.1
+    version: "2.083.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -4411,11 +4640,13 @@ outputs:
         - m2-perl
         - m2-perl-uri
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
       run:
         - m2-perl-net-ssleay
         - m2-perl
         - m2-perl-uri
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
     about:
       home: https://metacpan.org/release/IO-Socket-SSL
       license: GPL
@@ -4423,7 +4654,7 @@ outputs:
         Nearly transparent SSL encapsulation for IO::Socket::INET
 
   - name: m2-perl-uri
-    version: 5.21.1
+    version: "5.21.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -4432,9 +4663,11 @@ outputs:
       host:
         - m2-perl >=5.10.0
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
       run:
         - m2-perl >=5.10.0
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
     about:
       home: https://metacpan.org/dist/URI
       license: PerlArtistic
@@ -4442,7 +4675,7 @@ outputs:
         Uniform Resource Identifiers (absolute and relative)
 
   - name: m2-perl-net-ssleay
-    version: 1.92.5
+    version: "1.92.5"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -4451,9 +4684,11 @@ outputs:
       host:
         - m2-openssl
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
       run:
         - m2-openssl
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
     about:
       home: https://metacpan.org/dist/Net-SSLeay/
       license: custom:BSD
@@ -4461,7 +4696,7 @@ outputs:
         Perl extension for using OpenSSL
 
   - name: m2-perl-mime-tools
-    version: 5.510.1
+    version: "5.510.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -4472,11 +4707,13 @@ outputs:
         - m2-perl-io-stringy
         - m2-perl-convert-binhex
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
       run:
         - m2-perl-mailtools
         - m2-perl-io-stringy
         - m2-perl-convert-binhex
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
     about:
       home: https://metacpan.org/release/MIME-tools
       license: GPL
@@ -4484,7 +4721,7 @@ outputs:
         Parses streams to create MIME entities
 
   - name: m2-perl-convert-binhex
-    version: 1.125.2
+    version: "1.125.2"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -4493,9 +4730,11 @@ outputs:
       host:
         - m2-perl
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
       run:
         - m2-perl
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
     about:
       home: https://metacpan.org/dist/Convert-BinHex
       license: PerlArtistic
@@ -4503,7 +4742,7 @@ outputs:
         Perl module to extract data from Macintosh BinHex files
 
   - name: m2-perl-io-stringy
-    version: 2.113.1
+    version: "2.113.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -4512,9 +4751,11 @@ outputs:
       host:
         - m2-perl
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
       run:
         - m2-perl
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
     about:
       home: https://metacpan.org/release/IO-stringy
       license: GPL
@@ -4522,7 +4763,7 @@ outputs:
         I/O on in-core objects like strings/arrays
 
   - name: m2-perl-mailtools
-    version: 2.21.1
+    version: "2.21.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -4531,9 +4772,11 @@ outputs:
       host:
         - m2-perl-timedate
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
       run:
         - m2-perl-timedate
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
     about:
       home: https://metacpan.org/release/MailTools
       license: PerlArtistic
@@ -4541,7 +4784,7 @@ outputs:
         Various e-mail related modules
 
   - name: m2-perl-timedate
-    version: 2.33.2
+    version: "2.33.2"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -4550,9 +4793,11 @@ outputs:
       host:
         - m2-perl
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
       run:
         - m2-perl
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
     about:
       home: https://metacpan.org/dist/TimeDate
       license: PerlArtistic
@@ -4560,7 +4805,7 @@ outputs:
         Date formating subroutines
 
   - name: m2-perl-libwww
-    version: 6.67.1
+    version: "6.67.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -4582,6 +4827,7 @@ outputs:
         - m2-perl-http-message
         - m2-perl-try-tiny
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
       run:
         - m2-perl
         - m2-perl-encode-locale
@@ -4598,6 +4844,7 @@ outputs:
         - m2-perl-http-message
         - m2-perl-try-tiny
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
     about:
       home: https://metacpan.org/dist/libwww-perl
       license: Artistic-1.0-Perl
@@ -4605,7 +4852,7 @@ outputs:
         The World-Wide Web library for Perl
 
   - name: m2-perl-try-tiny
-    version: 0.31.1
+    version: "0.31.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -4614,9 +4861,11 @@ outputs:
       host:
         - m2-perl
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
       run:
         - m2-perl
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
     about:
       home: https://metacpan.org/release/Try-Tiny
       license: MIT
@@ -4624,7 +4873,7 @@ outputs:
         Minimal try/catch with proper localization of $@
 
   - name: m2-perl-http-message
-    version: 6.44.1
+    version: "6.44.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -4639,6 +4888,7 @@ outputs:
         - m2-perl-lwp-mediatypes >=6
         - m2-perl-uri >=1.10
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
       run:
         - m2-perl >=5.8.8
         - m2-perl-clone
@@ -4648,6 +4898,7 @@ outputs:
         - m2-perl-lwp-mediatypes >=6
         - m2-perl-uri >=1.10
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
     about:
       home: https://metacpan.org/release/HTTP-Message
       license: PerlArtistic
@@ -4655,7 +4906,7 @@ outputs:
         HTTP style messages
 
   - name: m2-perl-io-html
-    version: 1.004.2
+    version: "1.004.2"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -4664,9 +4915,11 @@ outputs:
       host:
         - m2-perl
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
       run:
         - m2-perl
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
     about:
       home: https://metacpan.org/release/IO-HTML
       license: PerlArtistic
@@ -4674,7 +4927,7 @@ outputs:
         Open an HTML file with automatic charset detection
 
   - name: m2-perl-clone
-    version: 0.46.1
+    version: "0.46.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -4683,9 +4936,11 @@ outputs:
       host:
         - m2-perl
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
       run:
         - m2-perl
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
     about:
       home: https://github.com/garu/Clone
       license: GPL
@@ -4693,7 +4948,7 @@ outputs:
         Recursive copy of nested objects.
 
   - name: m2-perl-www-robotrules
-    version: 6.02.2
+    version: "6.02.2"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -4703,10 +4958,12 @@ outputs:
         - m2-perl
         - m2-perl-uri
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
       run:
         - m2-perl
         - m2-perl-uri
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
     about:
       home: https://metacpan.org/release/WWW-RobotRules
       license: PerlArtistic
@@ -4714,7 +4971,7 @@ outputs:
         Database of robots.txt-derived permissions
 
   - name: m2-perl-net-http
-    version: 6.23.1
+    version: "6.23.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -4723,9 +4980,11 @@ outputs:
       host:
         - m2-perl >=5.6.2
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
       run:
         - m2-perl >=5.6.2
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
     about:
       home: https://metacpan.org/release/Net-HTTP
       license: PerlArtistic
@@ -4733,7 +4992,7 @@ outputs:
         Low-level HTTP connection (client)
 
   - name: m2-perl-lwp-mediatypes
-    version: 6.04.1
+    version: "6.04.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -4742,9 +5001,11 @@ outputs:
       host:
         - m2-perl
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
       run:
         - m2-perl
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
     about:
       home: https://metacpan.org/release/LWP-MediaTypes
       license: PerlArtistic
@@ -4752,7 +5013,7 @@ outputs:
         Guess the media type of a file or a URL
 
   - name: m2-perl-http-negotiate
-    version: 6.01.3
+    version: "6.01.3"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -4762,10 +5023,12 @@ outputs:
         - m2-perl >=5.8.8
         - m2-perl-http-message
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
       run:
         - m2-perl >=5.8.8
         - m2-perl-http-message
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
     about:
       home: https://metacpan.org/dist/HTTP-Negotiate
       license: PerlArtistic
@@ -4773,7 +5036,7 @@ outputs:
         choose a variant to serve
 
   - name: m2-perl-http-date
-    version: 6.06.1
+    version: "6.06.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -4782,9 +5045,11 @@ outputs:
       host:
         - m2-perl >=5.8.8
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
       run:
         - m2-perl >=5.8.8
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
     about:
       home: https://metacpan.org/release/HTTP-Date
       license: PerlArtistic
@@ -4792,7 +5057,7 @@ outputs:
         Date conversion routines
 
   - name: m2-perl-http-daemon
-    version: 6.16.1
+    version: "6.16.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -4805,6 +5070,7 @@ outputs:
         - m2-perl-io-socket-ip
         - m2-perl-lwp-mediatypes
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
       run:
         - m2-perl
         - m2-perl-http-date
@@ -4812,6 +5078,7 @@ outputs:
         - m2-perl-io-socket-ip
         - m2-perl-lwp-mediatypes
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
     about:
       home: https://metacpan.org/dist/HTTP-Daemon
       license: Artistic-1.0-Perl
@@ -4819,7 +5086,7 @@ outputs:
         A simple http server class
 
   - name: m2-perl-io-socket-ip
-    version: 0.41.2
+    version: "0.41.2"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -4828,9 +5095,11 @@ outputs:
       host:
         - m2-perl
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
       run:
         - m2-perl
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
     about:
       home: https://metacpan.org/release/IO-Socket-IP
       license: PerlArtistic
@@ -4838,7 +5107,7 @@ outputs:
         Family-neutral IP socket supporting both IPv4 and IPv6
 
   - name: m2-perl-http-cookies
-    version: 6.10.2
+    version: "6.10.2"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -4849,11 +5118,13 @@ outputs:
         - m2-perl-http-date >=6
         - m2-perl-http-message
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
       run:
         - m2-perl >=5.8.8
         - m2-perl-http-date >=6
         - m2-perl-http-message
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
     about:
       home: https://metacpan.org/release/HTTP-Cookies
       license: PerlArtistic
@@ -4861,7 +5132,7 @@ outputs:
         HTTP cookie jars
 
   - name: m2-perl-html-parser
-    version: 3.81.1
+    version: "3.81.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -4873,12 +5144,14 @@ outputs:
         - m2-perl-uri
         - m2-perl
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
       run:
         - m2-perl-html-tagset
         - m2-perl-http-message
         - m2-perl-uri
         - m2-perl
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
     about:
       home: https://metacpan.org/dist/HTML-Parser
       license: Artistic-1.0-Perl
@@ -4886,7 +5159,7 @@ outputs:
         Perl HTML parser class
 
   - name: m2-perl-html-tagset
-    version: 3.20.3
+    version: "3.20.3"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -4895,9 +5168,11 @@ outputs:
       host:
         - m2-perl >=5.10.0
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
       run:
         - m2-perl >=5.10.0
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
     about:
       home: https://metacpan.org/dist/HTML-Tagset
       license: PerlArtistic
@@ -4905,7 +5180,7 @@ outputs:
         Data tables useful in parsing HTML
 
   - name: m2-perl-file-listing
-    version: 6.16.1
+    version: "6.16.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -4915,10 +5190,12 @@ outputs:
         - m2-perl >=5.8.8
         - m2-perl-http-date >=6
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
       run:
         - m2-perl >=5.8.8
         - m2-perl-http-date >=6
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
     about:
       home: https://metacpan.org/dist/File-Listing
       license: Artistic-1.0-Perl
@@ -4926,7 +5203,7 @@ outputs:
         parse directory listing
 
   - name: m2-perl-encode-locale
-    version: 1.05.2
+    version: "1.05.2"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -4935,9 +5212,11 @@ outputs:
       host:
         - m2-perl >=5.008
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
       run:
         - m2-perl >=5.008
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
     about:
       home: https://metacpan.org/dist/Encode-Locale
       license: PerlArtistic
@@ -4945,7 +5224,7 @@ outputs:
         Determine the locale encoding
 
   - name: m2-perl-authen-sasl
-    version: 2.16.3
+    version: "2.16.3"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -4954,9 +5233,11 @@ outputs:
       host:
         - m2-perl
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
       run:
         - m2-perl
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
     about:
       home: https://metacpan.org/dist/Authen-SASL
       license: GPL
@@ -4964,7 +5245,7 @@ outputs:
         Perl/CPAN Module Authen::SASL : SASL authentication framework
 
   - name: m2-perl-error
-    version: 0.17029.1
+    version: "0.17029.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -4973,9 +5254,11 @@ outputs:
       host:
         - m2-perl
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
       run:
         - m2-perl
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
     about:
       home: https://metacpan.org/release/Error
       license: PerlArtistic
@@ -4983,7 +5266,7 @@ outputs:
         Perl/CPAN Error module - Error/exception handling in an OO-ish way
 
   - name: m2-openssh
-    version: 9.4p1.1
+    version: "9.4p1.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -4996,6 +5279,7 @@ outputs:
         - m2-libfido2
         - m2-openssl
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
       run:
         - m2-heimdal
         - m2-libedit
@@ -5003,6 +5287,7 @@ outputs:
         - m2-libfido2
         - m2-openssl
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
     about:
       home: https://www.openssh.com/portable.html
       license: custom:BSD
@@ -5010,7 +5295,7 @@ outputs:
         Free version of the SSH connectivity tools
 
   - name: m2-libfido2
-    version: 1.13.0.1
+    version: "1.13.0.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -5020,10 +5305,12 @@ outputs:
         - m2-libcbor
         - m2-openssl
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
       run:
         - m2-libcbor
         - m2-openssl
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
     about:
       home: https://developers.yubico.com/libfido2/
       license: BSD-2-Clause
@@ -5031,7 +5318,7 @@ outputs:
         Library functionality for FIDO 2.0, including communication with a device over USB
 
   - name: m2-libcbor
-    version: 0.9.0.1
+    version: "0.9.0.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -5039,8 +5326,10 @@ outputs:
     requirements:
       host:
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
       run:
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
     about:
       home: https://github.com/PJK/libcbor
       license: MIT
@@ -5048,7 +5337,7 @@ outputs:
         A C library for parsing and generating CBOR, a general-purpose schema-less binary data format
 
   - name: m2-heimdal
-    version: 7.8.0.4
+    version: "7.8.0.4"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
     script: install_pkg.sh   # [not build_platform.startswith("win-")]
     build:
@@ -5057,9 +5346,11 @@ outputs:
       host:
         - m2-heimdal-libs
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
       run:
         - m2-heimdal-libs
         - m2-conda-epoch 20230914
+        - m2-msys2-runtime
     about:
       home: https://www.h5l.org/
       license: custom
