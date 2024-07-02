@@ -1765,7 +1765,7 @@ source:
     folder: source-heimdal
 
 build:
-  number: 2
+  number: 3
   noarch: generic
   error_overlinking: false
 
