@@ -20,7 +20,7 @@ if "%PKG_NAME%" == "m2-ca-certificates" (
   copy %RECIPE_DIR%\.m2-ca-certificates-post-link.bat %PREFIX%\Scripts\
 )
 
-if "%PKG_NAME%" == "m2-file-system" (
+if "%PKG_NAME%" == "m2-filesystem" (
   REM cygpath has special casing for /bin
   REM %LIBRARY_PREFIX%/bin should be mounted to /bin, but /bin is a special path
   REM See https://github.com/msys2/msys2-runtime/blob/28d69fba269dd4a9f4281f8af7c2775292241e8b/winsup/cygwin/mount.cc#L1685-L1686
