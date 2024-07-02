@@ -30,6 +30,10 @@ if "%PKG_NAME%" == "m2-filesystem" (
   REM conversions.
   REM To prevent this we mount %LIBRARY_PREFIX%\bin to /conda_bin
   REM see https://cygwin.com/cygwin-ug-net/using.html#mount-table
-  echo >> %LIBRARY_PREFIX%\etc\fstab
-  echo %LIBRARY_PREFIX:\=/%/bin /conda_bin ntfs auto >> %LIBRARY_PREFIX%\etc\fstab
+  setlocal EnableDelayedExpansion
+  set LF=^
+
+
+  REM Keep the 2 empty lines above so LF is set to linefeed character!
+  <nul (set/p=!LF!%LIBRARY_PREFIX:\=/%/bin /conda_bin ntfs auto!LF!) >> %LIBRARY_PREFIX%\etc\fstab || call;
 )
