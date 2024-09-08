@@ -79,6 +79,8 @@ def get_pkgs():
 
 pkg_latest_ver = dict(get_pkgs())
 
+os.makedirs("cache", exist_ok=True)
+os.makedirs("src-cache", exist_ok=True)
 
 def get_info(pkginfo, desc):
     return [
@@ -152,7 +154,11 @@ def get_depends(pkg):
     # get dependencies
     depends = get_info(pkginfo, "depend")
     depends = [dep for dep in depends if not dep.startswith("pacman")]
-    if pkg == "bash":
+    if pkg == "filesystem":
+        # /etc/post-install/05-home-dir.post needs these
+        depends.append("findutils")
+        depends.append("which")
+    elif pkg == "bash":
         # make sure bash comes with the bashrc files
         depends.append("filesystem")
     elif pkg == "libiconv":
@@ -181,7 +187,8 @@ while to_process:
     seen[pkg] = depends, spdx, desc, url, src_name
 
 
-meta = f"""package:
+meta = f"""{{% set pkgs_to_build = ["all"] %}}
+package:
   name: m2-binary-packages
   version: {date}
 
@@ -253,13 +260,14 @@ meta += "".join(sources.keys())
 
 meta += """
 build:
-  number: 1
+  number: 2
   noarch: generic
   error_overlinking: false
 
 outputs:"""
 
 output_template = """
+  {% if "all" in pkgs_to_build or "{{ name }}" in pkgs_to_build %}
   - name: m2-{{ name }}
     version: "{{ version }}"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -276,6 +284,7 @@ output_template = """
       license: {{ license }}
       summary: |
         {{ summary }}
+  {% endif %}
 """
 
 

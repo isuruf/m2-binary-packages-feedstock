@@ -1,3 +1,4 @@
+{% set pkgs_to_build = ["filesystem"] %}
 package:
   name: m2-binary-packages
   version: 20230914
@@ -1765,11 +1766,12 @@ source:
     folder: source-heimdal
 
 build:
-  number: 4
+  number: 5
   noarch: generic
   error_overlinking: false
 
 outputs:
+  {% if "all" in pkgs_to_build or "pkg-config" in pkgs_to_build %}
   - name: m2-pkg-config
     version: "0.29.2.4"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -1790,7 +1792,9 @@ outputs:
       license: GPL
       summary: |
         A system for managing library compile/link flags
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "libiconv" in pkgs_to_build %}
   - name: m2-libiconv
     version: "1.17.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -1811,7 +1815,9 @@ outputs:
       license: LGPL
       summary: |
         Libiconv is a conversion library
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "gcc-libs" in pkgs_to_build %}
   - name: m2-gcc-libs
     version: "11.3.0.4"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -1830,7 +1836,9 @@ outputs:
       license: GPL
       summary: |
         Runtime libraries shipped by GCC
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "texinfo-tex" in pkgs_to_build %}
   - name: m2-texinfo-tex
     version: "7.0.3.3"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -1855,7 +1863,9 @@ outputs:
       license: GPL-3.0-or-later
       summary: |
         Utilities to work with and produce manuals, ASCII text, and on-line documentation from a single source file
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "perl" in pkgs_to_build %}
   - name: m2-perl
     version: "5.36.1.2"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -1884,7 +1894,9 @@ outputs:
       license: GPL
       summary: |
         A highly capable, feature-rich programming language
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "coreutils" in pkgs_to_build %}
   - name: m2-coreutils
     version: "8.32.5"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -1909,7 +1921,9 @@ outputs:
       license: GPL3
       summary: |
         The basic file, shell and text manipulation utilities of the GNU operating system
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "libintl" in pkgs_to_build %}
   - name: m2-libintl
     version: "0.22.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -1932,7 +1946,9 @@ outputs:
       license: GPL
       summary: |
         GNU Internationalization runtime library
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "gmp" in pkgs_to_build %}
   - name: m2-gmp
     version: "6.3.0.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -1951,7 +1967,9 @@ outputs:
       license: LGPL3
       summary: |
         A free library for arbitrary precision arithmetic
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "libxcrypt" in pkgs_to_build %}
   - name: m2-libxcrypt
     version: "4.4.36.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -1970,7 +1988,9 @@ outputs:
       license: LGPL-2.1-or-later
       summary: |
         Modern library for one-way hashing of passwords
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "gdbm" in pkgs_to_build %}
   - name: m2-gdbm
     version: "1.23.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -1991,7 +2011,9 @@ outputs:
       license: GPL3
       summary: |
         GNU database library
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "libgdbm" in pkgs_to_build %}
   - name: m2-libgdbm
     version: "1.23.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -2020,7 +2042,9 @@ outputs:
       license: GPL3
       summary: |
         GNU database library
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "ncurses" in pkgs_to_build %}
   - name: m2-ncurses
     version: "6.4.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -2041,7 +2065,9 @@ outputs:
       license: MIT
       summary: |
         System V Release 4.0 curses emulation library
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "libreadline" in pkgs_to_build %}
   - name: m2-libreadline
     version: "8.2.001.3"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -2062,7 +2088,9 @@ outputs:
       license: GPL
       summary: |
         GNU readline library
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "db" in pkgs_to_build %}
   - name: m2-db
     version: "5.3.28.4"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -2083,7 +2111,9 @@ outputs:
       license: custom
       summary: |
         The Berkeley DB embedded database system
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "libdb" in pkgs_to_build %}
   - name: m2-libdb
     version: "5.3.28.4"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -2104,7 +2134,9 @@ outputs:
       license: custom
       summary: |
         The Berkeley DB embedded database system
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "gawk" in pkgs_to_build %}
   - name: m2-gawk
     version: "5.2.2.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -2131,7 +2163,9 @@ outputs:
       license: GPL
       summary: |
         GNU version of awk
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "mpfr" in pkgs_to_build %}
   - name: m2-mpfr
     version: "4.2.1.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -2152,7 +2186,9 @@ outputs:
       license: LGPL-3.0-or-later
       summary: |
         Multiple-precision floating-point library
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "patchutils" in pkgs_to_build %}
   - name: m2-patchutils
     version: "0.4.2.3"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -2173,7 +2209,9 @@ outputs:
       license: GPL
       summary: |
         Utilities to work with patches
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "pcre2" in pkgs_to_build %}
   - name: m2-pcre2
     version: "10.42.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -2206,7 +2244,9 @@ outputs:
       license: BSD
       summary: |
         A library that implements Perl 5-style regular expressions
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "libpcre2posix" in pkgs_to_build %}
   - name: m2-libpcre2posix
     version: "10.42.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -2227,7 +2267,9 @@ outputs:
       license: BSD
       summary: |
         A library that implements Perl 5-style regular expressions
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "libpcre2_32" in pkgs_to_build %}
   - name: m2-libpcre2_32
     version: "10.42.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -2248,7 +2290,9 @@ outputs:
       license: BSD
       summary: |
         A library that implements Perl 5-style regular expressions
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "libpcre2_16" in pkgs_to_build %}
   - name: m2-libpcre2_16
     version: "10.42.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -2269,7 +2313,9 @@ outputs:
       license: BSD
       summary: |
         A library that implements Perl 5-style regular expressions
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "libpcre2_8" in pkgs_to_build %}
   - name: m2-libpcre2_8
     version: "10.42.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -2290,7 +2336,9 @@ outputs:
       license: BSD
       summary: |
         A library that implements Perl 5-style regular expressions
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "zlib" in pkgs_to_build %}
   - name: m2-zlib
     version: "1.3.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -2311,7 +2359,9 @@ outputs:
       license: custom
       summary: |
         Compression library implementing the deflate compression method found in gzip and PKZIP
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "libbz2" in pkgs_to_build %}
   - name: m2-libbz2
     version: "1.0.8.4"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -2332,7 +2382,9 @@ outputs:
       license: custom
       summary: |
         A high-quality data compression program
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "patch" in pkgs_to_build %}
   - name: m2-patch
     version: "2.7.6.2"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -2351,7 +2403,9 @@ outputs:
       license: GPL
       summary: |
         A utility to apply patch files to original sources
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "diffutils" in pkgs_to_build %}
   - name: m2-diffutils
     version: "3.9.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -2376,7 +2430,9 @@ outputs:
       license: GPL-3.0-or-later
       summary: |
         Utility programs used for creating patch files
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "unzip" in pkgs_to_build %}
   - name: m2-unzip
     version: "6.0.2"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -2399,7 +2455,9 @@ outputs:
       license: custom
       summary: |
         Unpacks .zip archives such as those made by PKZIP
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "zip" in pkgs_to_build %}
   - name: m2-zip
     version: "3.0.3"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -2420,7 +2478,9 @@ outputs:
       license: BSD
       summary: |
         Creates PKZIP-compatible .zip files
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "tar" in pkgs_to_build %}
   - name: m2-tar
     version: "1.34.3"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -2445,7 +2505,9 @@ outputs:
       license: GPL3
       summary: |
         Utility used to store, backup, and transport files
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "base" in pkgs_to_build %}
   - name: m2-base
     version: "2022.06.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -2526,7 +2588,9 @@ outputs:
       license: GPL
       summary: |
         Minimal package set to define a basic MSYS2 installation
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "zstd" in pkgs_to_build %}
   - name: m2-zstd
     version: "1.5.5.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -2549,7 +2613,9 @@ outputs:
       license: BSD
       summary: |
         Zstandard - Fast real-time compression algorithm
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "libzstd" in pkgs_to_build %}
   - name: m2-libzstd
     version: "1.5.5.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -2570,7 +2636,9 @@ outputs:
       license: BSD
       summary: |
         Zstandard - Fast real-time compression algorithm
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "which" in pkgs_to_build %}
   - name: m2-which
     version: "2.21.4"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -2591,7 +2659,9 @@ outputs:
       license: GPL3
       summary: |
         A utility to show the full path of commands
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "wget" in pkgs_to_build %}
   - name: m2-wget
     version: "1.21.4.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -2630,7 +2700,9 @@ outputs:
       license: GPL3
       summary: |
         A network utility to retrieve files from the Web
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "libgnutls" in pkgs_to_build %}
   - name: m2-libgnutls
     version: "3.8.1.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -2667,7 +2739,9 @@ outputs:
       license: GPL-3.0-or-later
       summary: |
         A library which provides a secure layer over a reliable transport layer
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "libtasn1" in pkgs_to_build %}
   - name: m2-libtasn1
     version: "4.19.0.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -2688,7 +2762,9 @@ outputs:
       license: GPL3
       summary: |
         A library for Abstract Syntax Notation One (ASN.1) and Distinguish Encoding Rules (DER) manipulation
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "libp11-kit" in pkgs_to_build %}
   - name: m2-libp11-kit
     version: "0.25.0.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -2713,7 +2789,9 @@ outputs:
       license: BSD
       summary: |
         Library to work with PKCS#11 modules
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "libffi" in pkgs_to_build %}
   - name: m2-libffi
     version: "3.4.4.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -2732,7 +2810,9 @@ outputs:
       license: MIT
       summary: |
         Portable, high level programming interface to various calling conventions
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "libnettle" in pkgs_to_build %}
   - name: m2-libnettle
     version: "3.9.1.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -2753,7 +2833,9 @@ outputs:
       license: GPL-2.0-or-later OR LGPL-3.0-or-later
       summary: |
         A low-level cryptographic library
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "libhogweed" in pkgs_to_build %}
   - name: m2-libhogweed
     version: "3.9.1.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -2774,7 +2856,9 @@ outputs:
       license: GPL-2.0-or-later OR LGPL-3.0-or-later
       summary: |
         A low-level cryptographic library
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "libutil-linux" in pkgs_to_build %}
   - name: m2-libutil-linux
     version: "2.35.2.4"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -2797,7 +2881,9 @@ outputs:
       license: GPL3
       summary: |
         Block device ID and Universally Unique ID libraries
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "libpsl" in pkgs_to_build %}
   - name: m2-libpsl
     version: "0.21.2.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -2822,7 +2908,9 @@ outputs:
       license: MIT
       summary: |
         Public Suffix List library (runtime)
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "libunistring" in pkgs_to_build %}
   - name: m2-libunistring
     version: "1.1.2"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -2843,7 +2931,9 @@ outputs:
       license: LGPL-3.0-or-later OR GPL-2.0-or-later
       summary: |
         Library for manipulating Unicode strings and C strings.
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "libxslt" in pkgs_to_build %}
   - name: m2-libxslt
     version: "1.1.38.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -2866,7 +2956,9 @@ outputs:
       license: custom
       summary: |
         XML stylesheet transformation library
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "libgcrypt" in pkgs_to_build %}
   - name: m2-libgcrypt
     version: "1.9.4.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -2887,7 +2979,9 @@ outputs:
       license: LGPL
       summary: |
         General purpose cryptographic library based on the code from GnuPG
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "libgpg-error" in pkgs_to_build %}
   - name: m2-libgpg-error
     version: "1.47.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -2912,7 +3006,9 @@ outputs:
       license: LGPL-2.1-or-later
       summary: |
         Support library for libgcrypt
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "libxml2" in pkgs_to_build %}
   - name: m2-libxml2
     version: "2.9.14.5"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -2941,7 +3037,9 @@ outputs:
       license: MIT
       summary: |
         XML parsing library, version 2
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "liblzma" in pkgs_to_build %}
   - name: m2-liblzma
     version: "5.4.4.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -2966,7 +3064,9 @@ outputs:
       license: GPL
       summary: |
         Library for XZ and LZMA compressed files
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "gettext" in pkgs_to_build %}
   - name: m2-gettext
     version: "0.22.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -2991,7 +3091,9 @@ outputs:
       license: GPL
       summary: |
         GNU internationalization library
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "libasprintf" in pkgs_to_build %}
   - name: m2-libasprintf
     version: "0.22.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -3012,7 +3114,9 @@ outputs:
       license: GPL
       summary: |
         C-style formatted output in C++ (runtime)
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "libgettextpo" in pkgs_to_build %}
   - name: m2-libgettextpo
     version: "0.22.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -3033,7 +3137,9 @@ outputs:
       license: GPL
       summary: |
         GNU Internationalization runtime library
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "libgpgme" in pkgs_to_build %}
   - name: m2-libgpgme
     version: "1.22.0.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -3058,7 +3164,9 @@ outputs:
       license: LGPL
       summary: |
         A C wrapper library for GnuPG
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "gnupg" in pkgs_to_build %}
   - name: m2-gnupg
     version: "2.2.41.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -3109,7 +3217,9 @@ outputs:
       license: GPL
       summary: |
         Complete and free implementation of the OpenPGP standard
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "pinentry" in pkgs_to_build %}
   - name: m2-pinentry
     version: "1.2.1.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -3134,7 +3244,9 @@ outputs:
       license: GPL
       summary: |
         A collection of simple PIN or passphrase entry dialogs which utilize the Assuan protocol
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "nettle" in pkgs_to_build %}
   - name: m2-nettle
     version: "3.9.1.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -3155,7 +3267,9 @@ outputs:
       license: GPL-2.0-or-later OR LGPL-3.0-or-later
       summary: |
         A low-level cryptographic library
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "libsqlite" in pkgs_to_build %}
   - name: m2-libsqlite
     version: "3.42.0.2"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -3174,7 +3288,9 @@ outputs:
       license: PublicDomain
       summary: |
         Sqlite3 library
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "libnpth" in pkgs_to_build %}
   - name: m2-libnpth
     version: "1.6.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -3195,7 +3311,9 @@ outputs:
       license: LGPL
       summary: |
         New portable threads library
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "libksba" in pkgs_to_build %}
   - name: m2-libksba
     version: "1.6.4.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -3218,7 +3336,9 @@ outputs:
       license: LGPL-3.0-or-later OR GPL-2.0-or-later
       summary: |
         A CMS and X.509 access library
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "libcurl" in pkgs_to_build %}
   - name: m2-libcurl
     version: "8.2.1.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -3259,7 +3379,9 @@ outputs:
       license: MIT
       summary: |
         Multi-protocol file transfer library (runtime)
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "openssl" in pkgs_to_build %}
   - name: m2-openssl
     version: "3.1.2.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -3280,7 +3402,9 @@ outputs:
       license: Apache-2.0
       summary: |
         The Open Source toolkit for Secure Sockets Layer and Transport Layer Security
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "libopenssl" in pkgs_to_build %}
   - name: m2-libopenssl
     version: "3.1.2.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -3299,7 +3423,9 @@ outputs:
       license: Apache-2.0
       summary: |
         The Open Source toolkit for Secure Sockets Layer and Transport Layer Security
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "libssh2" in pkgs_to_build %}
   - name: m2-libssh2
     version: "1.11.0.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -3324,7 +3450,9 @@ outputs:
       license: BSD
       summary: |
         Multi-protocol file transfer library (runtime)
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "libnghttp2" in pkgs_to_build %}
   - name: m2-libnghttp2
     version: "1.56.0.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -3345,7 +3473,9 @@ outputs:
       license: MIT
       summary: |
         Framing layer of HTTP/2 is implemented as a reusable C library (runtime)
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "heimdal-libs" in pkgs_to_build %}
   - name: m2-heimdal-libs
     version: "7.8.0.4"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -3374,7 +3504,9 @@ outputs:
       license: custom
       summary: |
         Implementation of Kerberos V5 libraries
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "libedit" in pkgs_to_build %}
   - name: m2-libedit
     version: "20221030_3.1.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -3397,7 +3529,9 @@ outputs:
       license: BSD
       summary: |
         Libedit is an autotool- and libtoolized port of the NetBSD Editline library.
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "ca-certificates" in pkgs_to_build %}
   - name: m2-ca-certificates
     version: "20230311.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -3428,7 +3562,9 @@ outputs:
       license: MPL
       summary: |
         Common CA certificates
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "p11-kit" in pkgs_to_build %}
   - name: m2-p11-kit
     version: "0.25.0.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -3449,7 +3585,9 @@ outputs:
       license: BSD
       summary: |
         Library to work with PKCS#11 modules
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "brotli" in pkgs_to_build %}
   - name: m2-brotli
     version: "1.1.0.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -3470,7 +3608,9 @@ outputs:
       license: MIT
       summary: |
         Brotli compression library
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "libassuan" in pkgs_to_build %}
   - name: m2-libassuan
     version: "2.5.6.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -3493,7 +3633,9 @@ outputs:
       license: GPL
       summary: |
         A IPC library used by some GnuPG related software
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "libidn2" in pkgs_to_build %}
   - name: m2-libidn2
     version: "2.3.4.2"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -3516,7 +3658,9 @@ outputs:
       license: GPL3
       summary: |
         Implementation of the Stringprep, Punycode and IDNA specifications
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "util-linux" in pkgs_to_build %}
   - name: m2-util-linux
     version: "2.35.2.4"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -3541,7 +3685,9 @@ outputs:
       license: GPL3
       summary: |
         Collection of basic system utilities
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "tzcode" in pkgs_to_build %}
   - name: m2-tzcode
     version: "2023c.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -3566,7 +3712,9 @@ outputs:
       license: GPL
       summary: |
         Sources for time zone and daylight saving time data
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "time" in pkgs_to_build %}
   - name: m2-time
     version: "1.9.3"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -3585,7 +3733,9 @@ outputs:
       license: GPL
       summary: |
         Utility for monitoring a program's use of system resources
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "rebase" in pkgs_to_build %}
   - name: m2-rebase
     version: "4.5.0.4"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -3606,7 +3756,9 @@ outputs:
       license: custom
       summary: |
         The Cygwin rebase distribution contains four utilities, rebase, rebaseall, peflags, and peflagsall
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "nano" in pkgs_to_build %}
   - name: m2-nano
     version: "7.2.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -3633,7 +3785,9 @@ outputs:
       license: GPL-3.0-or-later
       summary: |
         Pico editor clone with enhancements
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "msys2-runtime" in pkgs_to_build %}
   - name: m2-msys2-runtime
     version: "3.4.9.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -3650,7 +3804,9 @@ outputs:
       license: GPL
       summary: |
         Posix emulation engine for Windows
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "msys2-launcher" in pkgs_to_build %}
   - name: m2-msys2-launcher
     version: "1.5.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -3671,7 +3827,9 @@ outputs:
       license: MIT
       summary: |
         Helper for launching MSYS2 shells
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "msys2-keyring" in pkgs_to_build %}
   - name: m2-msys2-keyring
     version: "1!20230703.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -3690,7 +3848,9 @@ outputs:
       license: GPL
       summary: |
         MSYS2 PGP keyring
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "mintty" in pkgs_to_build %}
   - name: m2-mintty
     version: "1!3.6.5.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -3711,7 +3871,9 @@ outputs:
       license: GPL-3.0-or-later
       summary: |
         Terminal emulator with native Windows look and feel
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "less" in pkgs_to_build %}
   - name: m2-less
     version: "643.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -3734,7 +3896,9 @@ outputs:
       license: GPL3
       summary: |
         A terminal based program for viewing text files
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "info" in pkgs_to_build %}
   - name: m2-info
     version: "7.0.3.3"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -3761,7 +3925,9 @@ outputs:
       license: GPL-3.0-or-later
       summary: |
         Utilities to work with and produce manuals, ASCII text, and on-line documentation from a single source file
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "inetutils" in pkgs_to_build %}
   - name: m2-inetutils
     version: "2.4.2"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -3788,7 +3954,9 @@ outputs:
       license: GPL-3.0-or-later
       summary: |
         A collection of common network programs.
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "gzip" in pkgs_to_build %}
   - name: m2-gzip
     version: "1.13.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -3811,7 +3979,9 @@ outputs:
       license: GPL3
       summary: |
         GNU compression utility
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "grep" in pkgs_to_build %}
   - name: m2-grep
     version: "1!3.0.6"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -3838,7 +4008,9 @@ outputs:
       license: GPL3
       summary: |
         A string search utility
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "libpcre" in pkgs_to_build %}
   - name: m2-libpcre
     version: "8.45.3"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -3859,7 +4031,9 @@ outputs:
       license: BSD
       summary: |
         A library that implements Perl 5-style regular expressions
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "getent" in pkgs_to_build %}
   - name: m2-getent
     version: "2.18.90.4"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -3880,7 +4054,9 @@ outputs:
       license: LGPL
       summary: |
         Get entries from Name Service Switch libraries
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "libargp" in pkgs_to_build %}
   - name: m2-libargp
     version: "20110921.4"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -3899,7 +4075,9 @@ outputs:
       license: GPL
       summary: |
         Interface for parsing command-line arguments
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "filesystem" in pkgs_to_build %}
   - name: m2-filesystem
     version: "2023.02.07.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -3908,9 +4086,13 @@ outputs:
       noarch: generic
     requirements:
       host:
+        - m2-findutils
+        - m2-which
         - m2-conda-epoch 20230914
         - m2-msys2-runtime
       run:
+        - m2-findutils
+        - m2-which
         - m2-conda-epoch 20230914
         - m2-msys2-runtime
     about:
@@ -3918,7 +4100,9 @@ outputs:
       license: BSD-3-Clause
       summary: |
         Base filesystem
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "file" in pkgs_to_build %}
   - name: m2-file
     version: "5.45.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -3947,7 +4131,9 @@ outputs:
       license: custom
       summary: |
         File type identification utility
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "dash" in pkgs_to_build %}
   - name: m2-dash
     version: "0.5.12.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -3972,7 +4158,9 @@ outputs:
       license: BSD
       summary: |
         A POSIX compliant shell that aims to be as small as possible
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "bzip2" in pkgs_to_build %}
   - name: m2-bzip2
     version: "1.0.8.4"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -3993,7 +4181,9 @@ outputs:
       license: custom
       summary: |
         A high-quality data compression program
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "bsdtar" in pkgs_to_build %}
   - name: m2-bsdtar
     version: "3.7.2.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -4030,7 +4220,9 @@ outputs:
       license: BSD
       summary: |
         Multi-format archive and compression library
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "liblz4" in pkgs_to_build %}
   - name: m2-liblz4
     version: "1.9.4.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -4051,7 +4243,9 @@ outputs:
       license: LGPL
       summary: |
         Very fast lossless compression algorithm
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "libexpat" in pkgs_to_build %}
   - name: m2-libexpat
     version: "2.5.0.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -4072,7 +4266,9 @@ outputs:
       license: MIT
       summary: |
         An XML parser library
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "bash-completion" in pkgs_to_build %}
   - name: m2-bash-completion
     version: "2.11.3"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -4093,7 +4289,9 @@ outputs:
       license: GPL
       summary: |
         Programmable completion for the bash shell
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "curl" in pkgs_to_build %}
   - name: m2-curl
     version: "8.2.1.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -4126,7 +4324,9 @@ outputs:
       license: MIT
       summary: |
         Multi-protocol file transfer utility
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "p7zip" in pkgs_to_build %}
   - name: m2-p7zip
     version: "17.05.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -4149,7 +4349,9 @@ outputs:
       license: LGPL
       summary: |
         Command-line version of the 7zip compressed file archiver
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "texinfo" in pkgs_to_build %}
   - name: m2-texinfo
     version: "7.0.3.3"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -4174,7 +4376,9 @@ outputs:
       license: GPL-3.0-or-later
       summary: |
         Utilities to work with and produce manuals, ASCII text, and on-line documentation from a single source file
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "bash" in pkgs_to_build %}
   - name: m2-bash
     version: "5.2.015.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -4195,7 +4399,9 @@ outputs:
       license: GPL
       summary: |
         The GNU Bourne Again shell
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "m4" in pkgs_to_build %}
   - name: m2-m4
     version: "1.4.19.2"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -4220,7 +4426,9 @@ outputs:
       license: GPL3
       summary: |
         The GNU macro processor
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "findutils" in pkgs_to_build %}
   - name: m2-findutils
     version: "4.9.0.3"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -4243,7 +4451,9 @@ outputs:
       license: GPL3
       summary: |
         GNU utilities to locate files
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "autoconf" in pkgs_to_build %}
   - name: m2-autoconf
     version: "2.71.3"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -4274,7 +4484,9 @@ outputs:
       license: GPL2
       summary: |
         A GNU tool for automatically configuring source code
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "libtool" in pkgs_to_build %}
   - name: m2-libtool
     version: "2.4.7.3"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -4299,7 +4511,9 @@ outputs:
       license: GPL-2.0-or-later
       summary: |
         A generic library support script
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "libltdl" in pkgs_to_build %}
   - name: m2-libltdl
     version: "2.4.7.3"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -4318,7 +4532,9 @@ outputs:
       license: GPL-2.0-or-later
       summary: |
         A system independent dlopen wrapper for GNU libtool
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "sed" in pkgs_to_build %}
   - name: m2-sed
     version: "4.9.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -4341,7 +4557,9 @@ outputs:
       license: GPL3
       summary: |
         GNU stream editor
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "make" in pkgs_to_build %}
   - name: m2-make
     version: "4.4.1.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -4364,7 +4582,9 @@ outputs:
       license: GPL3
       summary: |
         GNU make utility to maintain groups of programs
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "automake-wrapper" in pkgs_to_build %}
   - name: m2-automake-wrapper
     version: "20221207.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -4399,7 +4619,9 @@ outputs:
       license: GPL-2.0-only
       summary: |
         Wrapper scripts for automake commands
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "automake1.16" in pkgs_to_build %}
   - name: m2-automake1.16
     version: "1.16.5.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -4422,7 +4644,9 @@ outputs:
       license: GPL
       summary: |
         A GNU tool for automatically creating Makefiles
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "automake1.15" in pkgs_to_build %}
   - name: m2-automake1.15
     version: "1.15.1.4"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -4445,7 +4669,9 @@ outputs:
       license: GPL
       summary: |
         A GNU tool for automatically creating Makefiles
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "automake1.14" in pkgs_to_build %}
   - name: m2-automake1.14
     version: "1.14.1.6"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -4468,7 +4694,9 @@ outputs:
       license: GPL
       summary: |
         A GNU tool for automatically creating Makefiles
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "automake1.13" in pkgs_to_build %}
   - name: m2-automake1.13
     version: "1.13.4.7"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -4491,7 +4719,9 @@ outputs:
       license: GPL
       summary: |
         A GNU tool for automatically creating Makefiles
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "automake1.12" in pkgs_to_build %}
   - name: m2-automake1.12
     version: "1.12.6.6"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -4514,7 +4744,9 @@ outputs:
       license: GPL
       summary: |
         A GNU tool for automatically creating Makefiles
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "automake1.11" in pkgs_to_build %}
   - name: m2-automake1.11
     version: "1.11.6.6"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -4537,7 +4769,9 @@ outputs:
       license: GPL
       summary: |
         A GNU tool for automatically creating Makefiles
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "git" in pkgs_to_build %}
   - name: m2-git
     version: "2.42.0.2"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -4584,7 +4818,9 @@ outputs:
       license: GPL2
       summary: |
         The fast distributed version control system
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "perl-termreadkey" in pkgs_to_build %}
   - name: m2-perl-termreadkey
     version: "2.38.5"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -4605,7 +4841,9 @@ outputs:
       license: custom
       summary: |
         Provides simple control over terminal driver modes
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "perl-net-smtp-ssl" in pkgs_to_build %}
   - name: m2-perl-net-smtp-ssl
     version: "1.04.2"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -4626,7 +4864,9 @@ outputs:
       license: GPL
       summary: |
         SSL support for Net::SMTP
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "perl-io-socket-ssl" in pkgs_to_build %}
   - name: m2-perl-io-socket-ssl
     version: "2.083.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -4651,7 +4891,9 @@ outputs:
       license: GPL
       summary: |
         Nearly transparent SSL encapsulation for IO::Socket::INET
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "perl-uri" in pkgs_to_build %}
   - name: m2-perl-uri
     version: "5.21.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -4672,7 +4914,9 @@ outputs:
       license: PerlArtistic
       summary: |
         Uniform Resource Identifiers (absolute and relative)
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "perl-net-ssleay" in pkgs_to_build %}
   - name: m2-perl-net-ssleay
     version: "1.92.5"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -4693,7 +4937,9 @@ outputs:
       license: custom:BSD
       summary: |
         Perl extension for using OpenSSL
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "perl-mime-tools" in pkgs_to_build %}
   - name: m2-perl-mime-tools
     version: "5.510.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -4718,7 +4964,9 @@ outputs:
       license: GPL
       summary: |
         Parses streams to create MIME entities
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "perl-convert-binhex" in pkgs_to_build %}
   - name: m2-perl-convert-binhex
     version: "1.125.2"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -4739,7 +4987,9 @@ outputs:
       license: PerlArtistic
       summary: |
         Perl module to extract data from Macintosh BinHex files
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "perl-io-stringy" in pkgs_to_build %}
   - name: m2-perl-io-stringy
     version: "2.113.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -4760,7 +5010,9 @@ outputs:
       license: GPL
       summary: |
         I/O on in-core objects like strings/arrays
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "perl-mailtools" in pkgs_to_build %}
   - name: m2-perl-mailtools
     version: "2.21.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -4781,7 +5033,9 @@ outputs:
       license: PerlArtistic
       summary: |
         Various e-mail related modules
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "perl-timedate" in pkgs_to_build %}
   - name: m2-perl-timedate
     version: "2.33.2"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -4802,7 +5056,9 @@ outputs:
       license: PerlArtistic
       summary: |
         Date formating subroutines
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "perl-libwww" in pkgs_to_build %}
   - name: m2-perl-libwww
     version: "6.67.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -4849,7 +5105,9 @@ outputs:
       license: Artistic-1.0-Perl
       summary: |
         The World-Wide Web library for Perl
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "perl-try-tiny" in pkgs_to_build %}
   - name: m2-perl-try-tiny
     version: "0.31.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -4870,7 +5128,9 @@ outputs:
       license: MIT
       summary: |
         Minimal try/catch with proper localization of $@
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "perl-http-message" in pkgs_to_build %}
   - name: m2-perl-http-message
     version: "6.44.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -4903,7 +5163,9 @@ outputs:
       license: PerlArtistic
       summary: |
         HTTP style messages
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "perl-io-html" in pkgs_to_build %}
   - name: m2-perl-io-html
     version: "1.004.2"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -4924,7 +5186,9 @@ outputs:
       license: PerlArtistic
       summary: |
         Open an HTML file with automatic charset detection
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "perl-clone" in pkgs_to_build %}
   - name: m2-perl-clone
     version: "0.46.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -4945,7 +5209,9 @@ outputs:
       license: GPL
       summary: |
         Recursive copy of nested objects.
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "perl-www-robotrules" in pkgs_to_build %}
   - name: m2-perl-www-robotrules
     version: "6.02.2"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -4968,7 +5234,9 @@ outputs:
       license: PerlArtistic
       summary: |
         Database of robots.txt-derived permissions
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "perl-net-http" in pkgs_to_build %}
   - name: m2-perl-net-http
     version: "6.23.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -4989,7 +5257,9 @@ outputs:
       license: PerlArtistic
       summary: |
         Low-level HTTP connection (client)
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "perl-lwp-mediatypes" in pkgs_to_build %}
   - name: m2-perl-lwp-mediatypes
     version: "6.04.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -5010,7 +5280,9 @@ outputs:
       license: PerlArtistic
       summary: |
         Guess the media type of a file or a URL
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "perl-http-negotiate" in pkgs_to_build %}
   - name: m2-perl-http-negotiate
     version: "6.01.3"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -5033,7 +5305,9 @@ outputs:
       license: PerlArtistic
       summary: |
         choose a variant to serve
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "perl-http-date" in pkgs_to_build %}
   - name: m2-perl-http-date
     version: "6.06.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -5054,7 +5328,9 @@ outputs:
       license: PerlArtistic
       summary: |
         Date conversion routines
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "perl-http-daemon" in pkgs_to_build %}
   - name: m2-perl-http-daemon
     version: "6.16.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -5083,7 +5359,9 @@ outputs:
       license: Artistic-1.0-Perl
       summary: |
         A simple http server class
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "perl-io-socket-ip" in pkgs_to_build %}
   - name: m2-perl-io-socket-ip
     version: "0.41.2"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -5104,7 +5382,9 @@ outputs:
       license: PerlArtistic
       summary: |
         Family-neutral IP socket supporting both IPv4 and IPv6
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "perl-http-cookies" in pkgs_to_build %}
   - name: m2-perl-http-cookies
     version: "6.10.2"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -5129,7 +5409,9 @@ outputs:
       license: PerlArtistic
       summary: |
         HTTP cookie jars
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "perl-html-parser" in pkgs_to_build %}
   - name: m2-perl-html-parser
     version: "3.81.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -5156,7 +5438,9 @@ outputs:
       license: Artistic-1.0-Perl
       summary: |
         Perl HTML parser class
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "perl-html-tagset" in pkgs_to_build %}
   - name: m2-perl-html-tagset
     version: "3.20.3"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -5177,7 +5461,9 @@ outputs:
       license: PerlArtistic
       summary: |
         Data tables useful in parsing HTML
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "perl-file-listing" in pkgs_to_build %}
   - name: m2-perl-file-listing
     version: "6.16.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -5200,7 +5486,9 @@ outputs:
       license: Artistic-1.0-Perl
       summary: |
         parse directory listing
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "perl-encode-locale" in pkgs_to_build %}
   - name: m2-perl-encode-locale
     version: "1.05.2"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -5221,7 +5509,9 @@ outputs:
       license: PerlArtistic
       summary: |
         Determine the locale encoding
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "perl-authen-sasl" in pkgs_to_build %}
   - name: m2-perl-authen-sasl
     version: "2.16.3"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -5242,7 +5532,9 @@ outputs:
       license: GPL
       summary: |
         Perl/CPAN Module Authen::SASL : SASL authentication framework
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "perl-error" in pkgs_to_build %}
   - name: m2-perl-error
     version: "0.17029.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -5263,7 +5555,9 @@ outputs:
       license: PerlArtistic
       summary: |
         Perl/CPAN Error module - Error/exception handling in an OO-ish way
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "openssh" in pkgs_to_build %}
   - name: m2-openssh
     version: "9.4p1.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -5292,7 +5586,9 @@ outputs:
       license: custom:BSD
       summary: |
         Free version of the SSH connectivity tools
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "libfido2" in pkgs_to_build %}
   - name: m2-libfido2
     version: "1.13.0.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -5315,7 +5611,9 @@ outputs:
       license: BSD-2-Clause
       summary: |
         Library functionality for FIDO 2.0, including communication with a device over USB
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "libcbor" in pkgs_to_build %}
   - name: m2-libcbor
     version: "0.9.0.1"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -5334,7 +5632,9 @@ outputs:
       license: MIT
       summary: |
         A C library for parsing and generating CBOR, a general-purpose schema-less binary data format
+  {% endif %}
 
+  {% if "all" in pkgs_to_build or "heimdal" in pkgs_to_build %}
   - name: m2-heimdal
     version: "7.8.0.4"
     script: install_pkg.bat  # [build_platform.startswith("win-")]
@@ -5355,6 +5655,7 @@ outputs:
       license: custom
       summary: |
         Implementation of Kerberos V5 libraries
+  {% endif %}
 
 about:
   home: https://github.com/conda-forge/m2-recipes-feedstock
